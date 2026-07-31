@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+/* ══════════════════════════════════════════════════════════════════════════
+   THÈME — jetons de design partagés par tout le site.
+   Modifier une valeur ici la répercute partout (couleurs, ombres, rythmes).
+   ══════════════════════════════════════════════════════════════════════════ */
+@theme {
+  /* ── Vert de marque ──────────────────────────────────────────────────── */
+  --color-brand-50: #ecfdf5;
+  --color-brand-100: #d1fae5;
+  --color-brand-200: #a7f3d0;
+  --color-brand-300: #6ee7b7;
+  --color-brand-400: #34d399;
+  --color-brand-500: #10b981; /* accent : sur-titres, icônes, liens */
+  --color-brand-600: #059669; /* boutons pleins */
+  --color-brand-700: #047857;
+  --color-brand-800: #065f46;
+  --color-brand-900: #064e3b;
+  --color-brand-950: #022c22;
+
+  /* ── Noirs bleutés : sections sombres, cartes premium, pied de page ──── */
+  --color-ink-700: #1b2536;
+  --color-ink-800: #121b2a;
+  --color-ink-850: #0e1622;
+  --color-ink-900: #0b111c;
+  --color-ink-950: #070b12;
+
+  /* ── Gris de texte et de surfaces claires ────────────────────────────── */
+  --color-sand-50: #fafbfc;
+  --color-sand-100: #f4f6f8;
+  --color-sand-200: #e7ebef;
+
+  /* ── Typographie ─────────────────────────────────────────────────────── */
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+
+  /* ── Ombres : douces et diffuses, jamais dures ───────────────────────── */
+  --shadow-soft: 0 1px 2px rgb(16 24 40 / 0.04), 0 4px 16px rgb(16 24 40 / 0.05);
+  --shadow-card: 0 1px 3px rgb(16 24 40 / 0.05), 0 12px 32px -8px rgb(16 24 40 / 0.1);
+  --shadow-lift: 0 2px 6px rgb(16 24 40 / 0.06), 0 24px 48px -12px rgb(16 24 40 / 0.16);
+  --shadow-brand: 0 8px 24px -6px rgb(5 150 105 / 0.45);
+  --shadow-brand-lg: 0 12px 32px -6px rgb(5 150 105 / 0.55);
+
+  /* ── Courbe d'animation maison (proche de l'easing d'iOS) ────────────── */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Apparition du plan Google Maps une fois sa disponibilité confirmée. */
+  --animate-map-in: map-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes map-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BASE
+   ══════════════════════════════════════════════════════════════════════════ */
+@layer base {
+  :root {
+    /* Hauteur de la barre de navigation — sert aussi de décalage d'ancre. */
+    --nav-height: 4.5rem;
+    color-scheme: light;
+  }
+
+  * {
+    border-color: var(--color-sand-200);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Les ancres ne passent plus sous la navigation fixe. */
+  [id] {
+    scroll-margin-top: calc(var(--nav-height) + 1.5rem);
+  }
+
+  body {
+    background-color: #ffffff;
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    font-variation-settings: "opsz" 32;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Titres : graisse forte et interlettrage resserré (rendu « premium »). */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Anneau de focus unique et lisible sur fond clair comme sur fond sombre. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-500);
+    color: #ffffff;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   UTILITAIRES
+   ══════════════════════════════════════════════════════════════════════════ */
+@layer utilities {
+  /* Dégradé vert de la section d'appel à l'action et du bandeau final. */
+  .bg-brand-gradient {
+    background-image: linear-gradient(
+      120deg,
+      var(--color-brand-700) 0%,
+      var(--color-brand-500) 46%,
+      var(--color-brand-700) 100%
+    );
+  }
+
+  /* Léger halo lumineux posé derrière les sections sombres. */
+  .bg-ink-glow {
+    background-image: radial-gradient(
+      60% 50% at 50% 0%,
+      rgb(16 185 129 / 0.1) 0%,
+      transparent 70%
+    );
+  }
+
+  /* Fond translucide façon verre — boutons secondaires sur photo. */
+  .glass {
+    background-color: rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+  }
+
+  /* Masque de lisibilité appliqué sur les photos plein écran. */
+  .overlay-hero {
+    background-image: linear-gradient(
+        to bottom,
+        rgb(7 11 18 / 0.62) 0%,
+        rgb(7 11 18 / 0.48) 38%,
+        rgb(7 11 18 / 0.72) 100%
+      ),
+      radial-gradient(70% 60% at 50% 45%, transparent 0%, rgb(7 11 18 / 0.42) 100%);
+  }
+
+  /* Trame de points discrète des sections sombres. */
+  .bg-dot-grid {
+    background-image: radial-gradient(
+      rgb(255 255 255 / 0.055) 1px,
+      transparent 1px
+    );
+    background-size: 26px 26px;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ACCESSIBILITÉ — respect du réglage système « réduire les animations ».
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
