@@ -72,10 +72,24 @@ Quelques repères :
 Les visuels livrés sont des **gabarits** : des dégradés aux bonnes dimensions,
 destinés à être remplacés par vos vraies photos.
 
-### La méthode la plus simple
+Deux méthodes, au choix.
+
+### Méthode 1 — la page d'administration (sans terminal)
+
+Rendez-vous sur **`/admin`**, entrez votre mot de passe, et glissez vos photos
+dans les emplacements correspondants. Chaque photo est recadrée automatiquement
+aux bonnes dimensions, puis publiée dans le dépôt : le site se reconstruit seul
+et le changement est en ligne **au bout d'environ une minute**.
+
+Cette page fonctionne depuis n'importe quel navigateur, téléphone compris.
+Voir [Configurer la page /admin](#-configurer-la-page-admin) pour la mise en
+service — c'est une manipulation de cinq minutes, à faire une seule fois.
+
+### Méthode 2 — le dossier `public/images/`
 
 Déposez votre photo dans `public/images/` **en gardant exactement le même nom
-de fichier**. Il n'y a rien d'autre à faire — aucun code à modifier.
+de fichier**, puis publiez avec `git add public/images/ && git commit && git push`.
+Aucun code à modifier.
 
 | Fichier                        | Emplacement sur le site           | Dimensions conseillées |
 | ------------------------------ | --------------------------------- | ---------------------- |
@@ -97,7 +111,14 @@ de fichier**. Il n'y a rien d'autre à faire — aucun code à modifier.
 | `og-image.jpg`                 | Aperçu de partage (réseaux)       | 1200 × 630 px          |
 
 Le script de gabarits **n'écrase jamais une photo que vous avez déposée** : il
-retient ce qu'il a lui-même généré et laisse le reste intact.
+retient l'empreinte de chaque gabarit qu'il écrit, et laisse intact tout
+fichier dont l'empreinte a changé — que la photo vienne de l'admin ou d'un
+dépôt manuel.
+
+Cette liste d'emplacements n'est pas dupliquée : elle vient de
+[`src/content/image-slots.json`](src/content/image-slots.json), lu à la fois
+par la page d'administration et par le script de gabarits. Les dimensions
+affichées dans l'admin sont donc toujours celles réellement appliquées.
 
 ### Ajouter une photo sous un autre nom
 
@@ -133,6 +154,59 @@ point de navigation apparaissent tout seuls :
 tailles adaptées à chaque écran. Fournissez donc simplement un **JPEG de bonne
 qualité** (2000 px de large suffisent, 500 Ko maximum) : l'optimisation est
 prise en charge.
+
+---
+
+## 🔐 Configurer la page /admin
+
+Un site déployé ne peut pas écrire dans son propre dossier `public/` : chez
+Vercel comme chez Netlify, le disque est en lecture seule et remis à zéro à
+chaque déploiement. L'admin envoie donc les photos **au dépôt GitHub**, ce qui
+déclenche un redéploiement. La photo devient ainsi la nouvelle source de
+vérité : versionnée, et restaurable en cas d'erreur.
+
+Il faut pour cela quatre variables d'environnement (voir
+[`.env.example`](.env.example)) :
+
+| Variable            | Valeur                                                     |
+| ------------------- | ---------------------------------------------------------- |
+| `ADMIN_PASSWORD`    | Le mot de passe protégeant `/admin`. Long et unique.       |
+| `GITHUB_TOKEN`      | Jeton GitHub avec « Contents : Read and write ».            |
+| `GITHUB_REPOSITORY` | `proprietaire/depot`, ex. `MoustafaMKCL/Claude-`            |
+| `GITHUB_BRANCH`     | La branche que votre hébergeur déploie, ex. `main`          |
+
+### Créer le jeton GitHub
+
+1. GitHub › **Settings** › **Developer settings** ›
+   **Personal access tokens › Fine-grained tokens** › **Generate new token**.
+2. *Repository access* → **Only select repositories**, et cochez ce seul dépôt.
+3. *Permissions › Repository permissions* → **Contents : Read and write**.
+   Rien d'autre n'est nécessaire.
+4. Copiez le jeton : il ne sera plus affiché ensuite.
+
+### Renseigner les variables
+
+- **En production (Vercel)** — *Settings* › *Environment Variables*, puis
+  redéployez pour qu'elles soient prises en compte.
+- **En local** — copiez `.env.example` en `.env.local` et remplissez-le.
+  Ce fichier est ignoré par git, vos secrets ne partent jamais sur GitHub.
+
+Tant qu'une variable manque, `/admin` affiche précisément laquelle et comment
+l'obtenir. Le site public, lui, n'est pas affecté.
+
+### Ce qui protège cette page
+
+- Mot de passe comparé en temps constant, session par cookie `httpOnly` signé,
+  valable 8 heures.
+- Huit tentatives de connexion maximum par adresse IP, sur dix minutes.
+- Un envoi n'est accepté que si le nom de fichier figure dans
+  `image-slots.json` — impossible d'écrire ailleurs que dans `public/images/`.
+- Le fichier doit être décodable comme image ; sinon rien n'est publié.
+- `/admin` et `/api/` sont exclus des moteurs de recherche via `robots.txt` et
+  la balise `noindex`.
+
+Le jeton GitHub reste toujours côté serveur : il n'est jamais transmis au
+navigateur.
 
 ---
 
@@ -182,6 +256,8 @@ src/
 │   ├── sitemap.ts robots.ts    Générés à partir du contenu
 │   ├── not-found.tsx           Page 404 aux couleurs du site
 │   ├── bureaux-privatifs/      Page dédiée aux bureaux privatifs
+│   ├── admin/                  Page de gestion des photos (protégée)
+│   ├── api/admin/              Connexion, déconnexion, envoi de photos
 │   ├── mentions-legales/       ⚠️ à compléter avant mise en ligne
 │   └── confidentialite/        ⚠️ à compléter avant mise en ligne
 │
@@ -198,11 +274,15 @@ src/
 │
 ├── content/
 │   ├── site.ts                 ← LE FICHIER À ÉDITER
-│   └── schema.ts               Types du contenu (aucun texte)
+│   ├── schema.ts               Types du contenu (aucun texte)
+│   └── image-slots.json        Emplacements d'images (admin + gabarits)
 │
 └── lib/
     ├── motion.ts               Réglages d'animation partagés
-    └── utils.ts                `cn()`, formatage des prix
+    ├── admin-auth.ts           Mot de passe et sessions de l'admin
+    ├── github.ts               Publication des photos dans le dépôt
+    ├── image-slots.ts          Lecture typée de image-slots.json
+    └── utils.ts                `cn()`, formatage des prix, liens
 ```
 
 **Principe directeur** : le contenu ne connaît pas React, et les composants ne
@@ -257,4 +337,6 @@ automatiquement si le système du visiteur demande de réduire les animations.
    **HTVA** (aucun prix TVAC n'est affiché sur le site).
 5. **Compléter les pages `mentions-legales` et `confidentialite`** : numéro
    d'entreprise, TVA, hébergeur. Les emplacements sont marqués `[à compléter]`.
-6. `npm run build` puis déployer (Vercel, Netlify ou tout hébergeur Node).
+6. Renseigner les variables d'environnement de `/admin` chez votre
+   hébergeur — voir [Configurer la page /admin](#-configurer-la-page-admin).
+7. `npm run build` puis déployer (Vercel, Netlify ou tout hébergeur Node).

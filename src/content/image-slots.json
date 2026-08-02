@@ -1,0 +1,149 @@
+[
+  {
+    "file": "hero.jpg",
+    "section": "Accueil",
+    "label": "Bannière plein écran",
+    "width": 2400,
+    "height": 1600,
+    "hue": 158,
+    "placeholderLabel": "",
+    "shade": 0.92
+  },
+  {
+    "file": "service-domiciliation.jpg",
+    "section": "Accueil · Services",
+    "label": "Carte « Domiciliation d'entreprise »",
+    "width": 1200,
+    "height": 900,
+    "hue": 152,
+    "placeholderLabel": "Domiciliation"
+  },
+  {
+    "file": "service-bureaux.jpg",
+    "section": "Accueil · Services",
+    "label": "Carte « Bureaux privatifs »",
+    "width": 1200,
+    "height": 900,
+    "hue": 168,
+    "placeholderLabel": "Bureaux privatifs"
+  },
+  {
+    "file": "service-coworking.jpg",
+    "section": "Accueil · Services",
+    "label": "Carte « Espace coworking »",
+    "width": 1200,
+    "height": 900,
+    "hue": 142,
+    "placeholderLabel": "Coworking"
+  },
+  {
+    "file": "espace-salle-reunion.jpg",
+    "section": "Accueil · Carrousel",
+    "label": "Vue 1 — Salle de réunion & Studio",
+    "width": 1920,
+    "height": 1080,
+    "hue": 160,
+    "placeholderLabel": "Salle de réunion & Studio"
+  },
+  {
+    "file": "espace-bureaux.jpg",
+    "section": "Accueil · Carrousel",
+    "label": "Vue 2 — Bureaux privatifs",
+    "width": 1920,
+    "height": 1080,
+    "hue": 172,
+    "placeholderLabel": "Bureaux privatifs"
+  },
+  {
+    "file": "espace-coworking.jpg",
+    "section": "Accueil · Carrousel",
+    "label": "Vue 3 — Espace coworking",
+    "width": 1920,
+    "height": 1080,
+    "hue": 145,
+    "placeholderLabel": "Espace coworking"
+  },
+  {
+    "file": "espace-studio.jpg",
+    "section": "Accueil · Carrousel",
+    "label": "Vue 4 — Studio podcast",
+    "width": 1920,
+    "height": 1080,
+    "hue": 186,
+    "placeholderLabel": "Studio podcast"
+  },
+  {
+    "file": "espace-connectivite.jpg",
+    "section": "Accueil · Carrousel",
+    "label": "Vue 5 — Fibre optique",
+    "width": 1920,
+    "height": 1080,
+    "hue": 130,
+    "placeholderLabel": "Fibre optique"
+  },
+  {
+    "file": "tarif-domiciliation.jpg",
+    "section": "Accueil · Tarifs",
+    "label": "Bandeau — onglet Domiciliation",
+    "width": 2100,
+    "height": 900,
+    "hue": 152,
+    "placeholderLabel": "Domiciliation"
+  },
+  {
+    "file": "tarif-coworking.jpg",
+    "section": "Accueil · Tarifs",
+    "label": "Bandeau — onglet Coworking",
+    "width": 2100,
+    "height": 900,
+    "hue": 142,
+    "placeholderLabel": "Coworking"
+  },
+  {
+    "file": "tarif-combo.jpg",
+    "section": "Accueil · Tarifs",
+    "label": "Bandeau — onglet Coworking + Domiciliation",
+    "width": 2100,
+    "height": 900,
+    "hue": 164,
+    "placeholderLabel": "Coworking + Domiciliation"
+  },
+  {
+    "file": "bureaux-hero.jpg",
+    "section": "Page Bureaux privatifs",
+    "label": "Bannière de la page",
+    "width": 2400,
+    "height": 1400,
+    "hue": 168,
+    "placeholderLabel": "",
+    "shade": 0.92
+  },
+  {
+    "file": "bureaux-environnement.jpg",
+    "section": "Page Bureaux privatifs",
+    "label": "Bloc « Un environnement conçu pour votre réussite »",
+    "width": 1400,
+    "height": 1050,
+    "hue": 174,
+    "placeholderLabel": "Environnement de travail"
+  },
+  {
+    "file": "bureaux-flexibilite.jpg",
+    "section": "Page Bureaux privatifs",
+    "label": "Bloc « Des solutions flexibles »",
+    "width": 1400,
+    "height": 1050,
+    "hue": 162,
+    "placeholderLabel": "Solutions flexibles"
+  },
+  {
+    "file": "og-image.jpg",
+    "section": "Partage",
+    "label": "Aperçu sur les réseaux sociaux",
+    "width": 1200,
+    "height": 630,
+    "hue": 158,
+    "placeholderLabel": "PWS Premium Workspaces",
+    "shade": 0.9
+  }
+]

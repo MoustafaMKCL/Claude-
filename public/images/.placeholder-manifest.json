@@ -1,20 +1,20 @@
 {
-  "files": [
-    "hero.jpg",
-    "og-image.jpg",
-    "service-domiciliation.jpg",
-    "service-bureaux.jpg",
-    "service-coworking.jpg",
-    "espace-salle-reunion.jpg",
-    "espace-bureaux.jpg",
-    "espace-coworking.jpg",
-    "espace-studio.jpg",
-    "espace-connectivite.jpg",
-    "tarif-domiciliation.jpg",
-    "tarif-coworking.jpg",
-    "tarif-combo.jpg",
-    "bureaux-hero.jpg",
-    "bureaux-environnement.jpg",
-    "bureaux-flexibilite.jpg"
-  ]
+  "fingerprints": {
+    "hero.jpg": "7550bf8f0aef7bc8ab600ee8c2a414abaad1f11802fc3fb1d29700a7e5e658ba",
+    "service-domiciliation.jpg": "a2a4eeeca70af054a7653e7af9918751550ee34a23c2b46689804577e77826a6",
+    "service-bureaux.jpg": "65d449fca60d69fd8a177fe78faa45cb1e23d78ad870b22a431fa7c5acbe414c",
+    "service-coworking.jpg": "dcdd10cc04e35d9d4fec9a96cb8321bca9644c905063dff10f145f4e837f6de1",
+    "espace-salle-reunion.jpg": "77f0a0938c425e7641be00b6422e14c48f9a77f5c0a02aa976305898cf967da3",
+    "espace-bureaux.jpg": "4894b5618c963aca42f52c83add8386e986383492d90df9c51558a409988b8cf",
+    "espace-coworking.jpg": "b690b17ea27f9264f7cb8135840c87bd745c38aa1de2d83c5a48552cb9730047",
+    "espace-studio.jpg": "add6e918bd57cfed2f691e968d1005b6d4a3c4194a706973d959eafb466f3e60",
+    "espace-connectivite.jpg": "4d2233a32fd5446842c2d58950049bef88d49ffb32133d62551a1dc2a61da70a",
+    "tarif-domiciliation.jpg": "f3385f89571eea5852a4d223a0932c227a68b4a0a5cabd2398c9491f61720ebf",
+    "tarif-coworking.jpg": "9f31732addb2db3c218c72e35251504a52569413bb2205302ca54247b8749729",
+    "tarif-combo.jpg": "cdc4ef9d2dd2ea0bd570e29485cb129cd75802f57f3b1dcfa038f2c89a746693",
+    "bureaux-hero.jpg": "993c55929fba86de85e1f74fd6c5962f0dc8f4ddede347a515a7787bcfe7140d",
+    "bureaux-environnement.jpg": "7b899fa625f0074cbcee769079c5f264be39ddc403af10b8486cd49932f55758",
+    "bureaux-flexibilite.jpg": "e45c76c2ac16b4cc951f623a35e07859e05e6b415e1cf19bdd470de48c3427fd",
+    "og-image.jpg": "aaf5f1f5d1ccb5738a2f1371d534d9d90696e0a8b157da14aa27f4de73c3f562"
+  }
 }

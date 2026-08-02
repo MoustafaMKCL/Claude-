@@ -8,46 +8,29 @@
  * chargement. Remplacez-les par vos photos réelles en conservant le même nom
  * de fichier — aucune modification de code n'est alors nécessaire.
  *
- * Le script est idempotent et n'écrase que les fichiers qu'il a lui-même créés
- * (repérés par le marqueur `.placeholder-manifest.json`), afin de ne jamais
- * supprimer une photo déposée par l'utilisateur.
+ * La liste des emplacements vient de `src/content/image-slots.json`, partagée
+ * avec la page d'administration : les dimensions annoncées dans l'admin sont
+ * donc toujours celles réellement produites ici.
+ *
+ * PROTECTION DES VRAIES PHOTOS — le script note l'empreinte SHA-256 de chaque
+ * gabarit qu'il écrit. À l'exécution suivante, un fichier dont l'empreinte ne
+ * correspond plus est considéré comme une photo déposée par vos soins et n'est
+ * jamais écrasé. Peu importe qu'elle ait été déposée à la main ou via l'admin.
  */
 
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
-const OUTPUT_DIR = path.join(process.cwd(), "public", "images");
+const ROOT = process.cwd();
+const OUTPUT_DIR = path.join(ROOT, "public", "images");
+const SLOTS_FILE = path.join(ROOT, "src", "content", "image-slots.json");
 const MANIFEST = path.join(OUTPUT_DIR, ".placeholder-manifest.json");
 
-/** Un visuel à produire : nom, dimensions, teinte et libellé affiché. */
-const ASSETS = [
-  // Le hero passe sous le titre de la page : son gabarit reste muet, sinon le
-  // libellé apparaîtrait en filigrane derrière « Votre espace professionnel ».
-  { file: "hero.jpg", width: 2400, height: 1600, hue: 158, label: "", shade: 0.92 },
-  { file: "og-image.jpg", width: 1200, height: 630, hue: 158, label: "PWS Premium Workspaces", shade: 0.9 },
-
-  { file: "service-domiciliation.jpg", width: 1200, height: 900, hue: 152, label: "Domiciliation" },
-  { file: "service-bureaux.jpg", width: 1200, height: 900, hue: 168, label: "Bureaux privatifs" },
-  { file: "service-coworking.jpg", width: 1200, height: 900, hue: 142, label: "Coworking" },
-
-  { file: "espace-salle-reunion.jpg", width: 1920, height: 1080, hue: 160, label: "Salle de réunion & Studio" },
-  { file: "espace-bureaux.jpg", width: 1920, height: 1080, hue: 172, label: "Bureaux privatifs" },
-  { file: "espace-coworking.jpg", width: 1920, height: 1080, hue: 145, label: "Espace coworking" },
-  { file: "espace-studio.jpg", width: 1920, height: 1080, hue: 186, label: "Studio podcast" },
-  { file: "espace-connectivite.jpg", width: 1920, height: 1080, hue: 130, label: "Fibre optique" },
-
-  // Bandeaux de la section Tarifs — format très large (21:9).
-  { file: "tarif-domiciliation.jpg", width: 2100, height: 900, hue: 152, label: "Domiciliation" },
-  { file: "tarif-coworking.jpg", width: 2100, height: 900, hue: 142, label: "Coworking" },
-  { file: "tarif-combo.jpg", width: 2100, height: 900, hue: 164, label: "Coworking + Domiciliation" },
-
-  // Page « Bureaux privatifs ».
-  { file: "bureaux-hero.jpg", width: 2400, height: 1400, hue: 168, label: "", shade: 0.92 },
-  { file: "bureaux-environnement.jpg", width: 1400, height: 1050, hue: 174, label: "Environnement de travail" },
-  { file: "bureaux-flexibilite.jpg", width: 1400, height: 1050, hue: 162, label: "Solutions flexibles" },
-];
+/** Empreinte d'un contenu, pour distinguer gabarit et photo réelle. */
+const sha256 = (buffer) => createHash("sha256").update(buffer).digest("hex");
 
 /** Échappe le texte inséré dans le SVG. */
 const escapeXml = (value) =>
@@ -84,7 +67,8 @@ function buildSvg({ width, height, hue, label, shade = 1 }) {
 
   const fontSize = Math.round(unit * 0.045);
 
-  // Un libellé vide produit un gabarit purement graphique (cas du hero).
+  // Un libellé vide produit un gabarit purement graphique (cas des bannières,
+  // où un texte transparaîtrait derrière le titre de la page).
   const caption = label
     ? `<text x="${cx}" y="${(cy + fontSize * 0.36).toFixed(1)}"
         font-family="Inter, Helvetica, Arial, sans-serif" font-size="${fontSize}"
@@ -130,40 +114,63 @@ function buildSvg({ width, height, hue, label, shade = 1 }) {
 async function main() {
   await mkdir(OUTPUT_DIR, { recursive: true });
 
-  /** Fichiers déjà produits par ce script lors d'une exécution précédente. */
-  let generated = [];
+  const slots = JSON.parse(await readFile(SLOTS_FILE, "utf8"));
+
+  /** Empreintes des gabarits écrits lors des exécutions précédentes. */
+  let fingerprints = {};
   if (existsSync(MANIFEST)) {
     try {
-      generated = JSON.parse(await readFile(MANIFEST, "utf8")).files ?? [];
+      fingerprints = JSON.parse(await readFile(MANIFEST, "utf8")).fingerprints ?? {};
     } catch {
-      generated = [];
+      fingerprints = {};
     }
   }
 
   const written = [];
-  const skipped = [];
+  const preserved = [];
+  const nextFingerprints = {};
 
-  for (const asset of ASSETS) {
-    const target = path.join(OUTPUT_DIR, asset.file);
-    const isUserPhoto = existsSync(target) && !generated.includes(asset.file);
+  for (const slot of slots) {
+    const target = path.join(OUTPUT_DIR, slot.file);
 
-    if (isUserPhoto) {
-      skipped.push(asset.file);
-      continue;
+    if (existsSync(target)) {
+      const current = sha256(await readFile(target));
+
+      // Empreinte inconnue ou différente : c'est une vraie photo, on n'y touche pas.
+      if (current !== fingerprints[slot.file]) {
+        preserved.push(slot.file);
+        continue;
+      }
     }
 
-    await sharp(Buffer.from(buildSvg(asset)))
+    const buffer = await sharp(
+      Buffer.from(
+        buildSvg({
+          width: slot.width,
+          height: slot.height,
+          hue: slot.hue,
+          label: slot.placeholderLabel,
+          shade: slot.shade,
+        }),
+      ),
+    )
       .jpeg({ quality: 82, chromaSubsampling: "4:4:4", mozjpeg: true })
-      .toFile(target);
+      .toBuffer();
 
-    written.push(asset.file);
+    await writeFile(target, buffer);
+    nextFingerprints[slot.file] = sha256(buffer);
+    written.push(slot.file);
   }
 
-  await writeFile(MANIFEST, `${JSON.stringify({ files: written }, null, 2)}\n`, "utf8");
+  await writeFile(
+    MANIFEST,
+    `${JSON.stringify({ fingerprints: nextFingerprints }, null, 2)}\n`,
+    "utf8",
+  );
 
   console.log(`✓ ${written.length} gabarit(s) écrit(s) dans public/images/`);
-  if (skipped.length > 0) {
-    console.log(`↷ ${skipped.length} photo(s) réelle(s) conservée(s) : ${skipped.join(", ")}`);
+  if (preserved.length > 0) {
+    console.log(`↷ ${preserved.length} photo(s) réelle(s) conservée(s) : ${preserved.join(", ")}`);
   }
 }
 

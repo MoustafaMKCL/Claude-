@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
+  // `sharp` embarque des binaires natifs : il doit rester externe au bundle
+  // serveur, sinon la route d'envoi de photos échoue au déploiement.
+  serverExternalPackages: ["sharp"],
+
   images: {
     // Les visuels du site vivent dans `public/images/`. Ajoutez ici un
     // `remotePatterns` si vous décidez un jour de servir les photos depuis
