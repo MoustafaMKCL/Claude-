@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
     // `remotePatterns` si vous décidez un jour de servir les photos depuis
     // un CDN externe (Cloudinary, S3, …).
     formats: ["image/avif", "image/webp"],
+    // Niveaux de compression employés dans les composants. Les déclarer est
+    // facultatif aujourd'hui mais obligatoire à partir de Next.js 16 : sans
+    // cette liste, les images concernées cesseraient d'être optimisées.
+    qualities: [75, 82, 88, 90],
     remotePatterns: [],
   },
 
