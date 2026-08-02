@@ -47,7 +47,7 @@ export function LegalPage({ title, updatedAt, children }: LegalPageProps) {
         </Container>
       </main>
 
-      <Footer />
+      <Footer hrefPrefix="/" />
     </>
   );
 }

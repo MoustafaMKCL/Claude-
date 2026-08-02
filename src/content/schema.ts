@@ -156,6 +156,8 @@ export interface PricingTab {
   icon: IconName;
   /** Précision affichée sous les onglets. */
   note?: string;
+  /** Bandeau illustrant l'offre, affiché au-dessus des cartes. */
+  image: ImageAsset;
   plans: PricingPlan[];
 }
 
@@ -177,6 +179,50 @@ export interface LocationContent extends SectionIntro {
    * seul son libellé se paramètre ici, pour éviter deux URL à tenir à jour.
    */
   mapOverlay: { title: string; subtitle: string; ctaLabel: string };
+}
+
+/* ─────────────────────────  Section « Autres services »  ────────────────── */
+
+export interface OtherServiceItem {
+  icon: IconName;
+  title: string;
+  description: string;
+}
+
+export interface OtherServicesContent extends SectionIntro {
+  items: OtherServiceItem[];
+}
+
+/* ──────────────────────────  Page « Bureaux privatifs »  ─────────────────── */
+
+/** Un bloc « titre + paragraphes + visuel » de la page bureaux privatifs. */
+export interface PrivateOfficesBlock {
+  title: string;
+  paragraphs: string[];
+  image: ImageAsset;
+}
+
+export interface PrivateOfficesContent {
+  /** Chemin de la page. Sert aussi d'entrée de navigation et de sitemap. */
+  slug: string;
+  navLabel: string;
+  metaTitle: string;
+  metaDescription: string;
+  hero: {
+    eyebrow: string;
+    title: string;
+    tagline: string;
+    /** Prix d'appel affiché en pastille, ex. « À partir de 500 € ». */
+    priceFrom: { prefix: string; price: number; currency: string; period: string };
+    background: ImageAsset;
+    primaryCta: LinkItem;
+    secondaryCta: LinkItem;
+  };
+  /** Paragraphes d'introduction, avant les blocs illustrés. */
+  intro: string[];
+  blocks: PrivateOfficesBlock[];
+  included: { eyebrow: string; title: string; items: string[] };
+  closing: { title: string; description: string; cta: LinkItem };
 }
 
 export interface CtaContent {
@@ -209,7 +255,10 @@ export interface SiteContent {
   advantages: AdvantagesContent;
   gallery: GalleryContent;
   pricing: PricingContent;
+  otherServices: OtherServicesContent;
   location: LocationContent;
   cta: CtaContent;
   footer: FooterContent;
+  /** Contenu de la page dédiée `/bureaux-privatifs`. */
+  privateOffices: PrivateOfficesContent;
 }

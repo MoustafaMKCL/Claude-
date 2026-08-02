@@ -4,9 +4,14 @@ import { Icon } from "@/components/ui/Icon";
 import { Logo } from "@/components/ui/Logo";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { site } from "@/content/site";
-import { cn } from "@/lib/utils";
+import { cn, resolveHref } from "@/lib/utils";
 
 const { footer, contact, hours, meta } = site;
+
+interface FooterProps {
+  /** Préfixe des ancres hors accueil, ex. `/`. Voir `resolveHref`. */
+  hrefPrefix?: string;
+}
 
 /**
  * Pied de page.
@@ -14,7 +19,7 @@ const { footer, contact, hours, meta } = site;
  * L'année du copyright est calculée au rendu : `{year}` dans le contenu est
  * remplacé automatiquement, il n'y a donc jamais de date à corriger à la main.
  */
-export function Footer() {
+export function Footer({ hrefPrefix = "" }: FooterProps = {}) {
   const copyright = footer.copyright.replace("{year}", String(new Date().getFullYear()));
 
   return (
@@ -26,8 +31,8 @@ export function Footer() {
         >
           {/* ── Marque ─────────────────────────────────────────────────────── */}
           <RevealItem>
-            <Link href="#top" aria-label={`${meta.name} — retour en haut de page`}>
-              <Logo tone="light" />
+            <Link href={resolveHref("#top", hrefPrefix)} aria-label={`${meta.name} — retour en haut de page`}>
+              <Logo tone="light" height={56} />
             </Link>
             <p className="mt-5 max-w-xs text-[0.8125rem] leading-relaxed text-white/50">
               {footer.description}
@@ -89,7 +94,7 @@ export function Footer() {
               {footer.links.map((link) => (
                 <li key={link.href}>
                   <Link
-                    href={link.href}
+                    href={resolveHref(link.href, hrefPrefix)}
                     className="group inline-flex items-center gap-1.5 text-[0.8125rem] text-white/50 transition-colors duration-200 hover:text-white"
                   >
                     <span

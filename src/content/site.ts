@@ -62,6 +62,7 @@ export const site: SiteContent = {
   nav: {
     links: [
       { label: "Services", href: "#services" },
+      { label: "Bureaux privatifs", href: "/bureaux-privatifs" },
       { label: "Espaces", href: "#espaces" },
       { label: "Tarifs", href: "#tarifs" },
       { label: "Localisation", href: "#localisation" },
@@ -232,6 +233,10 @@ export const site: SiteContent = {
         label: "Domiciliation",
         icon: "mapPin",
         note: "Une adresse prestigieuse à Bruxelles pour valoriser votre image de marque.",
+        image: {
+          src: "/images/tarif-domiciliation.jpg",
+          alt: "Accueil et gestion du courrier des sociétés domiciliées chez PWS",
+        },
         plans: [
           {
             id: "domiciliation-essentiel",
@@ -239,7 +244,7 @@ export const site: SiteContent = {
             badge: "Sans engagement",
             price: 85,
             currency: "€",
-            period: "HT / mois",
+            period: "HTVA / mois",
             features: [
               "Domiciliation & siège social",
               "Réception & gestion du courrier",
@@ -255,7 +260,7 @@ export const site: SiteContent = {
             price: 75,
             strikethroughPrice: 85,
             currency: "€",
-            period: "HT / mois",
+            period: "HTVA / mois",
             savings: "Économisez 12 %",
             features: [
               "Domiciliation & siège social",
@@ -272,7 +277,7 @@ export const site: SiteContent = {
             price: 70,
             strikethroughPrice: 85,
             currency: "€",
-            period: "HT / mois",
+            period: "HTVA / mois",
             savings: "Économisez 18 %",
             features: [
               "Domiciliation & siège social",
@@ -291,54 +296,61 @@ export const site: SiteContent = {
         label: "Coworking",
         icon: "users",
         note: "Un poste de travail flexible dans un espace pensé pour la concentration.",
+        image: {
+          src: "/images/tarif-coworking.jpg",
+          alt: "Plateau de coworking lumineux avec postes de travail partagés",
+        },
         plans: [
           {
-            id: "coworking-nomade",
-            name: "Nomade",
-            badge: "10 jours / mois",
-            price: 149,
+            id: "coworking-essentiel",
+            name: "Essentiel",
+            badge: "Sans engagement",
+            price: 165,
             currency: "€",
-            period: "HT / mois",
+            period: "HTVA / mois",
             features: [
-              "10 jours d'accès par mois",
-              "Poste en open space",
-              "Fibre optique & impressions",
-              "Café et espace détente inclus",
+              "Accès à l'espace de coworking",
+              "Fibre optique et impressions",
+              "Cuisine équipée et espace détente",
+              "Accès salle de réunion (conditions)",
             ],
             cta: { label: "Choisir cette formule", href: "#contact" },
           },
           {
-            id: "coworking-resident",
-            name: "Résident",
-            badge: "Illimité",
-            price: 249,
+            id: "coworking-confort",
+            name: "Confort",
+            badge: "Engagement 6 mois",
+            price: 140,
+            strikethroughPrice: 165,
             currency: "€",
-            period: "HT / mois",
+            period: "HTVA / mois",
+            savings: "Soit 840 € par semestre",
             features: [
-              "Accès illimité en semaine",
-              "Poste dédié et casier privatif",
-              "4 h de salle de réunion / mois",
-              "Réception du courrier",
+              "Accès à l'espace de coworking",
+              "Fibre optique et impressions",
+              "Cuisine équipée et espace détente",
+              "Accès salle de réunion (conditions)",
             ],
             cta: { label: "Choisir cette formule", href: "#contact" },
           },
           {
-            id: "coworking-bureau",
-            name: "Bureau privatif",
-            badge: "Dès 2 postes",
-            price: 420,
+            id: "coworking-premium",
+            name: "Premium Annuel",
+            badge: "Engagement 12 mois",
+            price: 120,
+            strikethroughPrice: 165,
             currency: "€",
-            period: "HT / mois",
-            savings: "Accès 24h/24",
+            period: "HTVA / mois",
+            savings: "Soit 1 440 € par an",
             features: [
-              "Bureau fermé et personnalisable",
-              "Accès 24h/24, 7j/7",
-              "8 h de salle de réunion / mois",
-              "Mobilier et ménage inclus",
+              "Accès à l'espace de coworking",
+              "Fibre optique et impressions",
+              "Cuisine équipée et espace détente",
+              "Accès salle de réunion (conditions)",
             ],
             cta: { label: "Choisir cette formule", href: "#contact" },
             featured: true,
-            featuredLabel: "Le plus demandé",
+            featuredLabel: "Meilleur tarif",
           },
         ],
       },
@@ -347,6 +359,10 @@ export const site: SiteContent = {
         label: "Coworking + Domiciliation",
         icon: "layers",
         note: "La formule complète : votre adresse et votre espace de travail réunis.",
+        image: {
+          src: "/images/tarif-combo.jpg",
+          alt: "Espace de travail et adresse professionnelle réunis au sein de PWS",
+        },
         plans: [
           {
             id: "combo-start",
@@ -355,7 +371,7 @@ export const site: SiteContent = {
             price: 219,
             strikethroughPrice: 234,
             currency: "€",
-            period: "HT / mois",
+            period: "HTVA / mois",
             features: [
               "Domiciliation & siège social",
               "10 jours de coworking / mois",
@@ -371,7 +387,7 @@ export const site: SiteContent = {
             price: 299,
             strikethroughPrice: 324,
             currency: "€",
-            period: "HT / mois",
+            period: "HTVA / mois",
             savings: "Économisez 8 %",
             features: [
               "Domiciliation & siège social",
@@ -388,7 +404,7 @@ export const site: SiteContent = {
             price: 469,
             strikethroughPrice: 520,
             currency: "€",
-            period: "HT / mois",
+            period: "HTVA / mois",
             savings: "Économisez 10 %",
             features: [
               "Domiciliation & siège social",
@@ -401,6 +417,28 @@ export const site: SiteContent = {
             featuredLabel: "Tout inclus",
           },
         ],
+      },
+    ],
+  },
+
+  /* ─────────────────────────────  AUTRES SERVICES  ───────────────────────── */
+  otherServices: {
+    eyebrow: "Autres services",
+    title: "Un écosystème d'experts\nà votre service",
+    description:
+      "Premium WorkSpaces s'entoure de spécialistes pour catalyser et soutenir la croissance de votre structure à chaque étape de son développement.",
+    items: [
+      {
+        icon: "building",
+        title: "Création de sociétés",
+        description:
+          "Bénéficiez d'un accompagnement intégral pour le lancement de votre activité, allant du choix de la structure juridique adéquate à la prise en charge des démarches légales et administratives, complété par un suivi rigoureux post-création.",
+      },
+      {
+        icon: "calculator",
+        title: "Comptabilité & fiscalité",
+        description:
+          "Confiez-nous la gestion externalisée de votre comptabilité, l'établissement de vos déclarations TVA, la conception de vos bilans et reportings, ainsi que l'optimisation stratégique de votre fiscalité.",
       },
     ],
   },
@@ -463,6 +501,7 @@ export const site: SiteContent = {
     linksTitle: "Liens",
     links: [
       { label: "Nos services", href: "#services" },
+      { label: "Bureaux privatifs", href: "/bureaux-privatifs" },
       { label: "Nos espaces", href: "#espaces" },
       { label: "Tarifs", href: "#tarifs" },
       { label: "Localisation", href: "#localisation" },
@@ -472,5 +511,88 @@ export const site: SiteContent = {
       { label: "Politique de confidentialité", href: "/confidentialite" },
     ],
     copyright: "© {year} PWS Premium Workspaces. Tous droits réservés.",
+  },
+
+  /* ─────────────────────  PAGE DÉDIÉE « BUREAUX PRIVATIFS »  ─────────────── */
+  privateOffices: {
+    slug: "/bureaux-privatifs",
+    navLabel: "Bureaux privatifs",
+    metaTitle: "Bureaux privatifs à Bruxelles",
+    metaDescription:
+      "Bureaux privatifs modernes, élégants et entièrement équipés au cœur de Bruxelles, à partir de 500 € HTVA par mois. Confidentialité, confort et flexibilité pour indépendants, professions libérales et entreprises.",
+
+    hero: {
+      eyebrow: "Bureaux privatifs",
+      title: "Votre bureau,\nà votre image",
+      tagline:
+        "Un espace de travail dédié, alliant confidentialité, confort et flexibilité, au cœur de Bruxelles.",
+      priceFrom: {
+        prefix: "À partir de",
+        price: 500,
+        currency: "€",
+        period: "HTVA / mois",
+      },
+      background: {
+        src: "/images/bureaux-hero.jpg",
+        alt: "Bureau privatif moderne et lumineux des espaces PWS à Bruxelles",
+      },
+      primaryCta: { label: "Réserver une visite", href: "/#contact" },
+      secondaryCta: { label: "Voir toutes les formules", href: "/#tarifs" },
+    },
+
+    intro: [
+      "Chez Premium WorkSpaces, nous mettons à votre disposition des bureaux privatifs modernes, élégants et entièrement équipés, pensés pour les entrepreneurs, indépendants, professions libérales et entreprises qui recherchent un environnement professionnel à la hauteur de leurs ambitions.",
+      "Que vous soyez seul ou en équipe, vous bénéficiez d'un espace de travail dédié, alliant confidentialité, confort et flexibilité, au cœur de Bruxelles.",
+      "Parce que votre bureau est bien plus qu'un simple lieu de travail, il devient le reflet de votre entreprise.",
+    ],
+
+    blocks: [
+      {
+        title: "Un environnement conçu pour votre réussite",
+        paragraphs: [
+          "Nos bureaux offrent un cadre de travail calme, lumineux et fonctionnel afin de favoriser la concentration, la productivité et les échanges professionnels.",
+          "Profitez d'une adresse de prestige, d'espaces communs soignés et de tous les services indispensables au développement de votre activité.",
+          "Vous vous concentrez sur votre entreprise, nous nous occupons du reste.",
+        ],
+        image: {
+          src: "/images/bureaux-environnement.jpg",
+          alt: "Bureau privatif calme et lumineux propice à la concentration",
+        },
+      },
+      {
+        title: "Des solutions flexibles",
+        paragraphs: [
+          "Que vous recherchiez un bureau pour quelques mois ou dans une perspective à plus long terme, nous vous proposons des formules adaptées à vos besoins.",
+          "Nos espaces évoluent avec votre activité afin de vous offrir la flexibilité nécessaire à chaque étape de votre croissance.",
+        ],
+        image: {
+          src: "/images/bureaux-flexibilite.jpg",
+          alt: "Bureau modulable pouvant accueillir une équipe en croissance",
+        },
+      },
+    ],
+
+    included: {
+      eyebrow: "Tout est compris",
+      title: "Des services inclus",
+      items: [
+        "Bureau privatif entièrement équipé",
+        "Internet haut débit sécurisé",
+        "Accès aux espaces communs",
+        "Cuisine équipée et espaces détente",
+        "Salle de réunion (selon formule)",
+        "Réception et gestion du courrier",
+        "Domiciliation du siège social (en option ou incluse selon l'offre)",
+        "Accès sécurisé",
+        "Charges comprises",
+      ],
+    },
+
+    closing: {
+      title: "Plus qu'un bureau,\nun véritable cadre professionnel",
+      description:
+        "Venez découvrir nos bureaux privatifs et projetez-vous dans l'espace qui portera la prochaine étape de votre activité.",
+      cta: { label: "Planifier une visite", href: "/#contact" },
+    },
   },
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -104,6 +105,31 @@ export function Pricing() {
           id={`panneau-${activeTab.id}`}
           aria-labelledby={`onglet-${activeTab.id}`}
         >
+          {/* Bandeau illustrant l'offre sélectionnée. Volontairement très large
+              (21:9) : il rythme la section sans repousser les prix hors écran. */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${activeTab.id}-visuel`}
+              initial={{ opacity: 0, scale: 1.015 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.45, ease: EASE_PREMIUM }}
+              className="relative mt-8 aspect-[2/1] w-full overflow-hidden rounded-2xl bg-ink-900 shadow-card sm:aspect-[3/1] lg:aspect-[32/9]"
+            >
+              <Image
+                src={activeTab.image.src}
+                alt={activeTab.image.alt}
+                fill
+                sizes="(min-width: 1280px) 1216px, 100vw"
+                className="object-cover"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-t from-ink-950/45 via-transparent to-transparent"
+              />
+            </motion.div>
+          </AnimatePresence>
+
           <AnimatePresence mode="wait">
             <motion.ul
               key={activeTab.id}

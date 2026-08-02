@@ -40,7 +40,7 @@ export default function NotFound() {
         </Container>
       </main>
 
-      <Footer />
+      <Footer hrefPrefix="/" />
     </>
   );
 }

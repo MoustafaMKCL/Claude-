@@ -9,7 +9,7 @@ import { Icon } from "@/components/ui/Icon";
 import { Logo } from "@/components/ui/Logo";
 import { site } from "@/content/site";
 import { EASE_PREMIUM } from "@/lib/motion";
-import { cn } from "@/lib/utils";
+import { cn, resolveHref } from "@/lib/utils";
 
 /** Défilement (en px) au-delà duquel la barre passe en mode « clair ». */
 const SCROLL_THRESHOLD = 24;
@@ -80,7 +80,7 @@ export function Navbar({ solid = false, hrefPrefix = "" }: NavbarProps = {}) {
           className="flex h-[var(--nav-height)] items-center justify-between gap-6"
         >
           <Link
-            href={`${hrefPrefix}#top`}
+            href={resolveHref("#top", hrefPrefix)}
             aria-label={`${site.meta.name} — retour en haut de page`}
             className="shrink-0 rounded-md"
           >
@@ -92,7 +92,7 @@ export function Navbar({ solid = false, hrefPrefix = "" }: NavbarProps = {}) {
             {site.nav.links.map((link) => (
               <li key={link.href}>
                 <Link
-                  href={`${hrefPrefix}${link.href}`}
+                  href={resolveHref(link.href, hrefPrefix)}
                   className={cn(
                     "relative rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200",
                     onPhoto
@@ -112,7 +112,7 @@ export function Navbar({ solid = false, hrefPrefix = "" }: NavbarProps = {}) {
 
           <div className="flex items-center gap-2">
             <Button
-              href={`${hrefPrefix}${site.nav.cta.href}`}
+              href={resolveHref(site.nav.cta.href, hrefPrefix)}
               variant="primary"
               size="sm"
               className="hidden sm:inline-flex"
@@ -176,7 +176,7 @@ export function Navbar({ solid = false, hrefPrefix = "" }: NavbarProps = {}) {
                     transition={{ duration: 0.3, ease: EASE_PREMIUM }}
                   >
                     <Link
-                      href={`${hrefPrefix}${link.href}`}
+                      href={resolveHref(link.href, hrefPrefix)}
                       onClick={closeMenu}
                       className="flex items-center justify-between rounded-xl px-3 py-3 text-base font-medium text-ink-900/80 transition-colors hover:bg-sand-100 hover:text-ink-900"
                     >
@@ -189,7 +189,7 @@ export function Navbar({ solid = false, hrefPrefix = "" }: NavbarProps = {}) {
 
               <div className="mt-4">
                 <Button
-                  href={`${hrefPrefix}${site.nav.cta.href}`}
+                  href={resolveHref(site.nav.cta.href, hrefPrefix)}
                   variant="primary"
                   size="lg"
                   fullWidth

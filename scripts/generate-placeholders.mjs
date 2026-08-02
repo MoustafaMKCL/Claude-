@@ -37,6 +37,16 @@ const ASSETS = [
   { file: "espace-coworking.jpg", width: 1920, height: 1080, hue: 145, label: "Espace coworking" },
   { file: "espace-studio.jpg", width: 1920, height: 1080, hue: 186, label: "Studio podcast" },
   { file: "espace-connectivite.jpg", width: 1920, height: 1080, hue: 130, label: "Fibre optique" },
+
+  // Bandeaux de la section Tarifs — format très large (21:9).
+  { file: "tarif-domiciliation.jpg", width: 2100, height: 900, hue: 152, label: "Domiciliation" },
+  { file: "tarif-coworking.jpg", width: 2100, height: 900, hue: 142, label: "Coworking" },
+  { file: "tarif-combo.jpg", width: 2100, height: 900, hue: 164, label: "Coworking + Domiciliation" },
+
+  // Page « Bureaux privatifs ».
+  { file: "bureaux-hero.jpg", width: 2400, height: 1400, hue: 168, label: "", shade: 0.92 },
+  { file: "bureaux-environnement.jpg", width: 1400, height: 1050, hue: 174, label: "Environnement de travail" },
+  { file: "bureaux-flexibilite.jpg", width: 1400, height: 1050, hue: 162, label: "Solutions flexibles" },
 ];
 
 /** Échappe le texte inséré dans le SVG. */

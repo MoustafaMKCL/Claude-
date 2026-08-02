@@ -5,6 +5,7 @@ import { Gallery } from "@/components/Gallery";
 import { Hero } from "@/components/Hero";
 import { Location } from "@/components/Location";
 import { Navbar } from "@/components/Navbar";
+import { OtherServices } from "@/components/OtherServices";
 import { Pricing } from "@/components/Pricing";
 import { Services } from "@/components/Services";
 import { StructuredData } from "@/components/StructuredData";
@@ -14,7 +15,8 @@ import { StructuredData } from "@/components/StructuredData";
  *
  * L'ordre des sections raconte le parcours du visiteur : on montre le lieu
  * (Hero), ce qu'on y propose (Services), pourquoi choisir PWS (Advantages),
- * à quoi ça ressemble (Gallery), combien ça coûte (Pricing), où c'est
+ * à quoi ça ressemble (Gallery), combien ça coûte (Pricing), ce que nos
+ * partenaires apportent en plus (OtherServices), où c'est
  * (Location), puis on invite à passer à l'action (CTA).
  */
 export default function HomePage() {
@@ -29,6 +31,7 @@ export default function HomePage() {
         <Advantages />
         <Gallery />
         <Pricing />
+        <OtherServices />
         <Location />
         <CTA />
       </main>

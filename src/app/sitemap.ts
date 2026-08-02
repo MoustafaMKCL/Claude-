@@ -12,6 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1,
     },
+    {
+      url: `${site.meta.url}${site.privateOffices.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
     ...site.footer.legalLinks.map((link) => ({
       url: `${site.meta.url}${link.href}`,
       lastModified,

@@ -25,3 +25,19 @@ export function formatPrice(value: number): string {
 export function splitLines(title: string): string[] {
   return title.split("\n");
 }
+
+/**
+ * Résout un lien de navigation selon la page où il est rendu.
+ *
+ * Les ancres (`#tarifs`) ne fonctionnent que sur l'accueil : depuis une autre
+ * page, elles doivent devenir `/#tarifs`. Les liens de page (`/bureaux-privatifs`)
+ * sont déjà absolus et doivent être laissés tels quels — les préfixer
+ * produirait `//bureaux-privatifs`, que le navigateur interprète comme un autre
+ * domaine.
+ *
+ * @param href    Lien tel qu'écrit dans le contenu.
+ * @param prefix  `""` sur l'accueil, `"/"` sur les autres pages.
+ */
+export function resolveHref(href: string, prefix = ""): string {
+  return href.startsWith("#") ? `${prefix}${href}` : href;
+}

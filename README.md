@@ -3,6 +3,10 @@
 Site vitrine de **PWS Premium Workspaces** — domiciliation de société, bureaux
 privatifs et coworking à Bruxelles.
 
+Deux pages : l'accueil (`/`) et **Bureaux privatifs** (`/bureaux-privatifs`),
+complétées par les mentions légales, la politique de confidentialité et
+une page 404.
+
 Next.js 15 (App Router) · TypeScript strict · Tailwind CSS 4 · Framer Motion ·
 Lucide React.
 
@@ -73,18 +77,24 @@ destinés à être remplacés par vos vraies photos.
 Déposez votre photo dans `public/images/` **en gardant exactement le même nom
 de fichier**. Il n'y a rien d'autre à faire — aucun code à modifier.
 
-| Fichier                        | Emplacement sur le site        | Dimensions conseillées |
-| ------------------------------ | ------------------------------ | ---------------------- |
-| `hero.jpg`                     | Bannière plein écran           | 2400 × 1600 px         |
-| `service-domiciliation.jpg`    | Carte « Domiciliation »        | 1200 × 900 px          |
-| `service-bureaux.jpg`          | Carte « Bureaux privatifs »    | 1200 × 900 px          |
-| `service-coworking.jpg`        | Carte « Espace coworking »     | 1200 × 900 px          |
-| `espace-salle-reunion.jpg`     | Carrousel — vue 1              | 1920 × 1080 px         |
-| `espace-bureaux.jpg`           | Carrousel — vue 2              | 1920 × 1080 px         |
-| `espace-coworking.jpg`         | Carrousel — vue 3              | 1920 × 1080 px         |
-| `espace-studio.jpg`            | Carrousel — vue 4              | 1920 × 1080 px         |
-| `espace-connectivite.jpg`      | Carrousel — vue 5              | 1920 × 1080 px         |
-| `og-image.jpg`                 | Aperçu de partage (réseaux)    | 1200 × 630 px          |
+| Fichier                        | Emplacement sur le site           | Dimensions conseillées |
+| ------------------------------ | --------------------------------- | ---------------------- |
+| `hero.jpg`                     | Bannière plein écran (accueil)    | 2400 × 1600 px         |
+| `service-domiciliation.jpg`    | Carte « Domiciliation »           | 1200 × 900 px          |
+| `service-bureaux.jpg`          | Carte « Bureaux privatifs »       | 1200 × 900 px          |
+| `service-coworking.jpg`        | Carte « Espace coworking »        | 1200 × 900 px          |
+| `espace-salle-reunion.jpg`     | Carrousel — vue 1                 | 1920 × 1080 px         |
+| `espace-bureaux.jpg`           | Carrousel — vue 2                 | 1920 × 1080 px         |
+| `espace-coworking.jpg`         | Carrousel — vue 3                 | 1920 × 1080 px         |
+| `espace-studio.jpg`            | Carrousel — vue 4                 | 1920 × 1080 px         |
+| `espace-connectivite.jpg`      | Carrousel — vue 5                 | 1920 × 1080 px         |
+| `tarif-domiciliation.jpg`      | Bandeau — onglet Domiciliation    | 2100 × 900 px          |
+| `tarif-coworking.jpg`          | Bandeau — onglet Coworking        | 2100 × 900 px          |
+| `tarif-combo.jpg`              | Bandeau — onglet Coworking + Dom. | 2100 × 900 px          |
+| `bureaux-hero.jpg`             | Bannière page Bureaux privatifs   | 2400 × 1400 px         |
+| `bureaux-environnement.jpg`    | Bloc « Un environnement conçu… »  | 1400 × 1050 px         |
+| `bureaux-flexibilite.jpg`      | Bloc « Des solutions flexibles »  | 1400 × 1050 px         |
+| `og-image.jpg`                 | Aperçu de partage (réseaux)       | 1200 × 630 px          |
 
 Le script de gabarits **n'écrase jamais une photo que vous avez déposée** : il
 retient ce qu'il a lui-même généré et laisse le reste intact.
@@ -126,6 +136,28 @@ prise en charge.
 
 ---
 
+## 🏷️ Changer le logo
+
+Le logo officiel est vectoriel (SVG), donc net à toutes les tailles. Il existe
+en deux fichiers, à la racine de `public/` :
+
+| Fichier                 | Utilisé pour                                              |
+| ----------------------- | --------------------------------------------------------- |
+| `logo-pws.svg`          | Version noire — barre de navigation sur fond clair        |
+| `logo-pws-blanc.svg`    | Version blanche — navigation sur photo, et pied de page   |
+
+Les deux sont rendus superposés et leur opacité s'inverse : la navigation passe
+donc du blanc au noir **en fondu** quand la page défile, sans clignotement.
+
+Pour changer le logo, remplacez ces deux fichiers **en conservant leurs noms**.
+Si votre nouveau logo n'a pas le même rapport hauteur/largeur, ajustez le
+coefficient dans `src/components/ui/Logo.tsx` (constante `width`, commentée).
+
+Ces fichiers ont été produits à partir du `.ai` fourni ; la version noire est
+le tracé plein, recadré au plus juste sur le dessin.
+
+---
+
 ## 🗺️ Changer l'adresse et la carte
 
 Tout est dans `contact`, dans `src/content/site.ts`. Pour régénérer l'URL de la
@@ -149,12 +181,15 @@ src/
 │   ├── icon.svg                Favicon
 │   ├── sitemap.ts robots.ts    Générés à partir du contenu
 │   ├── not-found.tsx           Page 404 aux couleurs du site
+│   ├── bureaux-privatifs/      Page dédiée aux bureaux privatifs
 │   ├── mentions-legales/       ⚠️ à compléter avant mise en ligne
 │   └── confidentialite/        ⚠️ à compléter avant mise en ligne
 │
 ├── components/
 │   ├── Navbar.tsx Hero.tsx Services.tsx Advantages.tsx
-│   ├── Gallery.tsx Pricing.tsx Location.tsx CTA.tsx Footer.tsx
+│   ├── Gallery.tsx Pricing.tsx OtherServices.tsx Location.tsx
+│   ├── CTA.tsx Footer.tsx
+│   ├── PrivateOffices.tsx      Corps de la page Bureaux privatifs
 │   ├── StructuredData.tsx      Données Schema.org (SEO local)
 │   ├── LegalPage.tsx           Gabarit des pages de texte légal
 │   └── ui/                     Briques réutilisables
@@ -218,6 +253,8 @@ automatiquement si le système du visiteur demande de réduire les animations.
 2. Renseigner l'URL de production dans `site.meta.url` (utilisée par les
    métadonnées, le sitemap et les données structurées).
 3. Vérifier l'adresse électronique et le téléphone dans `contact`.
-4. **Compléter les pages `mentions-legales` et `confidentialite`** : numéro
+4. Vérifier la grille tarifaire des trois onglets — les montants sont en
+   **HTVA** (aucun prix TVAC n'est affiché sur le site).
+5. **Compléter les pages `mentions-legales` et `confidentialite`** : numéro
    d'entreprise, TVA, hébergeur. Les emplacements sont marqués `[à compléter]`.
-5. `npm run build` puis déployer (Vercel, Netlify ou tout hébergeur Node).
+6. `npm run build` puis déployer (Vercel, Netlify ou tout hébergeur Node).

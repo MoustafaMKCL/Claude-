@@ -16,7 +16,7 @@ const { location, contact, meta } = site;
  */
 export function Location() {
   return (
-    <Section id="localisation" tone="light" aria-labelledby="location-title">
+    <Section id="localisation" tone="muted" aria-labelledby="location-title">
       <Container>
         <SectionHeading
           eyebrow={location.eyebrow}
