@@ -90,9 +90,10 @@
    - HU mère / HU filles apparaît 2 fois.
    - « Consolidation selon COPO / réservation / magasin » apparaît 3 fois (BR-05-006-030, « BR à créer ? », « BR *** »).
 2. **BR à créer** : HU mère / filles, flux d'expédition non géré par le DC, confirmation des STO, génération automatique de la HU d'expédition.
-3. **Lignes vides** (pas de TO-BE ni de point ouvert) : BR-06-001-050 (ADR), BR-05-006-060-01 à -04, « BR *** », BR-06-001-070.
-4. **Owner** renseigné sur 9 lignes seulement sur 56 ; **complexité** sur environ 15.
-5. **Retrait possible** : BR-05-003-010 (bon 8* sans référence), qui serait déjà traité dans le flux NNN → à retirer du blueprint Outbound ?
+3. **Lignes sans TO-BE ni point ouvert** : BR-06-001-050 (ADR), BR-05-006-060-01 à -04. Deux lignes sont à corriger autrement : « BR *** » est un vrai besoin (HU mère / HU filles) sans numéro de BR ; BR-06-001-070 (informations ADR dans l'EDI) a dans « Points ouverts » le texte de BR-06-001-080 (CMR, ADR, MSDS).
+4. **Texte de BR erroné** : pour BR-05-005-040, la colonne « Description formalisée BR » reprend le texte de BR-05-005-090 (le BR dit : picking selon des critères prédéfinis, par réservation / COPO / destination).
+5. **Owner** renseigné sur 9 lignes seulement sur 56 ; **complexité** sur environ 15.
+6. **Retrait possible** : BR-05-003-010 (bon 8* sans référence), qui serait déjà traité dans le flux NNN → à retirer du blueprint Outbound ?
 
 ## 5. Décisions récentes (22/10 et 27/10) à reporter dans le blueprint
 
