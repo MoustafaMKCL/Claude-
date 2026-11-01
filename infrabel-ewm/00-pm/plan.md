@@ -77,3 +77,13 @@ Dossier racine : « Projet EWM 2.0 - Ronet » (id `12JmO_QYHHomfQLEQDxn22v7x0uZC
 | Suivi | Follow-up - Ronet | Sheet | `1G8BX6Axh6DYg5uShPktWBV96ilVCXgkb2OqcnhY9_jo` |
 | Réf. SAP | Dossier « SAP EWM Embedded - Guides de configuration » | Dossier | `1zOCd7RjDR1mnNcuW2pRGYTu-YzyWR9CD` |
 | FSP existantes | Dossier « FSP Infrabel » | Dossier | `1NvhkVytlkLLJAm6S9AjL1cI7zpqTPXCX` |
+
+## 8. Accès Drive par consultant
+
+| Consultant | Accès Drive | Remarques | Date |
+|---|---|---|---|
+| GAP | Non confirmé | — | — |
+| Solution | Non confirmé | — | — |
+| Blueprint | Non confirmé | — | — |
+| QA | OK (lecture) | BR « Business Requirements 20260220 » = 209 BR. GAP 27-10 : Inbound 52, Outbound 56, Internal 9, Reporting 17, QM 21, Immat 2, NNN 12 ; onglets Retours et Intégration Tours vides. Lecture texte des Sheets partielle → utilise l'export xlsx | 2026-11-01 |
+| Support | Non confirmé | — | — |
