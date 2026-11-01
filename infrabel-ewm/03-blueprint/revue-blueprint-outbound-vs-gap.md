@@ -1,7 +1,7 @@
 # Revue — Blueprint Outbound FR Final v1.0 vs GAP List Outbound (27-10)
 
 > Préparé par : Consultant Blueprint · 2026-11-01 · Demande : Moustafa, via le PM (mission BP-001)
-> Branche : `ewm/blueprint` · Statut : **à relire par le QA**, non diffusé à Moustafa
+> Branche : `ewm/blueprint` · **Version 2** : corrige la v1 selon le rapport QA-001 (6 majeures, 6 mineures ; suivi au §8) · Statut : **à relire par le QA** (points QA-001 uniquement), non diffusé à Moustafa
 > Sources (copies PM, branche `ewm/pm`, lues en entier) :
 > - `infrabel-ewm/00-pm/inputs/Blueprint_Outbound_FR_Final_v1.0.txt` : ci-après « BP », lignes `L…` du fichier texte
 > - `infrabel-ewm/00-pm/inputs/GAP_List_EWM2.0_Ronet_27-10.xlsx`, onglet « GAP List Outbound » (56 lignes, 21 colonnes) et sa lecture texte : ci-après « GL », lignes `#1` à `#56` dans l'ordre de l'onglet
@@ -15,32 +15,45 @@
 
 **Question de Moustafa :** en comparant le blueprint Outbound à la GAP List Outbound, qu'est-ce qui est (a) vraiment ouvert, et (b) seulement en contradiction avec le texte du blueprint ?
 
-**(a) Ce qui est vraiment ouvert :** 27 lignes sur 56, soit **24 sujets distincts** une fois les doublons retirés. Les lignes #50 et #55 répètent #32 (HU mère / HU filles). La ligne #33 (Annexe 3) est le prérequis de #26 (consolidation).
+**(a) Ce qui est vraiment ouvert :** 31 lignes sur 56, soit **27 sujets distincts** une fois les doublons retirés. Les lignes #50 et #55 répètent #32 (HU mère / HU filles), #37 répète #56 (ADR dans l'EDI), et #33 (Annexe 3) est le prérequis de #26 (consolidation).
 - Pour ces sujets, la GAP List garde une question métier ou une dépendance sans réponse. Le blueprint, lui, les **présente le plus souvent comme acquis** : il les marque au mieux d'un tag « GAP », sans déclarer de point ouvert dans le texte.
 - Trois blocs concentrent l'essentiel :
-  - **Consolidation** : #26, #27, #33, #8 et #32. La matrice de l'Annexe 3 est absente, et ce manque est bloquant.
-  - **Expédition / transport** : #34, #36, #39, #43, #44, #45 et #56. Le déclencheur de la demande de transport, le contenu de l'EDI light et le prérequis hardware SSCC ne sont pas tranchés.
-  - **Picking** : #11, #13 à #15, #19, #22 à #24 et #28 (péremption, ship complete, scan dynamique, stock resté sur la BIN, pictogramme ADR).
+  - **Consolidation** : #26, #27, #33, #8, #28 et #32. La matrice de l'Annexe 3 est absente, et ce manque est bloquant. Le pictogramme ADR est aussi à placer.
+  - **Expédition / transport** : #34, #36, #39, #40, #43, #44, #45, #46 et #56. Il faut trancher :
+    - le déclencheur de la demande de transport ;
+    - le contenu de l'EDI light ;
+    - le prérequis hardware SSCC ;
+    - l'évolution du mail d'expédition proposée par la GL ;
+    - le tag GAP sur la HU refusée.
+  - **Picking** : #11, #13 à #15, #17, #19 et #22 à #24 (péremption, ship complete, reliquat, scan dynamique, stock resté sur la BIN).
 
-**(b) Ce qui est seulement en contradiction avec le texte :** **8 lignes** se corrigent sans nouvel arbitrage métier, ou avec une simple confirmation.
-- **5 contradictions**, détaillées en §2 : #2, #25, #37, #40 et #46.
-  - #2 (calendrier milkrun) : le blueprint dit que le coordinateur gère le calendrier, alors que la décision du 27/10 en confie la modification à REPL.
-  - #25 : le blueprint parle de « consolidation » là où la GAP List parle d'approche de picking (WOCR).
-  - #37 : l'ADR est rattaché à BR-06-001-050 dans la GAP List et à -070 dans le blueprint.
-  - #40 : le mail est envoyé au « demandeur » dans le blueprint et au « client destinataire » dans la GAP List.
-  - #46 : le blueprint tague comme GAP la sortie de la HU refusée, que la GAP List estime déjà couverte par la TU et la porte.
-- **3 décisions des 22/10 et 27/10 à reporter** : #5 (critères de vague) et #16 / #17 (livraison partielle et reliquat).
-- #40 et #46 demandent en plus une confirmation métier (§7).
+**(b) Ce qui est seulement en contradiction avec le texte :** **4 lignes** se corrigent sans nouvel arbitrage métier.
+- **2 contradictions**, détaillées en §2 :
+  - #2 (calendrier milkrun) : le blueprint dit que le coordinateur gère le calendrier. La décision du 27/10 confie la modification à REPL, au moyen d'une transaction spécifique. Il reste à savoir si le BR lui-même doit être reformulé (Q1).
+  - #25 : le blueprint parle de « critères de consolidation » là où la GAP List parle d'approche de picking (regroupement en ordres magasin).
+- **2 décisions à reporter** :
+  - #5 (critères de vague). La règle « job S/4 = occurrence, sans développement » reste à confirmer (Q3).
+  - #16 (livraison partielle : bon 8* clôturé, pas de bon 85*).
+- Ces quatre décisions sont **notées dans la GAP List** (colonnes TO-BE et Points ouverts). Aucune n'est **confirmée** par un compte rendu ou par une entrée du journal de décisions du PM (H1).
+
+Ce que la v1 classait comme contradiction, et qui ne l'est pas après QA :
+
+| Ligne | Classement v1 | Constat v2 |
+|---|---|---|
+| #40 | Contradiction | Le blueprint reprend fidèlement le BR-01-002-020-B ; c'est la GL qui s'en écarte. |
+| #37 | Contradiction | Doublon de #56, sous un mauvais ID. |
+| #46 | Contradiction | Point ouvert : dépend d'une réponse métier. |
+| #17 | Décision à reporter | Point ouvert : « à analyser avec Bernard ». |
 
 **Répartition des 56 lignes**
 
 | Catégorie | Nb | Lignes GL |
 |---|---|---|
-| 1. Contradiction | 5 | #2, #25, #37, #40, #46 |
-| 2. Point ouvert non couvert | 27 | #1, #6, #8, #9, #11, #12, #13, #14, #15, #19, #22, #23, #24, #26, #27, #28, #32, #33, #34, #36, #39, #43, #44, #45, #50, #55, #56 |
+| 1. Contradiction | 2 | #2, #25 |
+| 2. Point ouvert non couvert | 31 | #1, #6, #8, #9, #11, #12, #13, #14, #15, #17, #19, #22, #23, #24, #26, #27, #28, #32, #33, #34, #36, #37, #39, #40, #43, #44, #45, #46, #50, #55, #56 |
 | 3. Aligné | 16 | #3, #7, #10, #18, #20, #21, #31, #35, #38, #41, #48, #49, #51, #52, #53, #54 |
 | 4. GAP absent du blueprint | 5 | #4, #29, #30, #42, #47 |
-| 5. Décision à reporter | 3 | #5, #16, #17 |
+| 5. Décision à reporter | 2 | #5, #16 |
 | **Total** | **56** | |
 
 **À noter :**
@@ -60,7 +73,7 @@ Les sections indiquées sont celles du **corps** du blueprint, pas de la table d
 | 1 | GAP BR-05-004-010 | 3.1 ; 3.2.4 | PO | La GL est en « Attente réponse business REPL » : le planning quotidien du job convient-il ? Faut-il une configuration ou un enhancement ? Le BP présente l'horizon et les deux lancements par jour comme acquis. La vague ODD séparée, elle, est alignée sur la décision du 27/10. | L258 « Par défaut, les vagues sont lancées automatiquement deux fois par jour… » | Déclarer en 3.1 le point ouvert REPL (planning du job S/4, horizon de 7 jours). |
 | 2 | GAP BR-05-004-020 | 3.1 ; Annexe 1 | C | Décision du 27/10 (GL, colonne TO-BE) : le DC contacte REPL, qui modifie le variant du job au moyen d'une transaction contrôlée, sans CR ni ticket. Le BP fait gérer le calendrier par le coordinateur. | L169 « Le coordinateur gère le calendrier d'expédition en affectant une tournée, une route ou une destination à un jour de la semaine. » | Réécrire L169 (§3.1 ci-dessous). Le texte du BR (L175, « modifié par les coordinateurs ») n'est plus aligné sur la décision : voir Q1. |
 | 3 | GAP BR-05-004-050 | 3.1 | AL | Le BP affirme qu'aucun BL n'est créé sans stock. La décision du 27/10 (#5 : « si pas de stock pas BL ») repose sur ce principe. La GL reste pourtant en « Attente réponse REPL ». | L170 « Une livraison sortante ne peut être créée que si le stock est disponible dans le système… » | Aucune modification du BP. Signaler au PM que le statut GL est à mettre à jour après confirmation de REPL. |
-| 4 | BR-05-003-010 | — (aucune trace) | ABS | Ce BR (HU non gérées en stock, bon 8* sans référence) est absent du BP. La GL demande soit de le retirer (repris dans le flux NNN ?), soit de mentionner la transaction standard (VL06NO). | — | Voir Q2. Si le BR est maintenu : une phrase en 3.1. |
+| 4 | BR-05-003-010 | — (aucune trace) | ABS | Ce BR (HU non gérées en stock, bon 8* sans référence) est absent du BP. La GL demande soit de le retirer (repris dans le flux NNN ?), soit de mentionner la transaction standard (VL06NO). **L'ID est aussi absent du fichier BR** (onglet 20260220, vérification QA). | — | Rattacher l'ID ou créer le BR d'abord (PM / Consultant GAP, §4.14). Aucun tag dans le BP avant cette résolution (Q2). |
 | 5 | GAP BR-05-004-090 | 3.2 ; 3.2.1 ; 3.2.4 | DEC | Décisions du 27/10 (GL, colonne Points ouverts) : la disponibilité du stock n'est plus un critère de vague, la disponibilité des ressources non plus (on bloque les emplacements), il n'y a pas de split par aire d'activité, la vague ODD est séparée et le job milkrun correspond 1:1 à la vague milkrun. Le BP liste encore ces critères à trois reprises. | L184 « …en tenant compte du calendrier d'expédition des milkruns, de la disponibilité du stock et des ressources… » ; L203 « Les critères de regroupement peuvent varier selon la route, le calendrier milkrun, la destination, l'aire d'activité… » | Réécrire L184 et L203 et ajouter la relation 1:1 (§3.2). Garder le tag « GAP potentiel » sur la règle de fenêtre tant que l'option « le job S/4 détermine l'occurrence » n'est pas confirmée avec Bernard (Q3). |
 | 6 | GAP BR-05-004-120-A | 3.2.1 | PO | La GL est « À analyser » et l'alternative standard reste à arbitrer : vagues urgentes et vue filtrée dans le Warehouse Monitor, ou dashboard développé. Le BP affirme le dashboard Fiori. Il tague aussi BR-05-004-090 à tort et ne mentionne pas l'exigence d'un signal global non nominatif. | L205 « Un dashboard dynamique, mis à jour automatiquement, affiche les demandes T8/T9… (BR-05-004-090; potentiel GAP BR-05-004-120-A) » | Corriger le tag et déclarer l'alternative comme point ouvert, en coordination avec le BPR Reporting. |
 | 7 | GAP BR-05-004-120-B | 3.1 | AL | Le monitoring passe par le Warehouse Monitor ; les statuts sont à définir. Les deux documents concordent. | L172 « Les statuts à suivre restent à définir. » | Néant. Harmoniser le format du tag (§5). |
@@ -70,10 +83,10 @@ Les sections indiquées sont celles du **corps** du blueprint, pas de la table d
 | 11 | GAP BR-05-005-150 (2ᵉ ligne : découpe ou bobine complète) | 3.4.3 | PO | La GL demande comment distinguer une découpe d'une bobine complète, à part par la WOCR. Le BP affirme que le système fait la distinction. | L347 « …le système distingue les opérations de picking nécessitant une découpe de câble du prélèvement d'une bobine complète… » | Déclarer le critère de distinction comme point ouvert. Anomalie GL : le titre de la ligne reprend celui de #10. |
 | 12 | BR-05-005-160-B | 3.4.4 | PO | Le prérequis MMD n'est pas confirmé (« Attente réponse business MMD »). Le BP l'énonce comme une règle acquise. | L363 « La gestion de la péremption… est réalisée exclusivement dans SAP (MMD). » | Le requalifier en prérequis master data à confirmer par MMD. |
 | 13 | GAP BR-05-005-160-C | 3.4.4 | PO | La notion de « profil client » n'est pas définie. Il faut aussi vérifier si la détermination de lot S/4 couvre le besoin avant de confirmer le GAP. Le BP affirme la règle et ses exemples. | L365 « Le seuil minimal… dépend du profil du client. » | Déclarer comme points ouverts la donnée porteuse du profil et la vérification de la détermination de lot. |
-| 14 | GAP BR-05-005-160-D | 3.4.4 | PO | Le TO-BE de la GL compte 4 composantes. Le BP n'en reprend que 2 : il omet la vague dédiée à l'évacuation et le rapport vers REPL, que le commentaire 97, resté dans le corps, demande d'ajouter. L367 est ambigu. | L367 « Les quantités ainsi bloquées sont prises en compte dans l'évaluation du stock disponible. » | Compléter le texte (§3.3), lever l'ambiguïté de L367 (Q5) et retirer le commentaire 97. |
+| 14 | GAP BR-05-005-160-D | 3.4.4 | PO | Le TO-BE de la GL compte 4 composantes. Le corps du BP n'en reprend que 2 : la vague dédiée à l'évacuation et le rapport vers REPL ne figurent que dans le texte du BR (L384–L385). Le commentaire 97, resté dans le corps, demande de les ajouter **dans le blueprint EWM 2.0 Internal**, pas dans l'Outbound (L390). La GL est « À confirmer avec business ». L367 est ambigu. | L390 « …ajouter ces deux points dans le blueprint EWM 2.0 Internal » ; L367 « Les quantités ainsi bloquées sont prises en compte dans l'évaluation du stock disponible. » | Renvoyer au blueprint Internal et déclarer le point ouvert (§3.3, Q18). Lever l'ambiguïté de L367 (Q5). Retirer le commentaire 97 du corps. |
 | 15 | GAP BR-05-005-120-D | 3.4.5.2 | PO | La pertinence métier est à confirmer : la simulation de vague standard suffit-elle ? La GL distingue le ship complete au niveau de la livraison (ODD, PR, OF) et au niveau du poste (KIT, BOM). Le BP affirme l'annulation et la réaffectation automatiques, sans faire cette distinction. | L409 « …l'ensemble des tâches de prélèvement associées à la demande est annulé. Le système génère les instructions… » | Déclarer le point ouvert et ajouter la distinction livraison / poste (Q6). |
-| 16 | BR-05-005-120-E | 3.4.5.2 | DEC | Décision de la GL : « on clôture toujours le bon 800 (process code) », pas de bon 85*. Le BP mentionne un delivery split. | L410 « La solution décrite repose sur les process codes et le delivery split du standard EWM. » | Supprimer « delivery split » et écrire la règle du bon 800 (§3.3). Signaler au PM que le statut « A analyser » et la complexité XL de la GL sont incohérents avec « fonctionne déjà ». |
-| 17 | BR-05-005-120-F | 3.4.5.2 | DEC | Selon la GL, le solde est repris par un nouveau BL créé quand le stock revient, ce qui fonctionne déjà. Le BP décrit une remise en attente et une réaffectation automatiques dans EWM. Le commentaire [b] pose la même question. | L410 « La quantité restante à prélever est remise en attente et réaffectée automatiquement au picking… » | Réécrire selon le mécanisme réel : reliquat sur le STO 45*, nouveau bon 8* (§3.3). Retirer [b] après validation (Q7, avec Bernard). |
+| 16 | BR-05-005-120-E | 3.4.5.2 | DEC | Décision notée dans la GL : « on clôture toujours le bon 800 (process code) », pas de bon 85*. Le BP mentionne un delivery split. | L410 « La solution décrite repose sur les process codes et le delivery split du standard EWM. » | Supprimer « delivery split » et écrire la règle de clôture du bon 8* (§3.3). Signaler au PM que le statut « A analyser » et la complexité XL de la GL sont incohérents avec « fonctionne déjà ». |
+| 17 | BR-05-005-120-F | 3.4.5.2 | PO | La GL est « A analyser avec Bernard ». Son commentaire dit que le solde est repris par un nouveau BL créé quand le stock revient, ce qui fonctionne déjà. Le BP décrit une remise en attente et une réaffectation automatiques dans EWM. Le commentaire [b] du BP pose la même question. | L410 « La quantité restante à prélever est remise en attente et réaffectée automatiquement au picking… » | Déclarer le point ouvert. Une réécriture n'est possible qu'après l'analyse avec Bernard (Q7). Retirer [b] ensuite. |
 | 18 | GAP BR-05-005-060-B | 3.4.5.2 | AL | Le BP le présente déjà comme un prérequis extérieur à EWM ; la question de périmètre est cohérente avec la GL. | L413 « …implique également des données et décisions extérieures à EWM. » | Néant. |
 | 19 | GAP BR-05-005-140 | 3.4.5.2 | PO | Le BR porte sur la substitution d'une bobine par une bobine sœur. Le BP le généralise à « tout problème », sans mention de la bobine. La mutualisation avec la FSP Litiges est ouverte, comme le commentaire [c]. | L411 « Si un problème survient pendant l'exécution d'une tâche de picking, le magasinier peut saisir un code d'exception… » | Trancher le périmètre (Q8), puis réintroduire la substitution de bobine. |
 | 20 | GAP BR-05-005-190 | 3.4.5.2 | AL | Le comportement décrit est conforme au BR. La GL classe la ligne en GAP (variante de la solution Litiges), mais le BP ne la tague pas comme GAP. | L412 « …déclenche l'envoi automatique d'un e-mail à Replenishment et au FMB du DC. (BR-05-005-190) » | Ajouter « ; GAP BR-05-005-190 » et renvoyer à la solution Litiges. |
@@ -93,16 +106,16 @@ Les sections indiquées sont celles du **corps** du blueprint, pas de la table d
 | 34 | GAP BR-06-001-010 | 4.1.1.1 | PO | Le déclencheur n'est pas décidé : fin de consolidation, création du n° d'expédition ou liste des HU figée. Le BP en sous-entend deux : L783 dit « dès la fin de la consolidation », tandis que l'ordre des actions en 4.1.1 place la transmission après le figeage. | L783 « La demande de transport peut être créée dès la fin de la consolidation… » ; L766–767 | Déclarer le point ouvert (Q13) et aligner l'ordre des actions de 4.1.1. |
 | 35 | GAP BR-06-001-030 | 4.1.1.2 (Distribution) | AL | L'EDI envoyé avant la sortie de marchandises est décrit pareil des deux côtés. | L799 « …une demande d'expédition est transmise électroniquement au transporteur avant la sortie de marchandises. » | Néant. |
 | 36 | GAP BR-06-001-050 (EDI) | 4.1.1.2 | PO | Le TO-BE de la GL est vide (« Voir avec Hicham »). Le BP cite un « EDI light » sans tag GAP et sans en définir le contenu. | L801 « Le système doit également permettre l'envoi d'un EDI light… (BR-06-001-050). » | Déclarer le contenu de l'EDI light comme point ouvert et ajouter le tag GAP. |
-| 37 | GAP BR-06-001-050 (Informations ADR) | 4.1.1.2 | C | La GL rattache les informations ADR à BR-06-001-050. Le BP, comme la ligne #56 de la GL, les rattache à BR-06-001-070. | L800 « Les informations ADR… (BR-06-001-070 – GAP BR-06-001-070) » | Ne pas modifier le BP. Signaler l'anomalie au PM : renuméroter la ligne #37 en -070 ou la fusionner avec #56. |
+| 37 | GAP BR-06-001-050 (Informations ADR) | 4.1.1.2 | PO | Doublon de #56 sous un mauvais ID. La description de la ligne reprend mot pour mot le texte de BR-06-001-070, comme #56. Le BP rattache bien l'ADR à -070. | L800 « Les informations ADR… (BR-06-001-070 – GAP BR-06-001-070) » | À ne compter qu'une fois avec #56. Ne pas modifier le BP. Anomalie GL signalée au PM (§4.3). |
 | 38 | GAP BR-06-001-040 | 4.1.1.2 | AL | La réception de la confirmation EDI du transporteur figure des deux côtés. | L806 « Le système reçoit ensuite une confirmation du transporteur… » | Néant. Le mail qui suit est traité en #40. |
 | 39 | GAP BR-06-001-080 | 4.1.1.2 | PO | La source des MSDS est ouverte (« Quid des fiches MSDS ? Imprimées dans SAP ? »). Les commentaires [h] et [i], en attente de Moerenhout, restent dans le texte. | L805 « Fiches MSDS en FR & NL[h][i] » | Déclarer le point ouvert MSDS (Q14). |
-| 40 | GAP BR-01-002-0020-B | 4.1.1.2 | C | Selon la GL, le mail part vers le « client destinataire » et doit pouvoir être activé ou désactivé. Le BP l'envoie au « demandeur », ajoute « sauf contre-indication du TOM » et ne prévoit ni activation ni tag GAP. L'ID comporte un zéro en trop (BR-01-002-020-B, d'après ma synthèse du fichier BR). | L807 « …un e-mail est automatiquement envoyé au demandeur… sauf contre-indication du TOM (BR-01-002-0020-B). » | Aligner le destinataire et l'activation (Q15), ajouter le tag GAP et corriger l'ID après vérification. |
+| 40 | GAP BR-01-002-0020-B | 4.1.1.2 | PO | Le BP L807 reprend fidèlement le texte de BR-01-002-020-B (envoi au demandeur, « sauf contre-indication par le TOM »). C'est le TO-BE de la GL qui s'écarte du BR et de son propre titre (« Mail automatique au demandeur ») : il parle de « client destinataire » et de fonction activable / désactivable. Le TO-BE de #38 dit aussi « client destinataire ». L'ID cité comporte un zéro en trop : BR-01-002-0020-B est absent du fichier BR, BR-01-002-020-B y figure (vérification QA). | L807 « …un e-mail est automatiquement envoyé au demandeur… sauf contre-indication du TOM (BR-01-002-0020-B). » | Aucune réécriture de L807 avant arbitrage (Q15). Corriger l'ID en BR-01-002-020-B. Ajouter le tag GAP si l'évolution est retenue. |
 | 41 | GAP BR-05-007-010-B | 4.1.1.2 (Enlèvement) | AL | Le mail « marchandise prête » et le rendez-vous tracé figurent des deux côtés. | L817 « …pour lui permettre de prendre rendez-vous. La date/heure… sera tracée… » | Optionnel : mentionner la réutilisation de la notification GZH. |
 | 42 | GAP BR-05-007-020 | — | ABS | Track & Trace est absent du BP (aucun tag). Décision du 04/08 : le traiter comme une fonctionnalité à part. L836 (localiser une HU et son historique) s'en approche, sans tag. | L836 « Le système doit également permettre de localiser une HU et de consulter l'historique… » | Ajouter un renvoi vers la fonctionnalité Track & Trace à part et taguer L836 si c'est bien ce BR (Q16). |
 | 43 | GAP BR-06-003-040 | 4.1.2.2 | PO | Le moyen de communication qui fait remonter le lien de tracking est à clarifier (SP, Excellence). Le BP n'en dit rien. | L835 « Le lien de tracking communiqué par le transporteur doit pouvoir être enregistré… » | Déclarer le canal comme point ouvert. |
 | 44 | GAP BR-06-003-030 | 4.1.2.4 ; 4.1.3.1 | PO | La GL est « À analyser » et dépend du hardware (caméras SSCC / GPS). En 4.1.2.4, le BP affirme le fonctionnement au futur, sans tag inline. Le texte du BR (L856) contient un extrait du deck. | L853 « Le système permettra au DC d'enregistrer la date/heure physique de la sortie… » | Ajouter un tag inline et le prérequis hardware, et nettoyer L856. |
 | 45 | GAP Flux expédition non géré par le DC | 4.1.3 | PO | Le BR est à créer et le sujet dépend entièrement du prérequis hardware. Ce prérequis n'apparaît que dans le commentaire [j]. | L859 « 4.1.3 Flux expédition – Non-géré par le DC (GAP)[j] » | Porter le prérequis hardware dans le texte et attribuer l'ID BR (PM). Anomalie GL : la colonne « BR lié(s) » indique BR-06-003-030 alors que la ligne demande un nouveau BR. |
-| 46 | BR-02-002-050 | 4.1.2.2 | C | La GL est « A clarifier » : « C'est déjà rattaché au TU avec une door… À réexpliquer le BR », et la colonne « Couvert par » est vide. Le BP tague le contrôle de la HU refusée comme GAP, et la confirmation de l'endroit de sortie aussi (« (GAP) » sans ID). | L831 « …ainsi que l'endroit par lequel celle-ci quitte le DC (GAP). » ; L832 « …(BR-02-002-050 – GAP). » | Retirer les deux tags « GAP » si la TU et la porte couvrent le besoin, sinon les maintenir (Q17). |
+| 46 | BR-02-002-050 | 4.1.2.2 | PO | La GL est « A clarifier avec business » : « C'est déjà rattaché au TU avec une door… À réexpliquer le BR », et la colonne « Couvert par » est vide. Le BP L832 est fidèle au BR (scan à l'enlèvement). Seul le tag « GAP » diverge, en L832 comme en L831 (« (GAP) » sans ID). Ce tag dépend d'une réponse métier. | L831 « …ainsi que l'endroit par lequel celle-ci quitte le DC (GAP). » ; L832 « …(BR-02-002-050 – GAP). » | Déclarer le point ouvert. Retirer les deux tags « GAP » si la TU et la porte couvrent le besoin, sinon les maintenir (Q17). |
 | 47 | GAP (BR à créer) – Confirmation des STO | — | ABS | Hors EWM : ATP S/4, à qualifier avec REPL. Le BP n'en parle pas, ce qui est cohérent si le hors périmètre est confirmé. | L166 « Les quantités affectées aux bons de livraison ne peuvent pas être attribuées à une autre demande. » | Si le hors périmètre EWM est confirmé : aucune modification, ou une phrase de dépendance REPL en 3.1. |
 | 48 | GAP BR-05-005-080 | 3.4.7 | AL | L'étiquette de picking est déclarée avec un contenu à définir, des deux côtés. | L480 « Le contenu de cette étiquette reste à définir. » | Néant. |
 | 49 | GAP (BR à créer ?) – génération automatique de la HU d'expédition | 3.5.2 | AL | Le sujet est déclaré ouvert des deux côtés. Il n'a pas d'ID BR. | L583 « …génère automatiquement le numéro de la HU d'expédition. (GAP Potentiel – à analyser) » | Attribuer un ID BR (PM). |
@@ -118,21 +131,30 @@ Les sections indiquées sont celles du **corps** du blueprint, pas de la table d
 
 ## 3. Modifications de texte proposées, section par section
 
-Ces propositions ne sont pas reportées dans le blueprint. Les textes proposés sont au registre TO BE. Le format de tag retenu est `(BR-… ; GAP BR-…)`, et un point ouvert est déclaré par « Point ouvert : … ». Ce format est une hypothèse de convention, à valider (§6).
+Ces propositions ne sont pas reportées dans le blueprint. Les textes proposés sont au registre TO BE. Le format de tag retenu est `(BR-… ; GAP BR-…)`.
+
+Deux variantes de déclaration des points ouverts sont possibles. La convention reste à choisir par Moustafa (Q19) :
+- **Variante 1, style actuel du Final v1.0** : prose normative, par exemple L172 « Les statuts à suivre restent à définir. »
+- **Variante 2** : marqueur explicite « Point ouvert : … ».
+
+Les textes ci-dessous sont écrits en variante 2 pour être repérables en relecture. Ils se transposent en variante 1 sans changer le fond.
 
 ### 3.1 Prérequis – génération des livraisons sortantes (BL 8*)
 - **L169, calendrier milkrun (#2).** Remplacer par :
-  > « Le calendrier d'expédition milkrun affecte chaque tournée, route ou destination à un jour de la semaine ; chaque tournée regroupe les livraisons ayant les mêmes destinations. Ce calendrier est porté par le variant du job de génération des bons 8*. Toute modification est demandée par le DC à Replenishment, qui l'effectue au moyen d'une transaction de maintenance contrôlée, sans CR ni ticket. Un exemple de calendrier figure à l'annexe 1. (BR-05-004-020 ; GAP BR-05-004-020) »
+  > « Le calendrier d'expédition milkrun affecte chaque tournée, route ou destination à un jour de la semaine ; chaque tournée regroupe les livraisons ayant les mêmes destinations. Ce calendrier est porté par le variant du job de génération des bons 8*. Toute modification est demandée par le DC à Replenishment, qui l'effectue au moyen d'une transaction spécifique (développement), sans CR ni ticket. Un exemple de calendrier figure à l'annexe 1. (BR-05-004-020 ; GAP BR-05-004-020) »
+
+  Cette proposition suppose la réponse à Q1 (reformuler ou non le BR).
 - **Après L168 (#1).** Ajouter :
   > « Point ouvert : l'adéquation de la planification quotidienne du job S/4 (horizon de 7 jours, vagues séparées pour les appels) reste à confirmer par Replenishment. (GAP BR-05-004-010) »
-- **#4, BR-05-003-010.** Selon la réponse à Q2, soit rien, soit une phrase :
-  > « Les HU non gérées en stock liées à un bon 8* sans référence sont sorties au moyen de la transaction standard utilisée aujourd'hui. (BR-05-003-010) »
+- **#4, BR-05-003-010.** Aucun texte à proposer tant que l'ID n'est pas rattaché à un BR du fichier BR ou créé (§4.14, Q2).
 
 ### 3.2 Lancer les vagues de picking (3.2, 3.2.1, 3.2.4, 3.2.5)
 - **L184, intro du 3.2 (#5).** Remplacer « de la disponibilité du stock et des ressources » par :
   > « …du calendrier d'expédition des milkruns, des dates de besoin et des priorités opérationnelles. La disponibilité du stock n'est pas un critère de vague : elle est contrôlée à la création du bon de livraison (BR-05-004-050). L'indisponibilité d'une ressource matérielle est gérée par le blocage des emplacements concernés (BR-05-004-030). (BR-05-004-090) »
 - **L203, 3.2.1 (#5).** Remplacer la liste des critères par :
-  > « Les critères de regroupement sont la route, le calendrier milkrun, la destination et le caractère urgent de la demande. Les vagues ne sont pas scindées par aire d'activité ; la séparation par aire d'activité intervient au regroupement des tâches (3.2.5). Les demandes ODD sont regroupées dans une vague distincte. Chaque job de génération milkrun alimente une et une seule vague milkrun (relation 1:1). (BR-05-004-010 ; BR-05-004-090) »
+  > « Les critères de regroupement sont la route, le calendrier milkrun, la destination et le caractère urgent de la demande. Les vagues ne sont pas scindées par aire d'activité. Les demandes ODD sont regroupées dans une vague distincte. Chaque job de génération milkrun alimente une et une seule vague milkrun (relation 1:1). (BR-05-004-010 ; BR-05-004-090) »
+
+  La v1 ajoutait que la séparation par aire d'activité intervient au regroupement des tâches (3.2.5). La GL ne le dit pas : cette phrase est retirée et devient l'hypothèse H6.
 - **L205 (#6).** Corriger le tag en `(BR-05-004-120-A ; GAP BR-05-004-120-A)` et ajouter :
   > « Point ouvert : la restitution par vagues urgentes dédiées et vue filtrée du Warehouse Monitor (standard), ou par un affichage dynamique développé, reste à arbitrer avec le blueprint Reporting. »
 - **L207 à L214, règle de fenêtre (#5).** Garder le texte. Ajouter :
@@ -149,15 +171,18 @@ Ces propositions ne sont pas reportées dans le blueprint. Les textes proposés 
 - **L365 (#13).** Ajouter :
   > « Point ouvert : la donnée SAP porteuse du profil client (COPO, SP, type de destinataire) reste à identifier ; la couverture par la détermination de lot S/4 est à vérifier avant confirmation du GAP. »
 - **L366 et L367 (#14).**
-  - Ajouter : « Ces articles sont affectés à une vague de picking dédiée permettant leur évacuation du stock au moment opportun. Un rapport listant ces articles est transmis à Replenishment à intervalles réguliers. (BR-05-005-160-D ; GAP BR-05-005-160-D) »
+  - Ajouter : « Point ouvert : l'affectation des articles sous seuil à une vague d'évacuation dédiée et le rapport périodique vers Replenishment sont à confirmer avec le business ; selon le commentaire 97, ils relèvent du blueprint EWM 2.0 Internal. (BR-05-005-160-D ; GAP BR-05-005-160-D) »
+  - Leur ajout dans l'Outbound est une question au PM et à Moustafa (Q18) ; ils ne sont pas présentés comme acquis.
   - Préciser L367 selon Q5.
-  - Supprimer L388 à L390 (commentaire 97).
+  - Supprimer L388 à L390 (commentaire 97) une fois le report dans le blueprint Internal acté.
 - **L408 et L409 (#15).** Ajouter :
   > « Le ship complete s'applique soit à la livraison entière (ODD, PR, OF), soit au poste de livraison (kit, BOM). Point ouvert : la nécessité de l'annulation et de la réaffectation automatiques, au-delà de la simulation de vague standard, reste à confirmer avec le business et Replenishment. »
-- **L410 (#16 et #17).** Remplacer par :
-  > « Si les livraisons partielles sont autorisées, le bon de livraison 800 est clôturé sur la base des quantités effectivement prélevées, au moyen d'un code processus ; aucun bon 85* n'est créé. (BR-05-005-120-E) La quantité non livrée reste ouverte dans la commande de transfert (bon 45*) ; un nouveau bon de livraison est généré lorsque le stock redevient disponible, selon le fonctionnement actuel. (BR-05-005-120-F) »
+- **L410, 1ʳᵉ phrase (#16).** Remplacer par :
+  > « Si les livraisons partielles sont autorisées, le bon 8* est clôturé sur la base des quantités effectivement prélevées, au moyen d'un code processus ; aucun bon 85* n'est créé. (BR-05-005-120-E) »
+- **L410, 2ᵉ phrase (#17).** Aucune réécriture tant que l'analyse avec Bernard n'est pas faite (Q7). En attendant, ajouter :
+  > « Point ouvert : la reprise du solde non prélevé (nouveau bon 8* généré à partir du STO ou de la réservation lorsque le stock redevient disponible, selon le fonctionnement actuel, ou mécanisme automatique dans EWM) reste à confirmer. (BR-05-005-120-F) »
 
-  Cette formulation est à valider avec Bernard (Q7). Supprimer ensuite le commentaire [b].
+  Supprimer le commentaire [b] après cette analyse.
 - **L411 (#19).** Selon Q8, réintroduire la substitution de bobine :
   > « Lors du picking d'une bobine, le magasinier peut la substituer par une bobine sœur en précisant le code d'exception… »
 
@@ -198,7 +223,7 @@ Ces propositions ne sont pas reportées dans le blueprint. Les textes proposés 
 - **L800 (#56).** Ajouter : « Point ouvert : contenu ADR de l'EDI à confirmer par le DC. » Supprimer [f] et [g].
 - **L801 (#36).** Retaguer en `(BR-06-001-050 ; GAP BR-06-001-050)` et ajouter : « Point ouvert : contenu de l'EDI light à définir. »
 - **L805 (#39).** Ajouter : « Point ouvert : source et mode d'impression des fiches MSDS. » Supprimer [h] et [i].
-- **L807 (#40).** Aligner le destinataire du mail et ajouter « Cette notification est activable / désactivable » selon Q15. Retaguer en GAP et corriger l'ID.
+- **L807 (#40).** Le texte est fidèle au BR-01-002-020-B : aucune réécriture avant la réponse à Q15. Corriger seulement l'ID cité (BR-01-002-0020-B → BR-01-002-020-B). Si l'évolution de la GL est retenue (destinataire, activation), ajouter le tag GAP.
 - **L831 et L832 (#46).** Selon Q17, retirer ou maintenir les deux « GAP ».
 - **L835 (#43).** Ajouter : « Point ouvert : canal de remontée du lien de tracking (transporteur vers EWM). »
 - **L836 (#42).** Taguer, et renvoyer à la fonctionnalité Track & Trace traitée à part (décision du 04/08).
@@ -218,7 +243,7 @@ Ces propositions ne sont pas reportées dans le blueprint. Les textes proposés 
 
 1. **#11** : le titre reprend celui de #10 (réimpression après découpe), alors que le contenu porte sur la distinction découpe / bobine complète.
 2. **#25** : la description du BR reprend le texte de BR-05-005-090 (déjà relevé par le PM, §4.4).
-3. **#37** : les informations ADR sont rangées sous BR-06-001-050 (ID en double), alors que le BP et #56 les rangent sous BR-06-001-070.
+3. **#37** : doublon de #56 sous un mauvais ID. Sa description reprend mot pour mot le texte de BR-06-001-070, identique à celle de #56, mais la ligne porte l'ID BR-06-001-050, déjà utilisé par #36. À fusionner avec #56.
 4. **#56** : le titre est « Expédition » et la colonne Points ouverts contient le texte de BR-06-001-080.
 5. **#26** : la colonne Points ouverts indique « Section 3.5.1 encore marquée SECTION EN ATTENTE ». Ce n'est plus le cas dans le Final v1.0.
 6. **#4** : le TO-BE cite VL01NO et les Points ouverts citent VL06NO.
@@ -228,7 +253,10 @@ Ces propositions ne sont pas reportées dans le blueprint. Les textes proposés 
 10. **#30** : la colonne Points ouverts (lien de tracking) n'a pas de rapport avec le titre (HU d'expédition NNN).
 11. **#32, #50 et #55** : triple occurrence du besoin HU mère / HU filles. Les titres de #50 et #55 (« Consolidation selon différents critères ») ne correspondent pas à leur contenu.
 12. **Sous-sections** : la colonne « Sous-section blueprint » suit la table des matières, pas le corps. Exemples : #31 « 3.6.4 Mesurage » correspond au corps 3.6.5, et #9 à #11 « 3.4.3 » se trouvent dans le corps sous le chapitre « 3.3 Flux de picking ».
-13. **IDs absents du fichier BR**, d'après ma synthèse Drive, non revérifiés pour cette revue : BR-01-002-0020-B (probablement BR-01-002-020-B) et BR-05-004-130_B (BR-05-004-130-B dans le fichier BR).
+13. **IDs mal orthographiés**, vérifiés par le QA dans le fichier BR (onglet 20260220) :
+    - BR-01-002-0020-B (#40) est absent ; BR-01-002-020-B existe, et son texte est celui du BP L807.
+    - BR-05-004-130_B (#8) est absent ; BR-05-004-130-B existe (« emballage des composants qui composent un KIT (via OF) séparément… »).
+14. **ID absent du fichier BR** : BR-05-003-010 (#4) ne figure pas dans l'onglet « Business Requirements 20260220 » (209 BR), d'après la vérification QA. Il faut le rattacher à un BR existant ou le créer (PM, Consultant GAP). Le BP ne doit porter aucun tag sur cet ID avant cette résolution.
 
 ---
 
@@ -278,7 +306,8 @@ Ces propositions ne sont pas reportées dans le blueprint. Les textes proposés 
 - **H2 :** les numéros de section suivent le **corps** du texte du blueprint. Le texte exporté ne rend pas les images : je n'ai pas pu vérifier les flowcharts, l'Annexe 1, l'Annexe 3, ni le retrait de Track & Trace des BPMN (décision du 04/08).
 - **H3 :** le format de point ouvert (« Point ouvert : … ») et le format de tag `(BR-… ; GAP BR-…)` sont ma proposition d'harmonisation. Ce ne sont pas des conventions validées.
 - **H4 :** pour le classement « Aligné », j'ai vérifié que le texte est cohérent avec le TO-BE de la GL. Cela ne veut pas dire que le GAP est fermé.
-- **H5 :** pour les IDs BR absents (§4.13) et BR-07-007-010 dans la GL Reporting, je m'appuie sur ma synthèse Drive du 01/11. Je ne les ai pas revérifiés dans le fichier BR pour cette revue.
+- **H5 :** les IDs du §4.13 et du §4.14 ont été vérifiés par le QA dans le fichier BR. BR-07-007-010 (KPI transport OTIF) existe dans le fichier BR ; sa présence dans la GL Reporting plutôt que dans l'Outbound vient de ma synthèse Drive du 01/11.
+- **H6 :** la v1 affirmait que la séparation par aire d'activité intervient au regroupement des tâches en ordres magasin (3.2.5). La phrase est plausible, mais c'est une hypothèse de solution non écrite dans la GL : elle est retirée du texte proposé et reste à confirmer par le Consultant Solution.
 - **Non vérifié :** le contenu exact du fichier BR (onglet 20260220) pour chaque ligne, le deck BRM, la « slide consolidation Bernard », la FSP Litiges et le blueprint Reporting.
 
 ---
@@ -286,12 +315,12 @@ Ces propositions ne sont pas reportées dans le blueprint. Les textes proposés 
 ## 7. Questions pour Moustafa
 
 - **Q1 (#2).** Le BR-05-004-020 demande un calendrier « modifiable par les coordinateurs sans ICT ». La décision du 27/10 confie la modification à REPL. Faut-il reformuler le BR, ou garder le BR et tracer l'écart dans le blueprint ?
-- **Q2 (#4).** Retire-t-on BR-05-003-010 du blueprint Outbound (au profit du flux NNN), ou y ajoute-t-on une mention de la transaction standard ? Est-elle cohérente avec la solution de L171 (bon sans référence, fonctionnement GZH) ?
+- **Q2 (#4).** BR-05-003-010 est absent du fichier BR : à quel BR le rattache-t-on, ou faut-il le créer ? Ensuite, le retire-t-on du blueprint Outbound (au profit du flux NNN) ou y mentionne-t-on la transaction standard ? Est-elle cohérente avec la solution de L171 (bon sans référence, fonctionnement GZH) ?
 - **Q3 (#5).** Pour l'affectation aux vagues, confirme-t-on l'option « le job S/4 détermine l'occurrence, sans développement EWM » ? Le tag « GAP potentiel » serait alors retiré.
 - **Q4 (#8).** Quelle définition du kit retient-on pour l'Outbound : kit Infrabel (plusieurs NN, kitting standard) ou kit IKEA (1 NN en plusieurs composants) ? Qui maintient les master data ?
 - **Q5 (#14).** Les quantités sous le seuil de péremption doivent-elles être exclues du stock disponible pour Replenishment (« réappro ? ») ou y rester ?
 - **Q6 (#15).** Le pick denial en ship complete justifie-t-il un développement (annulation et réaffectation), ou la simulation de vague standard suffit-elle ?
-- **Q7 (#16 et #17).** Valides-tu la formulation « bon 800 clôturé, pas de 85*, reliquat repris par un nouveau bon 8* » ? La GL indique « à analyser avec Bernard ».
+- **Q7 (#17).** Le solde non prélevé est-il repris par un nouveau bon 8* généré à partir du STO ou de la réservation, comme aujourd'hui, ou faut-il un mécanisme automatique dans EWM ? La GL indique « à analyser avec Bernard ». Pour #16, la règle « bon 8* clôturé, pas de bon 85* » est déjà notée dans la GL.
 - **Q8 (#19).** BR-05-005-140 couvre-t-il la seule substitution de bobine, ou tout incident de picking, à mutualiser avec la solution Litiges ?
 - **Q9 (#22 et #23).** Pour le stock prélevé resté sur la BIN : emplacement source utilisé comme staging, ou emplacement d'expédition virtuel ? Et le blocage d'emplacement avec alerte à l'inventaire est-il retenu ?
 - **Q10 (#24).** Accepte-t-on le scan systématique de la HU (standard) à la place du scan dynamique (GAP XL) ?
@@ -299,8 +328,30 @@ Ces propositions ne sont pas reportées dans le blueprint. Les textes proposés 
 - **Q12 (#28).** À quelle étape indique-t-on le pictogramme ADR : à la consolidation picking ou à la consolidation expédition ?
 - **Q13 (#34).** Quel déclencheur pour la demande de transport ?
 - **Q14 (#39).** Les fiches MSDS sont-elles imprimées depuis SAP aujourd'hui ?
-- **Q15 (#40).** Le mail d'expédition part-il au demandeur ou au client destinataire ? Doit-il être activable / désactivable ? Que recouvre la « contre-indication du TOM » ?
+- **Q15 (#40).** La GL fait évoluer le BR-01-002-020-B : mail au client destinataire plutôt qu'au demandeur, et fonction activable / désactivable. Valide-t-on cette évolution ? Si non, la GL est à réaligner sur le BR, et le BP reste en l'état.
 - **Q16 (#42).** Le paragraphe L836 (localisation et historique des HU) relève-t-il de BR-05-007-020 (Track & Trace) ?
 - **Q17 (#46).** Le contrôle de la HU refusée et la confirmation de l'endroit de sortie sont-ils couverts par la TU et la porte en standard ? Si oui, on retire les deux tags GAP en 4.1.2.2.
 
+- **Q18 (#14).** La vague d'évacuation des articles sous seuil de péremption et le rapport vers Replenishment doivent-ils figurer dans le blueprint Outbound ? Le commentaire 97 les destine au blueprint EWM 2.0 Internal. Question posée au PM pour l'arbitrage de périmètre.
+- **Q19 (§3).** Quelle convention retient-on pour déclarer les points ouverts : prose normative, comme dans le Final v1.0, ou marqueur « Point ouvert : » ?
+
 **Remarque pour le PM :** les questions Q13 à Q15 relèvent de l'owner « Youssef » (Transport) dans la GL. La requalification de #53 et #54 relève du Consultant GAP. Je ne l'ai pas sollicité.
+
+---
+
+## 8. Suivi des remarques QA-001 (v2)
+
+| Remarque | Traitement en v2 |
+|---|---|
+| MAJ-1 (#40) | Reclassée PO. Le BP est fidèle au BR-01-002-020-B ; c'est le TO-BE de la GL qui dévie. Aucune réécriture de L807 n'est proposée. Q15 est reformulée et la sous-question sur le TOM est retirée. |
+| MAJ-2 (#37) | Reclassée PO, doublon de #56, comptée une seule fois. §4.3 corrigé. |
+| MAJ-3 (#46) | Reclassée PO, dépendante de Q17. |
+| MAJ-4 (#17, §1(b)) | #17 passe en PO. §1 recalculé : C = 2, DEC = 2, PO = 31 (27 sujets distincts). Les décisions sont distinguées en « notées dans la GL » et « confirmées ». |
+| MAJ-5 (#14) | Constat corrigé : le commentaire 97 vise le blueprint Internal. Le texte proposé devient un point ouvert avec renvoi. La question de périmètre est posée en Q18. |
+| MAJ-6 (#4) | Anomalie ajoutée (§4.14), aucun tag proposé avant résolution, Q2 complétée. |
+| MIN-1 | Vérifications QA intégrées au §4.13, H5 mis à jour. |
+| MIN-2 (L203) | Phrase non sourcée retirée, déclarée en hypothèse H6. |
+| MIN-3 (L410) | « bon 8* » à la place de « bon 800 » ; reliquat rattaché au « STO ou à la réservation ». La 2ᵉ phrase n'est plus réécrite (#17 ouvert). |
+| MIN-4 (L169) | « transaction spécifique (développement) » ; dépendance à Q1 signalée. |
+| MIN-5 | Deux variantes de déclaration des points ouverts proposées (§3), choix en Q19. |
+| MIN-6 | #28 déplacée du bloc Picking vers le bloc Consolidation au §1(a). |
