@@ -55,6 +55,8 @@ Règles (décision D-003, cf. `decisions.md`) :
 | PM-002 | Recevoir et qualifier les BR / drafts de Moustafa | PM | Drive « Projet EWM 2.0 - Ronet » | Inventaire des inputs (§7) | Fait | 2026-11-01 |
 | PM-003 | Informer l'équipe de l'emplacement des inputs (Drive) | PM | — | Message aux 5 consultants | Fait | 2026-11-01 |
 | PM-004 | Proposer le planning et la délégation initiale à Moustafa | PM | §7 | Planning à valider | À faire | À définir |
+| BP-001 | Revue du Blueprint Outbound Final v1.0 vs GAP List Outbound 27-10 : contradictions et vrais points ouverts | Blueprint | `ewm/pm` : `00-pm/inputs/` (blueprint .txt + GAP xlsx) | `ewm/blueprint` : `03-blueprint/revue-blueprint-outbound-vs-gap.md` | En cours (délégué 2026-11-01, demande de Moustafa) | À définir |
+| QA-001 | Relecture de BP-001 avant livraison à Moustafa | QA | Sortie de BP-001 | Avis QA | En attente input (BP-001) | À définir |
 | — | *(tâches GAP / Solution / Blueprint / QA / Support à créer après réception des inputs)* | | | | | |
 
 ## 6. Livraisons à Moustafa
