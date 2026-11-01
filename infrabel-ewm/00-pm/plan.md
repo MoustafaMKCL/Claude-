@@ -56,6 +56,8 @@ Règles (décision D-003, cf. `decisions.md`) :
 | PM-003 | Informer l'équipe de l'emplacement des inputs (Drive) | PM | — | Message aux 5 consultants | Fait | 2026-11-01 |
 | PM-004 | Proposer le planning et la délégation initiale à Moustafa | PM | §7 | Planning à valider | À faire | À définir |
 | BP-001 | Revue du Blueprint Outbound Final v1.0 vs GAP List Outbound 27-10 : contradictions et vrais points ouverts | Blueprint | `ewm/pm` : `00-pm/inputs/` (blueprint .txt + GAP xlsx) | `ewm/blueprint` : `03-blueprint/revue-blueprint-outbound-vs-gap.md` | À relire (QA) — livré par Blueprint le 2026-11-01 (branche `ewm/blueprint`, envoyé au QA par le consultant) | À définir |
+| BP-002 | Artefact interactif « déroulé du flux Outbound » avec maquettes d'écrans (séance de validation 4 h) : squelette + 3-4 écrans, puis flux complet ; liste des captures réelles à demander | Blueprint | `ewm/blueprint` : `03-blueprint/revue-blueprint-outbound-vs-gap.md` + blueprint Final v1.0 | Lien artefact privé + source `03-blueprint/maquette/` | En cours (délégué 2026-11-01, demande de Moustafa) | Étape 1 : 2026-11-01 |
+| QA-002 | Relecture de l'artefact (fidélité au blueprint, mention « maquette indicative », points à trancher) | QA | Sortie de BP-002 | Avis QA | En attente input (BP-002) | Avant la séance |
 | QA-001 | Relecture de BP-001 avant livraison à Moustafa | QA | Sortie de BP-001 | Avis QA | En cours (reçu en parallèle, à confirmer avec QA) | À définir |
 | — | *(tâches GAP / Solution / Blueprint / QA / Support à créer après réception des inputs)* | | | | | |
 
