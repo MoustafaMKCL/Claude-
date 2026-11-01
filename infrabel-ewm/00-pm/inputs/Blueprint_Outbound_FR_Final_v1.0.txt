@@ -1,0 +1,955 @@
+________________
+  
+
+1. Introduction
+Ce document décrit les processus de sortie de marchandises des centres de distribution (DC) de Ronet, Gent Zeehaven et Schaerbeek, depuis la création de la livraison sortante jusqu’à l’expédition des marchandises. Il couvre également les processus transversaux associés (« cross-functional »).
+L’objectif du modèle SAP EWM 2.0 sera d’harmoniser autant que possible les processus entre les différents sites d’Infrabel, en s’appuyant sur des procédures communes. Certaines spécificités locales devront toutefois être prises en compte, tel que la configuration physique des magasins, les types d’articles gérés et le rôle de chaque site dans la chaîne logistique d’Infrabel.
+La plupart des processus décrits seront communs aux DC concernés. Les différences propres à certains sites seront précisées dans les sections correspondantes.
+La partie « AS-IS » de ce blueprint décrit spécifiquement les processus actuels du DC de Ronet, qui sera le premier site à mettre en œuvre le modèle EWM 2.0.
+Ce document est également disponible en néerlandais.
+Le tableau ci-dessous présente l’historique des versions de ce document.
+
+
+Version
+	Version
+	Date
+	Nom
+	Comment
+	0.1
+	
+
+	
+
+	
+
+	1.1
+	
+
+	
+
+	
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Table des matières
+1.        Introduction        1
+2.        Processus « AS-IS » DC Ronet        3
+2.1 Picking & Préparation pour expédition        4
+2.1.1Résumé des sous-processus        4
+2.1.2 Intégration avec autres systèmes        4
+2.2 Expédition        4
+3.1 Prérequis – génération des livraisons sortantes (BL 8*)        5
+3.2 Lancer les vagues de picking        6
+3.2.1 Création et mise à jour automatique des vagues de picking        7
+3.2.3 Création et mise à jour manuelle des vagues de picking        10
+3.2.4 Création des tâches de picking        11
+3.2.5 Regroupement et Blocage des articles concernés par les tâches de picking        12
+3.2.6 Création des tâches de picking        13
+3.3 Mettre à disposition (Pas encore discuter)        13
+3.3.1 Prioriser les porteurs à traiter        14
+3.3.3 Proposer BIN par HU        15
+3.3.4 Déposer HU sur BIN        16
+3.3.4 Associer HU à BIN        16
+3.4 Flux de picking        17
+3.4.1 Sélection de l'aire d'activité        17
+3.4.2 Détermination de la HU de picking        18
+3.4.3 Instructions de picking et confirmation de l'emplacement        19
+3.4.4 Gestion du numéro de batch        20
+3.4.5 Prélèvement et confirmation de la quantité        21
+3.4.6 Scan du numéro de série        22
+3.4.7 Impression de l'étiquette de picking        23
+3.4.8 Association de l'article à la HU de picking        24
+3.4.8 Association de l'article à la HU de picking        25
+3.5 Consolider le picking        25
+3.5.1 Proposition de repackaging des HU de picking        26
+3.5.2 Génération du numéro de HU d'expédition        27
+3.5.3 Transvasement et association des articles à la HU d'expédition        27
+3.5.4 Fermeture de la HU et confirmation de fin de consolidation        27
+3.5.5 Impression de l'étiquette de HU d'expédition        28
+3.6 Consolider à l’expédition        29
+3.6.1 Proposition de repackaging des HU d’expédition        29
+3.6.2 Créer numéro de HU mère        30
+3.6.2 Dépose et association des HU d’expédition à la HU mère        30
+3.6.3 Confirmation fin consolidation de la HU mère        31
+3.6.4 Mesurage à l’aide du calculateur cubimétrique        31
+3.6.5 Impression documents + étiquettes        32
+3.6.6 Proposer bin dans zone d’expédition, déposer HU mère sur bin & associer HU mère à la bin        33
+Annexe 1 : Calendrier d’expédition        33
+Annexe 2 : Discussion Kit - Inbound        33
+Annexe 3 : Consolidation Picking et Expédition – A titre illustratif – Ne représente pas tous les cas de figure possibles        35
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2. Processus « AS-IS » DC Ronet[a]
+  
+
+  
+
+  
+
+Ce chapitre présente les processus actuels de sortie de marchandises du DC de Ronet. Il couvre le picking, la préparation à l’expédition et l’expédition des marchandises.
+Les schémas ci-dessus situent ces activités dans le flux logistique global du DC, depuis la réception jusqu’à l’expédition. Les sous-sections suivantes présentent les principales étapes du flux sortant ainsi que les systèmes utilisés.
+2.1 Picking & Préparation pour expédition 
+2.1.1Résumé des sous-processus
+* Lancement des vagues
+* Mise à disposition
+* Picking
+* Consolidation picking
+* Consolidation expédition
+2.1.2 Intégration avec autres systèmes
+* Fox4work : Tours de stockage, Kardex LR35
+* Ariane : gestion des câbles
+2.2 Expédition
+* Expédition
+   * Milkruns en général (Deliver-e)
+   * Milkruns autres transports -- Milkrun câbles / Retour Schaerbeek / Livraison ponctuelles / Livraisons directes sur chantier
+   * Transport urgent T8/T9
+   * * Enlèvement
+
+
+
+
+
+
+3 Processus sortant « To-be DC» 
+
+
+Ce chapitre décrit les processus cibles de préparation des marchandises dans le modèle SAP EWM 2.0, qui sera mis en œuvre en premier lieu au DC de Ronet.
+Il présente les prérequis liés à la génération des livraisons sortantes, la gestion des vagues de picking, la mise à disposition des articles, les opérations de picking ainsi que la consolidation du picking et la consolidation à l’expédition.
+Les sous-sections suivantes précisent les actions des opérateurs et des coordinateurs, les traitements réalisés par le système et les règles applicables à chaque étape.
+
+
+3.1 Prérequis – génération des livraisons sortantes (BL 8*)
+  
+
+La génération des bons 8* (MRP Run) tient compte de l’horizon de planification, du contrôle de disponibilité du stock (ATP), du magasin prenant, des COPO et des adresses de livraison. Les quantités affectées aux bons de livraison ne peuvent pas être attribuées à une autre demande. (BR-05-004-010 ; BR-05-004-050)
+La création des bons de livraison relève d’une responsabilité extérieure au DC, à l’exception des procédures de rappel, pour lesquelles le DC crée le bon de livraison de manière ad hoc. (BR-05-004-010 ; BR-05-004-060)
+Pour les demandes On-demand delivery (ODD), les bons 8* sont regroupés dans une vague distincte. Les livraisons concernées sont prélevées dans leur intégralité ; les livraisons partielles ne sont pas autorisées. (BR-05-004-010 ; GAP BR-05-004-010)
+Le coordinateur gère le calendrier d’expédition en affectant une tournée, une route ou une destination à un jour de la semaine. Chaque tournée regroupe les livraisons ayant les mêmes destinations. Ce calendrier sert de base à l’organisation de la charge de travail et au lancement de la création des tâches de picking. Un exemple de calendrier figure à l’annexe 1. (BR-05-004-020 ; GAP BR-05-004-020)
+Une livraison sortante ne peut être créée que si le stock est disponible dans le système, qu’elle soit issue d’un STO ou d’une réservation. (BR-05-004-050)
+Dans le cadre d’une procédure de rappel, y compris pour la vente comptoir, toute personne du DC peut créer un bon 8* sans référence afin de sortir du stock. La solution envisagée repose sur la création directe d’un ordre de livraison sortante dans EWM, selon le fonctionnement existant à GZH. (BR-05-004-060)
+Le Warehouse Monitor permet de consulter en temps réel l’évolution des statuts des livraisons T8/T9. Les statuts à suivre restent à définir. (BR-05-004-120-B ; GAP potentiel BR-05-004-120-B)
+________________________________
+BR-05-004-010 - GAP – Les bons 8* sont créés automatiquement (cas mag 1, 2, 3) dans un horizon de planification paramétrable (actuellement livraison max 7 jours à l'avance par rapport à la date de besoin). Les bons 8* pour appel sont générés par replenishment et tombent dans des vagues à part. Le DC lance la vague du jour, et donc, garantit qu'on n'envoie pas le matériel en avance.
+BR-05-004-020 - GAP – Le calendrier d'expédition des milkruns (qui reprend les jours et adresses de livraison) doit se trouver dans SAP et doit pouvoir être facilement modifié par les coordinateurs sans l'intervention d'ICT (comparable à des entrées récurrentes d'Outlook) dans le but de : pouvoir regrouper le picking par tournée ; pouvoir décaler le picking d'un client sur une autre tournée ; pouvoir décaler toute la tournée sur un autre jour.
+BR-05-004-050 – La création de la livraison sortante (créée par replenishment) doit tenir compte de la disponibilité du stock (que l'on travaille avec des STO / réservations) → existe déjà en eWM actuellement.
+BR-05-004-060 – La base de tout picking est un bon 8* (outbound delivery). Il doit cependant être possible de faire de la vente comptoir, par ex. pour la procédure de rappel de nuit.
+BR-05-004-120-B : La demande T8/T9 doit être monitorée.
+
+
+3.2 Lancer les vagues de picking
+  
+
+Ce processus assure l’articulation entre la disponibilité des articles en stock et leur préparation pour l’expédition. Il couvre la gestion et le lancement des vagues jusqu’à la création des tâches de picking, prêtes à être exécutées par les magasiniers. Il permet d’organiser les prélèvements correspondant aux besoins de la journée, en tenant compte du calendrier d’expédition des milkruns, de la disponibilité du stock et des ressources, ainsi que des priorités opérationnelles. (BR-05-004-090)
+BR-05-004-090
+Les vagues de picking doivent prendre en compte :
+* le calendrier d'expédition des milkruns 
+* la disponibilité du stock 
+* des dates de besoin 
+* la disponibilité des ressources matérielles 
+* la localisation des articles (picking par aire d'activité) 
+* du besoin du client qui ne souhaite pas que ses articles soient consolidés avec d'autres commandes 
+* du besoin du client d'être livré, à sa demande, d'une quantité particulière et à une date bien précise (lié à ODD)
+
+
+
+
+3.2.1 Création et mise à jour automatique des vagues de picking
+
+
+ Image 
+
+Dès la création d’un bon de livraison, le système crée et/ou met à jour automatiquement une vague de picking. Les critères de regroupement peuvent varier selon la route, le calendrier milkrun, la destination, l’aire d’activité et le caractère urgent de la demande. (BR-05-004-010 ; BR-05-004-090)
+Ce fonctionnement s’applique aux bons de livraison traditionnels ainsi qu’aux demandes T8/T9. Des vagues spécifiques sont créées séparément pour les T8 et pour les T9. Les demandes correspondantes sont automatiquement affectées à une vague de picking urgente. (BR-05-004-120-C)
+Un dashboard dynamique, mis à jour automatiquement, affiche les demandes T8/T9 à traiter en urgence. Il est accessible à l’ensemble des utilisateurs du DC au moyen d’écrans Fiori. Les modalités de restitution sont décrites dans le blueprint Reporting. (BR-05-004-090; potentiel GAP BR-05-004-120-A)
+Deux jours avant la date de livraison prévue, un dashboard permet de consulter la charge de travail de picking du lendemain afin de préparer le huddle. La solution décrite repose sur le standard EWM via Fiori pour restituer ces informations en temps réel. Les modalités de restitution sont décrites dans le blueprint Reporting. (BR-05-004-040)
+L’affectation d’une livraison sortante à une vague repose sur la combinaison de sa route et de sa date de besoin. La route détermine la série de vagues applicable, tandis que la date de besoin détermine l’occurrence à laquelle la livraison est affectée. La vague retenue est celle dont la fenêtre de besoins contient cette date, et non celle dont le lancement est calendairement le plus proche. (BR-05-004-090 ; GAP potentiel BR-05-004-090)
+  
+
+Ainsi, pour la route Luttre par exemple, un besoin au mardi 09/07 est affecté à la vague du jeudi 04/07, tandis qu’un besoin au lundi 22/07 est affecté à la vague du jeudi 18/07. (BR-05-004-090 ; GAP potentiel BR-05-004-090)
+  
+
+La date de création de la livraison sortante n’intervient pas dans cette affectation. Deux livraisons présentant la même route et la même date de besoin sont affectées à la même vague, qu’elles soient créées quelques jours ou plusieurs semaines avant la date de besoin. (BR-05-004-090 ; GAP potentiel BR-05-004-090)
+Le calendrier milkrun prévoit un lancement quotidien des vagues correspondant aux routes rattachées à chaque jour de la semaine. Chaque route dispose d’un jour de lancement fixe ; pour la route Luttre, ce lancement a lieu le jeudi. La fenêtre de besoins couverte par une vague commence le jour de son lancement et se termine la veille du lancement suivant. Les fenêtres se succèdent sans recouvrement ni interruption : pour une route donnée, chaque date de besoin appartient à une seule fenêtre. (BR-05-004-090 ; GAP potentiel BR-05-004-090)
+Il est possible d’isoler une partie du contenu d’une vague dans une nouvelle vague, notamment pour séparer les livraisons d’un client. L’opérateur sélectionne les postes concernés et les affecte à une nouvelle vague, dont le lancement est indépendant de celui de la vague d’origine. Cette opération n’est possible que tant que la vague d’origine n’est pas lancée. Après son lancement, les tâches magasin sont créées et son contenu ne peut plus être fractionné. (BR-05-004-100-B)
+BR-05-004-120-C
+Une demande T8/T9 doit être ajoutée automatiquement à une vague de picking "urgente"
+BR-05-004-120-A
+Le système doit alerter les coordinateurs dynamiquement qu'une demande de T8/T9 est émise afin que le picking puisse avoir lieu (mail ? popup ? étiquette imprimée ? warning dans un rapport?)
+BR-05-004-120-B
+La demande T8/T9 doit être monitorée.
+BR-05-004-040
+A J-2 par rapport à la date de livraison, avoir la possibilité de visualiser la charge de travail de picking prévue le lendemain (J-1) (= vagues de picking) afin de préparer le huddle de J-1
+-> std eWM
+BR-05-004-100-B
+Il doit être possible de splitter une vague (ex. isoler un client d'une vague dans une nouvelle vague)
+BR-05-004-010
+-> Les bons 8* sont créés automatiquement (cas mag 1, 2, 3) dans un horizon de planification paramétrable (actuellement livraison max 7 jours à l'avance par rapport à la date de besoin)
+-> Les bons 8* pour appel sont générés par replenishment et tombent dans des vagues à part.
+-> Le DC lance la vague du jour, et donc, garantit qu'on n'envoie pas le matériel en avance
+BR-05-004-090
+Les vagues de picking doivent prendre en compte :
+* le calendrier d'expédition des milkruns
+* la disponibilité du stock
+* des dates de besoin
+* la disponibilité des ressources matérielles
+* la localisation des articles (picking par aire d'activité)
+* du besoin du client qui ne souhaite pas que ses articles soient consolidés avec d'autres commandes
+* du besoin du client d'être livré, à sa demande, d'une quantité particulière et à une date bien précise (lié à ODD)
+
+
+3.2.3 Création et mise à jour manuelle des vagues de picking
+  
+
+  
+
+L’opérateur réorganise les vagues créées automatiquement en affectant manuellement les bons de livraison à une vague. Il ajuste ainsi leur composition en fonction des ressources disponibles et des besoins. Cette réorganisation repose sur les fonctionnalités standard d’EWM. (BR-05-004-070)
+______________________________________ 
+BR-05-004-070
+Après le run MRP du jour, les vagues de picking des milkrun doivent être préparées afin que les coordinateurs puissent les valider / réajuster en fonction des ressources disponibles (humaines et matérielles) et des besoins (ex : priorisation des découpes de câble sur une même bobine) avant le début de la journée
+3.2.4 Création des tâches de picking
+
+
+  
+
+Le calendrier milkrun prévoit un lancement quotidien des vagues correspondant aux routes rattachées à chaque jour de la semaine. Chaque route dispose d’un jour de lancement fixe (BR-05-004-010 ; BR-05-004-090)
+Cette périodicité détermine la fenêtre de besoins couverte par chaque vague. La fenêtre commence le jour du lancement et se termine la veille du lancement suivant. Les fenêtres se succèdent sans recouvrement ni interruption : pour une route donnée, chaque date de besoin appartient à une seule fenêtre. La logique d’affectation est décrite à la section 3.2.1 « Création et mise à jour automatique des vagues de picking » ; elle est rappelée ici pour expliquer le séquencement des lancements. (BR-05-004-090 ; GAP potentiel BR-05-004-090)
+Par défaut, les vagues sont lancées automatiquement deux fois par jour pour les bons de livraison, y compris les demandes T8. Les vagues affectées aux demandes T9 sont lancées immédiatement. (BR-05-004-010)
+Au besoin, le DC lance manuellement une vague existante. Pour une demande ponctuelle ou urgente, le coordinateur peut déclencher manuellement la création des tâches de picking correspondantes, sans attendre le prochain lancement automatique de la vague, planifié deux fois par jour (BR-05-004-080)
+En cas d’indisponibilité d’une ressource matérielle, par exemple un outil de manutention, le coordinateur bloque la ressource concernée depuis le moniteur. Il bloque également, de manière manuelle, les emplacements associés à cette ressource. Les opérations de mise en stock et de picking ne peuvent alors plus être réalisées sur ces emplacements. (BR-05-004-030)
+Traitement des tourets
+Les postes de livraison relatifs aux tourets sont affectés à une vague distincte afin de les isoler des autres articles. Leur traitement est manuel. Le mode de création des tâches de picking est manuelle directement dans le bon de livraison (/SCWM/PRDO), sans lancement de vague. (BR-05-004-110)
+Le coordinateur visualise le métrage des câbles ainsi que le type de HU, défini en fonction des dimensions des bobines. Ces informations lui permettent de sélectionner la bobine ou le touret approprié, ou de déterminer la découpe nécessaire. (BR-05-004-110)
+BR-05-004-110 : Le système doit afficher les dimensions des tourets et le mètrage restant sur le touret pour permettre aux coordinateurs de sélectionner la bobine la plus appropriée à livrer au client ou à découper (types de HU par dimension de bobines. Lié au BR 05-005-150
+BR-05-004-010 – Les bons 8* sont créés automatiquement (cas mag 1, 2, 3) dans un horizon de planification paramétrable (actuellement livraison max 7 jours à l'avance par rapport à la date de besoin). Les bons 8* pour appel sont générés par replenishment et tombent dans des vagues à part. Le DC lance la vague du jour, et donc, garantit qu'on n'envoie pas le matériel en avance.
+BR-05-004-030 – La disponibilité (on/off) des ressources matérielles doit se trouver dans SAP et doit pouvoir facilement être modifiée par les coordinateurs sans l'intervention d'ICT.
+BR-05-004-080
+Le coordinateur doit avoir la possibilité de lancer une tâche de picking en plus de la vague initalement prévue (cas des demandes ponctuelles (ex j'ai besoin d'un ruban d'imprimante / urgentes)
+-> std eWM
+BR-05-004-090
+Les vagues de picking doivent prendre en compte :
+* le calendrier d'expédition des milkruns
+* la disponibilité du stock
+* des dates de besoin
+* la disponibilité des ressources matérielles
+* la localisation des articles (picking par aire d'activité)
+* du besoin du client qui ne souhaite pas que ses articles soient consolidés avec d'autres commandes
+* du besoin du client d'être livré, à sa demande, d'une quantité particulière et à une date bien précise (lié à ODD)
+
+
+
+
+
+
+3.2.5 Regroupement et Blocage des articles concernés par les tâches de picking
+
+
+ Image 
+
+Après le lancement des vagues, les tâches de prélèvement sont regroupées par aire d’activité afin que le magasinier effectue le picking de plusieurs commandes au sein d’un même périmètre. Le picking multi-client est activable ou non pour chaque aire d’activité. Lorsqu’il est activé, le picking peut couvrir les commandes de plusieurs clients ; lorsqu’il est désactivé, le picking reste séparé par client. (BR-05-004-100-A)
+Les critères de consolidation durant le picking sont définis par DC. (BR-05-005-040)
+BR-05-004-100-A Le picking doit s’effectuer par aire d’activité / clients (multi-picking). 
+BR-05-005-040 – Le picking doit pouvoir s'effectuer sur base de critères prédéfinis (picking par réservation / par COPO / par destination / …)
+3.2.6 Création des tâches de picking
+
+
+À la fin du processus, les tâches de picking sont créées dans le système et deviennent disponibles pour être prises en charge par les magasiniers du DC. Chaque tâche est associée à une file d’attente par aire d’activité. Un traitement spécifique reste à définir pour les demandes T8 et T9.
+
+
+3.3 Flux de picking 
+
+
+Le présent chapitre décrit l’exécution opérationnelle du picking par le magasinier du DC. Le processus débute lorsque les tâches de picking, créées à la suite du lancement des vagues décrit à la section 3.2, sont disponibles pour traitement. Il se termine lorsque les articles prélevés sont associés à une HU de picking et déposés dans la zone de consolidation.
+Le flux est principalement exécuté au moyen d’une ressource mobile équipée d’un scanner. Sur la base des tâches de magasin générées dans SAP EWM, le système guide le magasinier lors des différentes étapes du prélèvement : sélection de l’aire d’activité, détermination de la HU de picking, identification de l’emplacement et de l’article, confirmation de la quantité prélevée et dépôt de la HU dans la zone de consolidation.
+Des traitements spécifiques sont prévus notamment pour les câbles et les bobines, les articles gérés par lot ou par numéro de série, les quantités indisponibles ainsi que les demandes urgentes T8/T9.
+
+
+
+
+
+
+3.4.1 Sélection de l'aire d'activité
+
+
+  
+
+
+
+Le flux débute lorsque les tâches de picking créées par les vagues sont disponibles. Le magasinier se connecte à sa ressource de travail et scanne l’imprimante qu’il utilise. Il sélectionne ensuite la file d’attente correspondant à son aire d’activité ou, si nécessaire, se connecte directement à un ordre magasin. Le système affiche la première tâche magasin à traiter (warehouse task). (BR-05-005-010)
+En fonction de l’aire d’activité, plusieurs magasiniers peuvent prélever simultanément dans une même aire d’activité. (BR-05-005-020 ; Possible GAP BR-05-005-020)
+BR-05-005-010 – Pour effectuer le picking, le magasinier doit se connecter aux ressources utilisées (ex : scanner / poste de travail / chariot / imprimante..)
+BR-05-005-020 – Quel que soit le poste de picking, plusieurs magasiniers doivent pouvoir prélever de la marchandise en même temps
+BR-05-005-040 – Le picking doit pouvoir s'effectuer sur base de critères prédéfinis (picking par réservation / par COPO / par destination / …)
+
+
+
+
+3.4.2 Détermination de la HU de picking
+  
+
+Avant le démarrage des prélèvements, le système propose un type de HU de picking que le magasinier peut sélectionner. Si la proposition ne convient pas, le magasinier peut saisir manuellement un autre type de HU.
+Deux cas se présentent :
+• Si un numéro de HU existant est utilisé, le magasinier associe ce numéro à la tâche magasin en scannant l’HU. 
+• Si aucun numéro de HU n’existe, le système génère un numéro de HU et imprime l’étiquette correspondante avant l’association à la tâche magasin (warehouse task). 
+
+
+
+
+3.4.3 Instructions de picking et confirmation de l'emplacement
+  
+
+Le système fournit au magasinier les instructions de picking : le numéro d’article (NN), la quantité à prélever et l’emplacement (BIN).
+Le système guide le magasinier de manière optimale vers les BIN dans lesquelles les prélèvements sont effectués. Ce principe s’applique également aux tours. (BR-05-005-030)
+Traitement des câbles
+À la réception de la commande client, le coordinateur analyse dans le système les quantités de câble disponibles par bobine. Il détermine si la préparation nécessite une découpe sur une bobine spécifique pour satisfaire la quantité demandée ou le prélèvement d’une bobine complète sans découpe (piece picking). Il crée ensuite les tâches de picking correspondant au mode de préparation retenu. (BR-05-005-150)
+Les bobines doivent pouvoir être localisées à tout moment. Leurs déplacements vers le poste de découpe et leur retour sont enregistrés. (BR-05-005-150)
+Pour permettre le suivi de la productivité et l’organisation du travail, le système distingue les opérations de picking nécessitant une découpe de câble du prélèvement d’une bobine complète sans découpe (piece picking). (BR-05-005-150 ; Potentiel GAP BR-05-005-150)
+Après une découpe, le système réimprime une étiquette de HU actualisée indiquant la quantité restante sur la bobine remise en stock. (BR-05-005-150 ; Potentiel GAP BR-05-005-150)
+Le système doit permettre de piloter toute forme d’emplacements automatisés, notamment les VLM, LR35 et magasins compacts Microstore, ainsi que tout outil de manutention automatisé, notamment les robots et chariots élévateurs autonomes. (BR-05-005-030 ; GAP BR-05-005-030)
+BR-05-005-030 – EWM doit piloter les plateaux des tours, les boîtes dans LR35 ou guider le magasinier dans les emplacements de picking de manière optimale (smart picking)
+BR-05-005-150 – Le système doit permettre d'effectuer une découpe de câble : - Le scanner doit indiquer qu'une découpe est nécessaire. - La bobine mère est déplacée depuis sa zone de stockage vers la dérouleuse de câble -> le magasinier scanne l'emplacement de la dérouleuse - Le magasinier scanne le touret récepteur et l'enrouleuse (s'il n'existe pas de HU de stockage sur le touret récepteur, il doit être possible d'imprimer une nouvelle HU de stockage) - La coupe doit être confirmée - La bobine demandée par le client est scannée pour confirmer le picking - L'autre bobine est relocalisée - S'il existe un numéro de lot sur la bobine mère, celui-ci doit être également lié à la bobine fille
+
+
+
+
+3.4.4 Gestion du numéro de batch
+
+
+ Image 
+
+Lorsque l’article à prélever est géré par numéro de lot (batch), le système indique le numéro de lot concerné et le magasinier le confirme lors du prélèvement. Si l’article n’est pas géré par lot, le flux se poursuit directement vers le prélèvement.
+Le picking des articles gérés par numéro de lot s’effectue dans des emplacements (BIN) spécifiques. Pour les articles soumis à une date de péremption, le prélèvement suit la logique FEFO. Une règle de prélèvement FEFO est définie pour le type de stockage concerné. (BR-05-005-160-A)
+La gestion de la péremption des articles concernés est réalisée exclusivement dans SAP (MMD). (BR-05-005-160-B)
+Le système empêche l’expédition au client d’articles dont la durée restante avant péremption est inférieure au seuil minimal applicable. À cette fin, il exclut ces articles du picking destiné à l’expédition client. (BR-05-005-160-C ; GAP BR-05-005-160-C)
+Le seuil minimal de durée restante avant péremption dépend du profil du client. Il est plus court lorsque le client utilise l’article immédiatement après réception et plus long lorsque le client est susceptible de le stocker avant utilisation. Ainsi, le délai minimal est plus long pour un client SP1 et plus court pour un COPO dont le chantier est prévu le week-end suivant. (BR-05-005-160-C ; GAP BR-05-005-160-C)
+Le système identifie également les articles dont la durée restante avant péremption est inférieure au seuil minimal requis pour l’ensemble des profils clients et qui ne peuvent donc plus être expédiés à un client, quel que soit son profil. Ces articles sont bloqués pour le picking destiné à l’expédition client. (BR-05-005-160-D ; GAP BR-05-005-160-D)
+Les quantités ainsi bloquées sont prises en compte dans l’évaluation du stock disponible. (BR-05-005-160-D ; GAP BR-05-005-160-D)
+BR-05-005-160 – Gestion FEFO : le picking d'articles avec numéro de lot s'effectue dans des BIN spécifiques. Il faut garantir que le matériel proche de sa date de péremption ne soit pas expédié (le problème doit être réglé en amont par IM par replenishment). Contrainte : les articles avec date de péremption doivent être gérés dans SAP (MMD)
+BR-05-005-160-A
+Gestion FEFO : le picking d'articles avec numéro de lot s'effectue dans des BIN spécifiques. Standard EWM, règle de prélèvement FEFO pour un storage type spécifique.
+BR-05-005-160-B
+La gestion de la péremption des articles soumis à une date de péremption doit être réalisée exclusivement dans SAP (MMD)
+BR-05-005-160-C        
+Le système doit empêcher l'expédition au client d'articles dont la date de péremption est trop proche, en fonction d'un délai minimal restant avant expiration.
+- Le système doit exclure du picking destiné à l'expédition client tout article dont la durée restante avant la date de péremption est inférieure au seuil défini.
+- Le seuil minimal de durée restante avant péremption doit être déterminé en fonction du profil du client (GAP). Ce seuil doit être plus court pour un client qui utilise l'article immédiatement après réception. Ce seuil doit être plus long pour un client susceptible de stocker l'article avant son utilisation.
+Exemples :  SP1 : délai minimal avant péremption plus long & COPO (chantier prévu le week-end suivant) : délai minimal avant péremption plus court
+-
+BR-05-005-160-D
+Le système doit identifier les articles soumis à une date de péremption dont la durée résiduelle est inférieure au seuil minimal requis pour être expédiés à un client, quel que soit le profil de ce dernier. (GAP)
+- Le système doit détecter les articles soumis à une date de péremption dont la durée résiduelle restante est inférieure au seuil minimal défini pour l'ensemble des profils clients.
+- Les articles détectés comme ne respectant plus ce seuil minimal doivent être bloqués pour le picking destiné à l'expédition client.
+- La quantité d'articles ainsi bloquée doit être prise en compte pour la considération de stock disponible (réappro?)
+- Les articles détectés comme ne respectant plus ce seuil minimal doivent être affectés à une vague de picking dédiée afin de permettre leur évacuation du stock au moment opportun.
+- Un rapport listant les articles intégrés à cette vague de picking doit être transmis à Replenishment à intervalles réguliers. 
+
+
+EL BAKKALI Youssef — commentaire 97
+Association : - Les articles détectés comme ne respectant plus ce seuil minimal doivent être affectés à une vague de picking dédiée afin de permettre leur évacuation du stock au moment opportun.
+@EL BAKKALI Youssef ajouter ces deux points dans le blueprint EWM 2.0 Internal
+
+
+3.4.5 Prélèvement et confirmation de la quantité
+3.4.5.1 Prélèvement et confirmation de la quantité
+  
+
+Une fois l’emplacement de prélèvement et, le cas échéant, le numéro de lot confirmés, le magasinier prélève physiquement la quantité indiquée par le système. Il confirme ensuite sur son scanner la quantité effectivement prélevée. (BR-05-005-070)
+Selon l’aire d’activité, les informations à confirmer lors du picking peuvent porter sur l’emplacement, l’article (NN), la HU de picking et la quantité prélevée. Les champs de confirmation sont paramétrables par aire d’activité. (BR-05-005-070)
+Pour un même article, le prélèvement peut être réalisé selon deux modes. En piece picking, la quantité prélevée et livrée correspond exactement à la quantité commandée. Lorsque le picking à l’arrondi est autorisé, la quantité prélevée correspond à l’unité de conditionnement immédiatement supérieure à la quantité demandée. Le choix du mode de prélèvement dépend notamment du conditionnement de l’article et de l’autorisation d’arrondi indiquée dans la demande du client. (BR-05-005-060-A) Infrabel SAP EWM 2.0 Blueprint …
+
+
+3.4.5.2 Gestion des exceptions lors du picking
+Pour le picking à l’arrondi, le traitement prévu repose sur l’overpick à l’aide du code d’exception DIFS. (BR-05-005-060-A)
+Lorsque la quantité présente dans une BIN descend sous un seuil défini à l’issue du prélèvement, le système déclenche un comptage d’inventaire et le magasinier confirme la quantité restante. (BR-05-005-130)
+Lorsqu’une BIN est entièrement vidée à l’issue du picking, le système déclenche automatiquement un inventaire de cette BIN, que la totalité de la quantité demandée ait été prélevée ou non. (BR-05-005-120-A)
+Si la quantité demandée n’est pas entièrement disponible dans l’emplacement proposé, le magasinier confirme la quantité effectivement prélevée. Cette quantité est prise en compte pour la suite du processus de sortie et entraîne une mise à jour des quantités dans la livraison sortante à l’aide d’un code processus. (BR-05-005-120-B)
+Lorsque du stock du même article est disponible dans un autre emplacement, le magasinier saisit le code d’exception prévu et le système le redirige vers cet emplacement afin de poursuivre le prélèvement. (BR-05-005-120-C) 
+Lorsque la quantité demandée ne peut pas être prélevée intégralement, le traitement dépend des conditions de livraison applicables au destinataire, et notamment de l’autorisation ou non des livraisons partielles (GAP BR-05-005-120-D).
+Si les livraisons partielles ne sont pas autorisées, l’ensemble des tâches de prélèvement associées à la demande est annulé. Le système génère les instructions nécessaires pour remettre en stock les articles déjà prélevés, réaffecte les articles au picking lorsque le stock redevient disponible et informe Replenishment de l’impossibilité d’exécuter la demande en raison de l’insuffisance de stock. (BR-05-005-120-D ; GAP BR-05-005-120-D)
+Si les livraisons partielles sont autorisées, la livraison peut être clôturée sur la base des quantités effectivement prélevées. La solution décrite repose sur les process codes et le delivery split du standard EWM. (BR-05-005-120-E). La quantité restante à prélever est remise en attente et réaffectée automatiquement au picking lorsque le stock concerné redevient disponible, par exemple à la suite d’un backorder. (BR-05-005-120-F)[b]
+Si un problème survient pendant l’exécution d’une tâche de picking, le magasinier peut saisir un code d’exception et compléter l’information au moyen d’un texte ou d’une photo afin de remonter l’anomalie. (BR-05-005-140 ; GAP BR-05-005-140[c])
+Dans le cas spécifique d’un picking T8/T9, l’utilisation d’un code d’exception, par exemple lorsqu’une BIN est inaccessible ou lorsque la quantité prélevée doit être diminuée ou augmentée, déclenche l’envoi automatique d’un e-mail à Replenishment et au FMB du DC. Replenishment peut ainsi gérer l’impact sur la demande client, tandis que le DC prend les actions opérationnelles nécessaires. (BR-05-005-190) 
+Enfin, les quantités proposées en amont au client dans le Supply Catalogue doivent rester cohérentes avec les modes de prélèvement et les conditionnements effectivement réalisables par le DC. Ce besoin constitue un prérequis au processus de picking et implique également des données et décisions extérieures à EWM. (BR-05-005-060-B ; GAP BR-05-005-060-B)
+  
+
+BR-05-005-120-A        
+Lorsqu'une BIN est entièrement vidée à l'issue d'une opération de picking (quantité restante = 0), SAP doit déclencher automatiquement un inventaire de cette BIN, que le picking soit complet ou pas. En standard SAP EWM,  après un prélèvement de l’entièreté des quantités, le système demande de confirmer que l’emplacement est vide. Cela génère un inventaire sur la bin et est directement confirmé.
+-
+BR-05-005-120-B        
+Si, lors du picking, la quantité demandée n'est pas entièrement disponible, le magasinier doit confirmer la quantité effectivement prélevée. Cette quantité confirmée doit être prise en compte pour la sortie de marchandises. 
+-
+BR-05-005-120-C
+Si, lors du picking, la quantité demandée n'est pas entièrement disponible dans l'emplacement initialement assigné, le système doit rediriger le magasinier vers un autre emplacement contenant le même article et disposant d'un stock disponible pour le prélèvement. 
+-
+BR-05-005-120-D (GAP)
+Si, au cours du picking, il apparaît que la quantité demandée ne peut pas être entièrement prélevée et que la demande client concernée (PR, ODD, KIT, BOM, OF, etc. – à définir ailleurs) n'autorise pas les livraisons partielles (ship complete), tous les ordres de prélèvement associés à cette demande doivent être annulés.
+Cette annulation implique que : 
+- le système génère automatiquement des instructions de remise en stock pour les articles déjà prélevés
+- le système réaffecte automatiquement à un prochain picking tous les articles à prélever dès que le stock concerné redevient disponible 
+- une notification soit envoyée à Replenishment afin de signaler que la demande n'a pas pu être exécutée en raison d'une insuffisance de stock
+-
+BR-05-005-120-E
+Si, au cours du picking, la quantité demandée ne peut pas être entièrement prélevée et que la demande client autorise les livraisons partielles, le système doit permettre de clôturer la livraison partielle sur base des quantités effectivement prélevées.
+Standard EWM via les process codes & delivery split.
+-
+BR-05-005-120-F
+Si, au cours du picking, la quantité demandée n'a pas pu être entièrement prélevée, le système doit garantir que le solde restant à prélever soit automatiquement remis en attente et réaffecté au picking dès que le stock concerné redevient disponible (ex. à la suite d'un backorder).
+-
+BR-05-005-060-A :
+“Pour un même article, le système doit permettre à la fois le 'piece picking / picking à l'unité' et le 'picking à l'arrondi / picking arrondi au colis'.
+- piece picking : la quantité pickée et livrée correspond exactement à la quantité commandée par le client (ex. 18 pièces commandées > 18 pièces pickées et livrées)
+- picking à l'arrondi / picking arrondi au colis : la quantité pickée est arrondie à l’unité de conditionnement immédiatement supérieure par rapport à la quantité commandée (ex. 18 pièces commandées - un conditionnement de 10 pièces par colis > 2 colis de 10 pièces pickées > 20 pièces pickées et livrées)
+Standard EWM via overpick (code exception DIFS)
+-
+BR-05-005-060-B (GAP)
+“Les quantités de commande proposées au client dans le Supply Catalogue doivent être alignées avec et limitées par les quantités de picking réalisables par le DC.
+- plusieurs quantités de sortie peuvent être proposées pour un même article
+- les quantités de sortie d'un article peuvent varier en fonction du conditionnement associé à un fournisseur (il pourrait exister plusiseurs conditionnements pour le même fournisseur)
+- les quantités du Supply Catalogue doivent être alignées avec les conditionnements de la commande auprès du fournisseur
+- le client doit pouvoir indiquer dans sa commande si l'arrondi est permis 
+si oui > arrondi en fonction conditionnement
+si pas > on respecte quantité commandée”
+-
+BR-05-005-140 – Lors du picking de bobines, le magasinier doit pouvoir substituer une bobine par une bobine sœur en précisant le code d'exception (ex : bobine cassée). En fonction du code d'exception, il doit être possible d'insérer une photo / commentaire qui sera envoyé au coordinateur (business workplace SAP?)
+-
+BR-05-005-060 – eWM doit permettre le piece picking et le picking à l'arrondi
+-
+BR-05-005-070 – A chaque picking, la quantité prélevée doit être confirmée
+-
+BR-05-005-120 – A tout picking, si la quantité à prélever n'est pas entièrement disponible, - le magasinier confirme la qté prélevée qui sera prise en compte pour la sortie de marchandise - SAP doit envoyer le magasinier vers une autre BIN du même article (si applicable) ou via une liste de backorder - SAP doit effectuer l'inventaire de la BIN vide
+-
+BR-05-005-130 – Standard SAP eWM : activer le paramètre qui permet d'effectuer le comptage d'inventaire d'une BIN lors de son picking si sa quantité est en dessous d'un certain seuil
+-
+BR-05-005-190 Au moment d'un picking T8/T9, si un code d'exception et utilisé (bin non-accessible, dimintion de la quantité, augmentation de la quantité) un mail automatique doit être envoyé à Replenishment + FMB du DC afin que les opérationnels puissent prendre une action rapide
+
+
+3.4.6 Scan du numéro de série
+  
+
+Si l’article prélevé est géré par numéro de série, le magasinier scanne le numéro de série de l’article prélevé. Dans le cas contraire, le flux se poursuit directement avec l’impression de l’étiquette de picking. (BR-05-005-170)
+Point d’attention : les articles gérés par numéro de série sont à stocker dans des emplacements qui permettent de scanner leur numéro de série sans difficulté. Les emplacements où le scan est compliqué, tels que les emplacements en grande hauteur à Schaerbeek, sont à éviter. (BR-05-005-170)
+BR-05-005-170 – Lors du picking, le système doit imposer le scan du numéro de série si la marchandise dispose d'un numéro de série
+
+
+
+
+3.4.7 Impression de l'étiquette de picking
+  
+
+Une fois le prélèvement confirmé, le système imprime automatiquement une étiquette de picking pour la ligne ou le poste prélevé. Le contenu de cette étiquette reste à définir. (BR-05-005-080 – GAP BR-05-005-080)
+Lors du picking, le magasinier doit pouvoir réimprimer, si nécessaire, les étiquettes déjà générées. Cette possibilité répond aux différents motifs pouvant nécessiter une réimpression. (BR-08-010-090 ; GAP BR-08-010-090)
+BR-05-005-080 – Pour chaque ligne de picking, une fois que la quantité pickée est confirmée, une étiquette article doit être automatiquement imprimée
+-
+BR-08-010-090 : Il doit être possible de réimprimer une étiquette dans le cas où l'étiquette originelle n'est pas scannable. --> quel type d'étiquettes ? Tout type d'étiquette qui a été généré par eWM
+3.4.8 Association de l'article à la HU de picking
+  
+
+Après l’impression de l’étiquette, le traitement dépend de la conservation de la HU source ou du transfert de l’article vers une HU de picking :
+* Transfert vers une HU de picking (Pick-HU) : le magasinier affecte la quantité prélevée à la HU de picking de destination. (BR-05-005-050 ; BR-05-005-090)
+* Conservation de la HU source, notamment lors du prélèvement d’une HU complète : le magasinier scanne la HU source. Celle-ci est utilisée comme HU de picking. (BR-05-005-050 ; BR-05-005-090)
+Lorsque la HU source est conservée comme HU de picking, deux cas se présentent :
+* La HU est retirée de l’emplacement source (BIN) : le processus se poursuit par le contrôle de fin du picking. (BR-05-005-100)
+* La HU reste dans l’emplacement source, notamment pour les bobines : le système imprime une étiquette d’expédition. L’emplacement source fait alors office de zone de staging pour les articles concernés. Les quantités prélevées qui y restent ne sont plus disponibles pour d’autres opérations de picking. (BR-05-005-100 ; BR-05-005-110 -GAP BR-05-005-110[d])
+Validation des données source
+En cas de correspondance unique entre l’article et l’emplacement source, le magasinier valide le prélèvement par le scan de l’un des deux éléments : l’emplacement ou l’article. Lorsque plusieurs articles (NN, composants, etc.) sont stockés dans le même emplacement, le scan de l’emplacement source et de l’article est requis. (BR-05-005-090)
+Validation de la HU de destination
+Lorsqu’une seule HU de picking est utilisée, le système la reprend par défaut et la confirme automatiquement comme HU de destination. Lorsque plusieurs HU de picking sont utilisées, le magasinier scanne la HU de destination dans laquelle il dépose la quantité prélevée. (BR-05-005-090)
+BR-05-005-050 – Il faut pouvoir garantir la traçabilité durant le picking (via HU) jusqu'à sa consolidation
+-
+BR-05-005-090 – A chaque picking, la HU de préparation client doit être confirmée
+- source : si unicité article et bin > scan d'un seul des 2 éléments - si plusieurs articles (NN / composants / ...) dans une bin > scan de la bin + article
+- destination : si 1 seule HU picking > confirmation par défaut/automatique de la HU picking par système / si plusieurs HU picking > scan de la HU de picking
+-
+BR-05-005-100 – Pour le picking de certains articles (ex : bobines, caniveaux, tire-fond..), il doit être possible de préciser que l'article est/n'est pas déplacé afin que l'emplacement soit repris dans SAP (+ scan de l'emplacement si déplacement). Pour tous ces articles, une étiquette d'expédition doit être imprimée. (L'étape de consolidation n'est dès lors pas nécessaire) 
+-
+BR-05-005-110 (GAP) – Si l'article pické est resté sur place, il doit toujours être considéré comme étant dans sa BIN mais il ne doit plus être possible de le picker à nouveau. En cas d'inventaire, l'article doit être compté. (Lié au BR nr 189)
+
+
+
+
+3.4.8 Association de l'article à la HU de picking
+  
+
+Tant que toutes les tâches magasin de prélèvement (WT) de l’ordre magasin (WO) ne sont pas confirmées, le système guide le magasinier vers la tâche suivante. Une fois toutes les tâches confirmées, le magasinier dépose la HU de picking dans un emplacement (BIN) de la zone de consolidation et confirme son affectation à cet emplacement. Le processus de picking est alors terminé. (BR-05-005-180)
+BR-05-005-180 – Toutes les HU de préparation sont déposées dans la zone de consolidation -> La HU de prép et la BIN des racks/étagère dédiées à la consolidation sont scannées
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3.5 Consolider le picking 
+
+
+Le présent chapitre décrit la consolidation des articles prélevés, réalisée par le magasinier du DC après la fin du picking. Le processus débute lorsque les HU de picking sont déposées dans la zone de consolidation, conformément à la section 3.4.
+Sur la base des règles de consolidation définies, le système guide le magasinier pour regrouper ou réemballer les articles contenus dans les HU de picking au sein d’une ou de plusieurs HU d’expédition.
+Le processus comprend la détermination du regroupement à effectuer, la création de la HU d’expédition, le transfert et l’association des articles, la confirmation de la fin de la consolidation ainsi que l’impression de l’étiquette correspondante.
+
+
+3.5.1 Proposition de repackaging des HU de picking 
+  
+
+À l’issue du picking, les HU de picking sont déposées dans un emplacement (BIN) de la zone de consolidation. Le système propose leur réemballage selon des règles de consolidation paramétrables, spécifiques à cette étape et adaptées aux besoins du destinataire final. Les critères de regroupement, notamment par destination, par COPO ou par réservation, restent à définir. Lors du réemballage, le système guide automatiquement le magasinier dans le regroupement du contenu des HU de picking au sein des HU d’expédition, conformément à ces règles (voir le tableau de l’annexe 3). (BR-05-006-010 ; GAP BR-05-006-010)
+Certaines marchandises peuvent être exclues de la consolidation selon des critères définis. Dans ce cas, l’étape de réemballage peut être contournée : le processus se poursuit sans transfert du contenu vers une autre HU. (BR-05-006-040 ; GAP BR-05-006-040)
+Une HU de picking contenant un kit peut être traitée séparément lors de la consolidation afin de maintenir l’ensemble des composants du kit dans un même emballage. (BR-05-004-130_B ; GAP BR-05-004-130_B)
+Lors de la constitution d’une HU d’expédition contenant des marchandises dangereuses, le système indique au magasinier le pictogramme de danger à apposer sur l’emballage pour respecter les exigences réglementaires du transport. Cette indication est fournie au cours de l’opération d’emballage. Les exigences d’impression associées — points ADR, numéros UN, classes de danger et étiquette SSCC grand format — sont décrites dans la section « Impression de l’étiquette de HU d’expédition ». (BR-05-006-060 ; GAP BR-05-006-060)
+BR-05-006-010 ; BR-05-006-010 GAP – Une fois le picking pour une logique de consolidation terminé, le système doit permettre le pilotage de l'emballage des HU de préparation (HU non gérée en stock y compris) afin d'obtenir des HU d'expédition. Il existe plusieurs logiques de consolidation : par destination / COPO / réservation? / ODD
+Texte complet non reproduit dans le draft ; citation officielle : Business Requirements 20260220!F159.
+BR-05-006-040
+Selon certains critères, la consolidation doit pouvoir être bypassée
+Texte complet non reproduit dans le draft ; citation officielle : Business Requirements 20260220!F130. Référence locale BR-05-004-130_B ; correspondance proposée avec BR-05-004-130-B.
+BR-05-004-130-B
+Le système doit permettre l'emballage des composants qui composent un KIT (via OF) séparément d'autres KITs / articles
+Texte du BR conservé depuis la section 3.5.5 Impression de l'étiquette de HU d'expédition.
+BR-05-006-060 – Lors du packing d'une HU contenant des produits dangereux, le système doit : - indiquer au magasinier quel pictogramme de danger doit être appliqué sur la HU (pour respecter la législation du transport) - imprimer sur l'étiquette de transport le nombre de points ADR, les UN ainsi que les classes de danger - imprimer une étiquette grand format du SSCC afin d'identifier les palettes automatiquement par caméra
+
+
+
+
+3.5.2 Génération du numéro de HU d'expédition 
+  
+
+Sur la base de la proposition de réemballage, le système génère automatiquement le numéro de la HU d’expédition. (GAP Potentiel – à analyser)
+3.5.3 Transvasement et association des articles à la HU d'expédition 
+  
+
+Le magasinier effectue le repacking des articles contenus dans les HU de picking vers la HU d’expédition au niveau du poste de travail de packing. Dans SAP EWM, il confirme le transfert du contenu des HU source vers la HU destination. Le système contrôle ensuite si l’ensemble des articles à regrouper dans la HU d’expédition a été traité. 
+Tant qu’il reste du contenu à repacker, le magasinier poursuit le transfert des articles vers la HU d’expédition. Lorsque l’ensemble du contenu attendu a été traité, il confirme la fin du packing de la HU d’expédition.
+3.5.4 Fermeture de la HU et confirmation de fin de consolidation 
+  
+
+Lorsque les tâches de consolidation sont terminées, le magasinier ferme physiquement la HU d'expédition, puis confirme dans le système la fin de la consolidation de cette HU. Cette confirmation matérialise le passage au statut « consolidation 1 terminée ».
+3.5.5 Impression de l'étiquette de HU d'expédition 
+  
+
+À la clôture de la HU d’expédition, SAP EWM déclenche l’impression de l’étiquette correspondante. Pour les HU contenant des produits dangereux, l’étiquetage reprend les exigences prévues pour le transport. (BR-05-006-060)
+BR-05-006-060 – Lors du packing d'une HU contenant des produits dangereux, le système doit : - indiquer au magasinier quel pictogramme de danger doit être appliqué sur la HU (pour respecter la législation du transport) - imprimer sur l'étiquette de transport le nombre de points ADR, les UN ainsi que les classes de danger - imprimer une étiquette grand format du SSCC afin d'identifier les palettes automatiquement par caméra
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3.6 Consolider à l’expédition
+
+
+
+
+3.6.1 Proposition de repackaging des HU d’expédition[e]
+  
+
+Lors de la consolidation à l’expédition, SAP EWM détermine le regroupement des HU selon des règles de consolidation paramétrées pour cette étape du processus. Ces règles tiennent notamment compte du destinataire (ship-to) et des critères de regroupement définis. Le système guide ensuite le magasinier dans le repacking des HU source vers la HU destination, conformément à la logique de consolidation déterminée (voir annexe 3). (BR-05-006-010 – GAP BR-05-006-010   ; BR-05-006-040) 
+Selon les critères définis, certaines marchandises peuvent être exclues de cette étape de consolidation. Dans ce cas, le repacking est bypassé et les HU concernées poursuivent directement le flux d’expédition sans transfert de leur contenu vers une autre HU. (BR-05-006-040)
+BR-05-006-060 – Lors du packing d'une HU contenant des produits dangereux, le système doit : - indiquer au magasinier quel pictogramme de danger doit être appliqué sur la HU (pour respecter la législation du transport) - imprimer sur l'étiquette de transport le nombre de points ADR, les UN ainsi que les classes de danger - imprimer une étiquette grand format du SSCC afin d'identifier les palettes automatiquement par caméra
+BR-05-006-010 ; BR-05-006-010 GAP – Une fois le picking pour une logique de consolidation terminé, le système doit permettre le pilotage de l'emballage des HU de préparation (HU non gérée en stock y compris) afin d'obtenir des HU d'expédition. Il existe plusieurs logiques de consolidation : par destination / COPO / réservation? / ODD
+BR-05-006-040
+Selon certains critères, la consolidation doit pouvoir être bypassée
+
+
+
+
+3.6.2 Créer numéro de HU mère
+
+
+
+
+  
+
+
+
+Sur la base de la logique de consolidation déterminée, l’opérateur crée dans SAP EWM une HU de niveau supérieur (HU mère), dans laquelle les HU d’expédition de niveau inférieur (HU filles) sont regroupées. 
+Besoins (GAP) :
+* Pour l’expédition, le nesting des HU d’expédition dans une HU de niveau supérieur permet de réduire le nombre d’unités de manutention à gérer au niveau du transport et d’optimiser les opérations de manutention.
+* Pour le Track & Trace, le système conserve la relation entre la HU mère et les HU filles, afin d’assurer la traçabilité de chaque HU tout au long du flux.
+* Pour la réception au SP, la HU mère permet de réduire le nombre de scans nécessaires lors de la réception du transport, tout en conservant l’identification des HU filles qu’elle contient.
+* Pour le besoin du COPO, chaque HU fille reste identifiable individuellement et peut être réceptionnée par scan de son numéro HU, sans devoir scanner les articles ou les lignes qu’elle contient.
+3.6.3 Dépose et association des HU d’expédition à la HU mère 
+
+
+  
+
+Le magasinier regroupe physiquement les HU d’expédition et les packe dans une HU de niveau supérieur (HU mère). Dans SAP EWM, les HU d’expédition sont ainsi associées comme HU filles à la HU mère, tout en conservant leur identification et leur contenu. 
+Le système contrôle ensuite si toutes les HU prévues pour cette consolidation ont été affectées à la HU mère. Tant que des HU restent à consolider, le magasinier poursuit leur affectation. Lorsque l’ensemble des HU attendues est regroupé, il confirme la fin du packing de la HU mère.
+3.6.4 Confirmation fin consolidation de la HU mère 
+  
+
+Lorsque toutes les HU filles prévues ont été packées dans la HU de niveau supérieur, le magasinier clôture la HU mère dans SAP EWM. Cette confirmation marque la fin de l’étape de packing/consolidation au niveau de la HU mère et permet le passage à l’étape suivante du processus. Le statut métier « consolidation 2 terminée » peut alors être mis à jour.
+
+
+
+
+
+
+
+
+
+
+
+
+3.6.5 Mesurage à l’aide du calculateur cubimétrique 
+  
+
+SAP EWM reçoit et exploite les données transmises par le calculateur cubimétrique, notamment le poids et le volume de la HU, afin d’éviter une saisie manuelle et de rendre ces informations disponibles pour les étapes de transport. (BR-05-006-020 ; GAP BR-05-006-020)
+En l’absence d’intégration avec le calculateur cubimétrique, l’opérateur renseigne manuellement, via le scanner RF, le poids et le volume de la HU concernée dans SAP EWM. (BR-05-006-020 ; GAP BR-05-006-020)
+BR-05-006-020 - Le système doit pouvoir traiter les informations reçues d'un calculateur cubimétrique (poids, volume…) afin d'éviter d'introduire les informations manuellement et de les exploiter pour le transport
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3.6.5 Impression documents + étiquettes
+
+
+  
+
+Lors du packing d’une HU contenant des produits dangereux, SAP EWM indique au magasinier le pictogramme de danger à appliquer sur la HU. (BR-05-006-060)
+Après la clôture de la HU mère dans SAP EWM, le système déclenche l’impression des documents et étiquettes requis pour l’expédition :
+* l’étiquette de transport reprenant le nombre de points ADR, les numéros UN et les classes de danger (GAP BR-05-006-060-01)
+* l’étiquette SSCC grand format destinée à l’identification automatique des palettes par caméra (GAP BR-05-006-060-02)
+* la packing list (GAP BR-05-006-060-03)
+* le bon de livraison (GAP BR-05-006-060-04)
+BR-05-006-060 – Lors du packing d'une HU contenant des produits dangereux, le système doit : - indiquer au magasinier quel pictogramme de danger doit être appliqué sur la HU (pour respecter la législation du transport) - imprimer sur l'étiquette de transport le nombre de points ADR, les UN ainsi que les classes de danger - imprimer une étiquette grand format du SSCC afin d'identifier les palettes automatiquement par caméra
+3.6.6 Proposer bin dans zone d’expédition, déposer HU mère sur bin & associer HU mère à la bin
+
+
+  
+
+
+
+SAP EWM propose au magasinier une BIN de destination dans la zone d’expédition. Le magasinier y dépose la HU mère et confirme le déplacement via le scanner RF. La HU est alors positionnée dans SAP EWM sur la BIN d’expédition correspondante.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4.1 Flux expédition
+
+
+Le présent chapitre décrit le processus d’expédition des marchandises à partir du moment où les HU sont prêtes et disponibles dans la zone d’expédition jusqu’à leur sortie physique du DC et à l’enregistrement de la sortie de marchandises dans le système.
+Le processus couvre notamment:
+* La préparation et l’organisation du transport par le coordinateur du DC ;
+* L’association des HU à l’expédition concernée ;
+* La transmission des informations au transporteur ;
+* La génération des documents nécessaires ;
+* Le chargement ou l’enlèvement des HU ;
+* La confirmation de leur sortie physique ;
+* L’enregistrement de la sortie de marchandises.
+Le déroulement dépend du type d’expédition, notamment lorsqu’il s’agit d’une distribution ou d’un enlèvement, ainsi que du mode de gestion du chargement. Le chargement peut être géré directement par le DC ou par un transporteur ou système externe.
+4.1.1 Flux expédition – Coordinateur DC
+Lorsque les HU sont conditionnées et positionnées dans la zone de sortie (staging area), le coordinateur du DC préparera leur prise en charge pour le transport dans SAP EWM.
+Selon le scénario d'expédition, distribution organisée par le DC ou enlèvement par le client ou le transporteur, le coordinateur du DC réalisera les actions suivantes :
+* créer l'unité de transport (transportation unit, TU) qui identifiera l'expédition dans le système
+* sélectionner les HU concernées et les affecter à la TU
+* figer la liste des HU affectées, afin qu'aucune HU ne puisse plus être ajoutée ou retirée de l'expédition
+* transmettre au transporteur les données d'expédition requises
+* éditer les documents de transport associés à la TU
+* informer le destinataire de l'expédition ou de la mise à disposition de la marchandise.
+L'enchaînement de ces actions et les exigences propres à chaque scénario sont décrits dans les sections relatives au flux de distribution et au flux d'enlèvement.
+
+
+
+
+4.1.1.1 Créer le numéro d’expédition, associer les palettes au numéro d’expédition & figer les HU d’expédition liées au numéro d’expédition
+
+
+  
+
+Depuis le desktop, le coordinateur du DC crée une unité de transport (transportation unit, TU) pour chaque transport à organiser. Chaque TU correspond à un véhicule unique, destiné au chargement des HU positionnées sur les emplacements d'expédition (BR-06-001-020).
+Lors de la création du TU, le coordinateur du DC sélectionne le moyen de transport (means of transport) concerné, par exemple un camion-grue ou une semi-remorque. Il sélectionne ensuite, dans la liste des HU disponibles à l'expédition, les HU à charger et les affecte à la TU (BR-06-001-020).
+Une fois toutes les HU affectées, le coordinateur du DC clôture le chargement de la TU via la fonction « Fin de chargement » (end of loading). Cette action fige la liste des HU liées au TU et définit de manière définitive les marchandises prévues pour le transport concerné (BR-06-001-020).
+La demande de transport peut être créée dès la fin de la consolidation de l'ensemble des marchandises, sans comptabilisation préalable de la sortie de marchandises (goods issue). Les HU restent ainsi suivies dans le stock SAP EWM jusqu'à leur sortie physique du DC (BR-06-001-010 ; GAP BR-06-001-010).
+Le terme « numéro d'expédition » désigne indifféremment :
+* un numéro de distribution ;
+* un numéro d'enlèvement.
+Dans le cadre d'un enlèvement, les articles et les HU formant un même ensemble sont regroupés sous une référence unique. Cette référence permet au transporteur se présentant au comptoir d'identifier sans ambiguïté l'ensemble des marchandises à enlever (BR-06-002-010).
+Ce principe s'applique notamment aux cas suivants (BR-06-002-010) :
+* les retours de marchandises liés à un litige fournisseur ;
+* les enlèvements d'articles NNN ou destinés à la consommation directe ;
+* les autres enlèvements comprenant plusieurs articles ou HU.
+
+
+
+
+4.1.1.2 Distribution
+  
+
+Dans le cas d’une distribution, une demande d’expédition est transmise électroniquement au transporteur avant la sortie de marchandises. Le message EDI reprend les données de conditionnement, notamment le nombre de palettes, le poids, les dimensions et l’identification des palettes (BR-06-001-030 – GAP BR-06-001-030).
+Les informations ADR nécessaires à l’organisation du transport, notamment le poids brut des marchandises dangereuses, sont également intégrées dans le message EDI afin de respecter les règles légales applicables (BR-06-001-070[f][g]– GAP BR-06-001-070).
+Le système doit également permettre l’envoi d’un EDI light au transporteur avant la sortie de marchandises (BR-06-001-050).
+Une fois la demande d’expédition envoyée, le système imprime automatiquement les documents suivants (BR-06-001-080 – GAP BR-06-001-080) :
+* CMR en 4 exemplaires (nb palettes, poids, destination, référence aux produits dangereux (code UN..)
+* Documentation ADR
+* Fiches MSDS en FR & NL[h][i]
+Le système reçoit ensuite une confirmation du transporteur indiquant que la demande EDI a bien été prise en charge (BR-06-001-040 – GAP BR-06-001-040).
+Une fois cette confirmation reçue, un e-mail est automatiquement envoyé au demandeur afin de l’informer que son matériel sera expédié lors de la prochaine tournée, sauf contre-indication du TOM (BR-01-002-0020-B).
+
+
+4.1.1.2 Enlèvement
+
+
+  
+
+
+
+Dans le cas de l’enlèvement, le système enverra automatiquement un mail au destinataire pour l’informer que la marchandise est prête pour enlèvement et pour lui permettre de prendre rendez-vous. La date/heure de prise de rendez-vous sera tracée par le système afin d’assurer un suivi (BR-05-007-010-B ; GAP BR-05-007-010-B) 
+4.1.2 Flux expédition – Gestion par le DC
+Lorsque le chargement est pris en charge par le DC, le magasinier réalise les opérations de sortie et de chargement des HU d’expédition au moyen de son scanner/PDA.
+4.1.2.1 Activer le chargement, afficher liste des HU d’expédition & sortir les HU d’expédition de l’entrepôt
+  
+
+Au début du chargement, le magasinier sélectionne ou scanne le numéro d’expédition depuis son scanner/PDA et active le chargement.
+Le système affiche alors la liste des HU d’expédition préalablement sélectionnées par le coordinateur et associées à ce numéro d’expédition (BR-06-001-020 - GAP).
+Sur la base de cette liste, le magasinier prend en charge les HU concernées et les sort de leur BIN d’expédition afin de les acheminer vers le véhicule. La confirmation individuelle de la sortie des HU est décrite à la section 4.1.2.2.
+4.1.2.2 Confirmer la sortie des HU d’expédition de l’entrepôt & confirmer l’endroit de sortie des HU d’expédition
+
+
+  
+
+Le magasinier sort les HU d’expédition de l’entrepôt une par une. Pour chaque HU, il confirme la sortie dans le système ainsi que l’endroit par lequel celle-ci quitte le DC (GAP).
+Le même mécanisme de scan est appliqué lors du retour d’une HU refusée. Le magasinier scanne la HU au moment de son enlèvement afin de confirmer la sortie de la bonne HU, notamment lorsque d’autres HU contenant le même article se trouvent dans la même zone (BR-02-002-050 – GAP).
+En cas de problème technique survenu lors de l’enlèvement par un chauffeur milkrun, le coordinateur doit pouvoir enregistrer manuellement, depuis son poste de travail, le retrait des HU d’expédition concernées (BR-06-003-020). Cela se fera via la transaction relative aux unités de transport, ou on enregistrera la sortie marchandises des HU liés à ce numéro d’expédition.
+Lorsque la sortie de toutes les HU associées au numéro d’expédition a été confirmée, le système confirme la fin du chargement.
+Le lien de tracking communiqué par le transporteur doit pouvoir être enregistré dans le système et associé à la HU, au numéro de transport ou au bon de livraison. Il permet d’assurer le suivi du transport jusqu’à l’arrivée des marchandises chez le destinataire (BR-06-003-040 – GAP BR-06-003-040).
+Le système doit également permettre de localiser une HU et de consulter l’historique de ses différentes localisations. Cette traçabilité doit couvrir les mouvements réalisés tout au long du processus, y compris les éventuels passages par les flux d’échantillonnage QM et d’immatriculation.
+Enfin, des KPI doivent permettre de suivre la performance des transports (BR-07-007-010 – GAP BR-07-007-010) :
+* marchandises enlevées OTIF ;
+* marchandises livrées OTIF.
+4.1.2.3 Totalité des HU n’est pas emportée
+
+
+  
+
+A la confirmation de la fin du chargement du transport, si le DC confirme que la totalité des HU n’est pas emportée, le système dissociera automatiquement les HU d’expédition non-emportées du numéro d’expédition. Une notification sera ensuite envoyée au coordinateur.
+4.1.2.4 Sortie des articles du DC
+
+
+  
+
+
+
+Le système permettra au DC d’enregistrer la date/heure physique de la sortie des marchandises. Une fois la sortie des marchandises enregistrée dans le système EWM, la sortie des marchandises IM sera effectuée automatiquement au même moment. La sortie physique devra correspondre à la sortie comptable.
+Dans le cas des articles NNN/Consommation les articles quittent le DC sans enregistrement de la sortie comptable dans le système.
+BR-06-003-030 
+La sortie des marchandises dans le système IM doit être effectuée au moment où la marchandise quitte le DC (y compris via interface EDI avec le transporteur ou la plateforme qui gère les balises GPS ou le système caméra qui reconnaît les étiquettes SSCC). : la synchronisation EWM / S4 est standard ; le GAP porte sur l'interface avec le système caméra reconnaissant les étiquettes SSCC.
+
+
+4.1.3 Flux expédition – Non-géré par le DC (GAP)[j]
+4.1.3.1 Détecter sortie des HU d’expédition, enregistrer les infos relatives à l’expédition & comparer liste des HU d’expédition
+
+
+
+
+  
+
+Dans le cas ou l’expédition n’est pas gérée par le DC (mais par le transport, ou toute autre personne n’appartenant pas au DC). Les Hus seront sorties physiquement de l’entrepôt. Le système permettra de détecter et enregistrer la sortie des HU d’expédition et l’endroit de sortie (soit en direct par l’intégration soit par l’import de données tierces).
+BR-06-003-030 
+La sortie des marchandises dans le système IM doit être effectuée au moment où la marchandise quitte le DC (y compris via interface EDI avec le transporteur ou la plateforme qui gère les balises GPS ou le système caméra qui reconnaît les étiquettes SSCC).
+
+
+
+
+4.1.3.2 Hus prévues mais non-emportées & HU prévues & emportées
+
+
+  
+
+
+
+Le système comparera automatiquement la liste des HU d’expédition attendues et les HU réellement emportées. 
+* HU Prévues et emportées
+Si le système détecte que la totalité des HU est emportée. La sortie des marchandises sera enregistrée suivant la section 4.1.2.4 Sortie des articles du DC
+* HU Prévues et non-emportées 
+Si le système détecte que la totalité des HU n’est pas emportée, le système dissociera automatiquement les HU d’expédition non-emportées du numéro d’expédition. Une notification sera ensuite envoyée au coordinateur.
+* HU Non-prévues et emportées
+Si le système détecte que des HU non-prévues ont été emportées. Le système associera automatiquement les HU d’expédition emportées au numéro d’expédition. Une notification sera ensuite envoyée au coordinateur.
+Annexe 1 : Calendrier d’expédition
+
+
+  
+
+
+
+Annexe 2 : Discussion Kit - Inbound
+Notion visée par ce BR = kit au sens courant : càd l’article composé de plusieurs composants physiques distincts. Ex. une armoire IKEA connue sous une seule référence commerciale et constituée de 3 colis distincts.
+Transposé à Infrabel :
+- 1 seul NN est commandé sur le PO
+- 1 seul NN est réceptionné
+- cet article peut être composé de plusieurs composants physiques distincts
+- ces composants peuvent être stockés ensemble dans une même HU et dans une même BIN ou répartis dans plusieurs HU et/ou plusieurs BIN
+ex. 1 armoire électrique = 1 NN, est constituée de 1 pied + 1 armoire
+Besoins :
+- Le système doit pouvoir identifier qu'un article NN est composé de plusieurs composants physiques distincts
+- Chaque composant doit avoir ses propres caractéristiques (poids, dimension, aire de stockage...)
+- Le système doit afficher le nombre de composants constituant l'article
+- Lors de la mise en stock, le manutentionnaire doit pouvoir décider à sa discrétion de répartir différents composants d’un même article NN en éléments distincts
+- Le système doit permettre :
+o le stockage de tous les composants dans une même HU et une même BIN
+o le stockage des composants dans plusieurs HU
+o le stockage des composants dans plusieurs BIN
+o le stockage des composants dans différentes aires de stockage
+o toute combinaison des deux modes de stockage
+- Lors du picking, le système doit indiquer au manutentionnaire qu'un article NN est composé de plusieurs composants
+- Le système doit afficher le nombre total de composants attendus
+- Lors du picking d'un article NN composé de plusieurs composants, le système doit guider le manutentionnaire vers l'ensemble des emplacements
+- La clôture de la tâche de picking n’est possible qu'après confirmation du picking de la totalité des composants
+- Le système doit permettre le suivi de l'état d'avancement du picking (ex. 1/3, 2/3, 3/3)
+- Le système doit imprimer une étiquette par composant (1/3, 2/3, 3/3)
+Ex existants : 
+- 385202400000 - DMR (lien : sharepoint.com/:u:/r/sites/104379/Gedeelde%20documenten/03%20Design%20Documentation/Blueprint/Dmr%20.eml?csf=1&web=1&e=e3Idin"https://infrabel.sharepoint.com/:u:/r/sites/104379/Gedeelde%20documenten/03%20Design%20Documentation/Blueprint/Dmr%20.eml?csf=1&web=1&e=e3Idin)
+- 078370530000 - Poste transf 1kV/230V GSM-R (type d'armoires qui doit être livré avec pied et transformateur (donc 2 ou 3 palettes pour 1 NN))
+- 078371420000 - Arm. 1kV/110V 3,15 kVA (type d'armoires qui doit être livré avec pied et transformateur (donc 2 ou 3 palettes pour 1 NN))
+- 071070010000 - Poteau basculant de 12m
+
+
+
+
+
+
+
+
+Annexe 3 : Consolidation Picking et Expédition – A titre illustratif – Ne représente pas tous les cas de figure possibles
+  
+[k]
+  
+[l]
+ General (Internal Property) 
+
+
+
+
+
+[a]Remettre à jour l’image avec la dernière version
+[b]Attention, ici on doit clarifier si une livraison sortante doit être generer automatiquement pour les quantités restantes. Et si cela doit être fait automatiquement.
+[c]@EL BAKKALI Youssef Dans ce BR, on parle de subsituer une bobine, par une bobine soeur. Te rappelle-tu si c’est plutot un BR “plus général”?
+[d]A confirmer avec le business - dans la GAP List
+[e]A verifier avec la Solution pensée par Bernard
+[f]@Moerenhout Gilles à confirmer
+[g]25/08 En cours @Moerenhout Gilles (discussion relative à l’ADR)
+[h]@Moerenhout Gilles à confirmer
+[i]25/08 En cours @Moerenhout Gilles (discussion relative à l’ADR)
+[j]@EL BAKKALI Youssef note BRM, pré-requis = hardware & portiques automatiques.
+[k]@Moerenhout Gilles définir les différents cas de consolidation picking et consolidation expédition
+[l]A rediscuter Consolidation pour plusieurs COPO

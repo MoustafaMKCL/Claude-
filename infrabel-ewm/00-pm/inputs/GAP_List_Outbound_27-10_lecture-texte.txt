@@ -1,0 +1,280 @@
+### GAP BR-05-004-010 | Génération automatique des bons 8* – horizon & vagues séparées | STATUT=Attente réponse business REPL | CPLX=/ | TYPE=Config / Enhancement (à trancher) | SECTION=3.1 – Prérequis – génération des livraisons sortantes (BL 8*) | OWNER= | AUTRES EQ=oui / Replenishment | COUVERT=Gap
+TOBE: Planification jobs.docx  |  | Confirmer si la planification quotidienne convient pour ce besoin
+PO: 25/09/2026 : première jet de Ronet : |  | - Calendrier des milkruns (tournée fixée par semaine, la même toutes les semaines) |  | - ODD |  | - Urgences (T8/T9) |  | - Par rapport au moyen/type de transport ? > câble/Touret (Camio grue ou Geertrans) |  | - Divers (Expedition de reappro) |  | Enlèvement (COPO/Entrepreneur) |  | Vague manuel pour les touret
+ALT: 
+
+### GAP BR-05-004-020 | Calendrier d'expédition milkrun maintenable par les coordinateurs | STATUT=Analysé | CPLX=/ | TYPE=Enhancement (table de paramétrage + interface de maintenance) | SECTION=3.1 – Prérequis – génération des livraisons sortantes (BL 8*) | OWNER= | AUTRES EQ=oui / Replenishment | COUVERT=Gap
+TOBE: Idem solution GAP BR-05-004-020 + analyser la possibilité de donner accès aux coordinateurs au calendrier des milkrun |  | 27/10; si un besoin de changement dans le calendrier milkrun est nécessaire, le DC contacte replenishment afin de changer le variant du job sans necessité de CR ou Ticket. |  | Ca reste un GAP pour restreindre l'equipe Replenishment au modification. Developpé transaction pour modifier le variant du job d'une maniere controlé.
+PO: 25/09/2026 : première jet de Ronet : |  | - Calendrier des milkruns (tournée fixée par semaine, la même toutes les semaines) |  | - ODD |  | - Urgences (T8/T9) |  | - Par rapport au moyen/type de transport ? > câble/Touret (Camio grue ou Geertrans) |  | - Divers (Expedition de reappro) |  | Enlèvement (COPO/Entrepreneur) |  | Vague manuel pour les touret
+ALT: 
+
+### GAP BR-05-004-050 | Création de la livraison sortante conditionnée à la disponibilité du stock | STATUT=Attente réponse business REPL | CPLX=— | TYPE=— | SECTION=3.1 – Prérequis – génération des livraisons sortantes (BL 8*) | OWNER= | AUTRES EQ=oui / Replenishment | COUVERT=Standard Infrabel
+TOBE: Une livraison sortante ne peut être générée que si le stock est disponible dans le système, quel que soit le type de livraison (STO / réservation).
+PO: Point ouvert : commentaires blueprint — attente du retour de Gilles sur la génération des BL en lien avec l'ATP (Kayali 04/08) ; Youssef 25/08 : en cours. |  | Attente Retour Replenishment - meeting 22/10
+ALT: 
+
+### BR-05-003-010 | HU non gérées en stock liées à un bon 8* sans référence – staging | STATUT=Analysé | CPLX=/ | TYPE=— | SECTION=3.1 – Prérequis – génération des livraisons sortantes (BL 8*) | OWNER= | AUTRES EQ= /  | COUVERT=Standard Infrabel
+TOBE: Deck : standard Infrabel (VL01NO – solution Bascoup). À reclarifier avec le business pour lister tous les cas de figure des bons 8* sans référence.
+PO: Fait partie du flux 5C Création de bon sans référence. Pas encore traité durant session Blueprint. A retirer du blueprint outbound car repris dans flux NNN?  | Mentionner dans le blueprint la possibilité d'utiliser la transaction VL06no pour sortir des articles sur un bon sans réference, c'est du standard et déja utilisé aujourd'hui. Juste expliquer la possibilité.
+ALT: 
+
+### GAP BR-05-004-090 | Critères d'affectation des livraisons aux vagues de picking | STATUT=Analysé | CPLX=/ | TYPE=Config / Enhancement (à trancher) | SECTION=3.2 – Lancer les vagues de picking | OWNER= | AUTRES EQ= /  | COUVERT=Gap (potentiel)
+TOBE: Blueprint : l'affectation d'une OBD à une vague résulte de la combinaison de deux critères — sa route (qui détermine la série de vagues) et sa date de besoin (qui détermine l'occurrence retenue au sein de la série). La vague retenue est le lancement qui précède la date de besoin, et non le lancement calendairement le plus proche ; les fenêtres se succèdent sans recouvrement ni interruption. La date de création de l'OBD n'intervient pas. Exemple route Luttre (lancement le jeudi) documenté dans le blueprint. |  | Concernant le calendrier milkrun, le besoin est d'avoir une vague Milkrun meme si la création des BL se fait depuis IM. relation 1:1 entre job Milkrun et Wave milkrun.
+PO: si on considère que le job planifié dans S4 détermine l'occurrence dans SAP EWM, nous n'avons pas de développement à faire. A confirmer avec le business & bernard. |  | A confirmer si nécessaire après la discussion avec REPL le 22/10 |  | 27/10 onleve de la wave la disponibité du stock car si pas de stock pas BL. Pour les ressource, pas besoin car on bloque les emplacement dans lesquels on ne veut pas picker | Gilles confirme le split de wave par Aire d'activité n'est pas nécessaire. |  | Wave à part pour les ODD
+ALT: Le standard EWM affecte les postes de livraison aux vagues par wave templates et enregistrements de conditions (par exemple route), avec des heures de lancement définies par wave template : route et date de besoin sont des critères exploitables. La disponibilité du stock est contrôlée à la création du BL, et la disponibilité des ressources n'intervient pas dans l'affectation aux vagues (note BA du 28/07). L'alternative consiste à laisser le job planifié S/4 déterminer l'occurrence et à utiliser la détermination standard par route côté EWM ; dans ce cas, aucun développement n'est nécessaire (commentaire de la ligne). Si l'affectation doit se faire dans EWM, la règle de fenêtre de besoins (lancement qui précède la date de besoin) n'est pas identifiée comme standard. L'écart porte sur cette règle ; solution à discuter avec le business et Bernard (voir colonne Lien document d'analyse).
+
+### GAP BR-05-004-120-A | Alerte dynamique DC à l'arrivée d'une demande T8/T9 | STATUT=À analyser | CPLX=M | TYPE=Enhancement (PPF) et/ou App Fiori | SECTION=3.2 – Lancer les vagues de picking | OWNER=Moustafa | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Blueprint : le DC doit être alerté activement de l'arrivée d'un T8/T9 ; l'information doit prendre la forme d'un signal global visible par l'ensemble du personnel du DC, non adressé à une personne ou un rôle ; ce signal ne doit pas perturber les activités de manutention en cours. Un dashboard dynamique affichant les T8/T9 à traiter en urgence, mis à jour automatiquement, sera disponible à tous les utilisateurs du DC.  | un Ecran avec couleur différentes par statuts picking etc
+PO: Deck : GAP au niveau du système d'alerte (email + PPF selon le statut de la livraison, ou app Fiori). Renvoi au blueprint Reporting pour les écrans Fiori — coordonner les deux documents. | 25/09/2026 : première jet de Ronet : |  | - Calendrier des milkruns (tournée fixée par semaine, la même toutes les semaines) |  | - ODD |  | - Urgences (T8/T9) |  | - Par rapport au moyen/type de transport ? > câble ? à rediscuter
+ALT: Le standard EWM peut déclencher des actions PPF (impression, e-mail) selon le statut de la livraison, affiche les livraisons et leur statut dans /SCWM/MON, et offre le Warehouse Cockpit et des apps KPI Fiori (voir onglet Reporting). L'alternative consiste à regrouper les T8/T9 dans des vagues urgentes dédiées (BR-05-004-120-C) et à afficher sur un écran du DC une vue filtrée sur ces vagues. Un signal global non nominatif, rafraîchi automatiquement et visible par tout le DC, n'existe pas tel quel en standard ; la piste du fichier BR est un dispositif de type ZIM1_WM_FOLLOWUP (Schaerbeek). L'écart porte sur cet affichage dynamique ; à coordonner avec le blueprint Reporting.
+
+### GAP BR-05-004-120-B | Monitoring des demandes T8/T9 | STATUT=À analyser | CPLX=/ | TYPE=Config | SECTION=3.1 – Prérequis – génération des livraisons sortantes (BL 8*) | OWNER=Moustafa | AUTRES EQ= /  | COUVERT=GAP Possible
+TOBE: L'évolution en temps réel des statuts des livraisons T8/T9 sera accessible via le Warehouse Monitor. Les différents statuts restent à définir. GAP Possible en fonction d'affichage
+PO: Stanadard SAP : possible de monitorer les routes T8 T9 via le warehouse monitor. Cependant type d'affichage (couleurs) nécessite un développement
+ALT: 
+
+### GAP BR-05-004-130_B | Traitement séparé d'une HU de picking relative à un Kit | STATUT=Partiellement analysé | CPLX=L | TYPE=Enhancement | SECTION=3.5 – Consolider le picking | OWNER= | AUTRES EQ=oui / MMD, autres ? | COUVERT=Gap
+TOBE: Une HU de picking relative à un Kit doit pouvoir être traitée séparément afin que le Kit soit emballé avec l'ensemble de ses composantes. Besoins listés en Annexe 2 du blueprint : identifier qu'un NN est composé de plusieurs composants, afficher le nombre de composants, guider le magasinier vers l'ensemble des emplacements, n'autoriser la clôture qu'après confirmation de tous les composants, suivre l'avancement (1/3, 2/3, 3/3) et imprimer une étiquette par composant.
+PO: BR-05-004-130_A supprimé (Demoulin 06/08) ; BR splitté, 2ᵉ partie remontée au niveau création / affectation de vague (Kayali 04/08). Définition du Kit à figer — renvoi à la définition inbound (Moerenhout 19/08) ; distinguer « Kit IKEA » (1 NN en plusieurs parties) et « Kit Infrabel » (plusieurs NN regroupés à l'expédition). Deck : « n'a pas été discuté durant les WS ». | Responsabilité maintenance des master data à définir avec les BA le 22/10/26
+ALT: Le standard EWM gère des kits avec article en-tête et composants (kit to order, kit to stock, VAS) lorsque chaque composant a son propre n° article. L'alternative pour le « Kit Infrabel » (plusieurs NN expédiés ensemble) consiste à utiliser ce kitting standard, avec une nomenclature (BOM) comme prérequis. Le « Kit IKEA » (1 NN composé de plusieurs composants physiques, Annexe 2) n'est pas couvert en standard : le stock d'une pièce n'est localisé qu'à un seul emplacement, et le guidage composant par composant, le suivi 1/3, 2/3, 3/3 et l'étiquette par composant n'existent pas. L'écart porte sur le Kit IKEA ; définition du kit et déclencheur du kitting à figer avant tout développement.
+
+### GAP BR-05-005-030 | Pilotage des magasins automatisés et des outils de manutention (smart picking) | STATUT=Analysé | CPLX=L | TYPE=Interface | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Blueprint : le système permettra de piloter toute forme de magasin automatisé (VLM, LR35, magasin compact microstore…) et tout outil de manutention automatisé (robot, clark autonome…). Le système doit piloter de manière optimale vers les BIN de prélèvement, y compris pour les tours.
+PO: Commentaire Moerenhout 28/08 — à compléter concernant les tours : un utilisateur doit pouvoir travailler sur plusieurs tours en alternance (Hänel, Kardex, Modula) ; plusieurs utilisateurs doivent pouvoir travailler sur plusieurs tours ; plusieurs utilisateurs doivent pouvoir exécuter des flux différents (inbound pour l'un, picking pour l'autre) simultanément sur plusieurs tours. Ces trois exigences ne sont pas encore reprises dans le corps du blueprint.
+ALT: 
+
+### GAP BR-05-005-150 | Réimpression de l'étiquette HU avec la quantité restante après découpe | STATUT=Analysé | CPLX=S | TYPE=Form / Enhancement | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ= /  | COUVERT=Gap possible
+TOBE: Après une découpe, il faut réimprimer une étiquette de HU actualisée avec la quantité restante pour la bobine remise en stock.
+PO: 
+ALT: 
+
+### GAP BR-05-005-150 | Réimpression de l'étiquette HU avec la quantité restante après découpe | STATUT=À analyser | CPLX=S | TYPE=Enhancement | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ= /  | COUVERT=Gap possible
+TOBE: Pour permettre le suivi de la productivité et l’organisation du travail, le système distingue les opérations de picking nécessitant une découpe de câble du prélèvement d’une bobine complète sans découpe (piece picking). (BR-05-005-150 ; Potentiel GAP BR-05-005-150)
+PO: Comment distinguer necessitant une découpe complète ou pas? sauf la WORC
+ALT: 
+
+### BR-05-005-160-B | Gestion de la péremption exclusivement dans SAP (MMD) | STATUT=Attente réponse business MMD | CPLX=— | TYPE=— | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ=oui / MMD, MMD FI | COUVERT=Prérequis master data
+TOBE: Contrainte de données : les articles avec date de péremption doivent être gérés dans SAP par MMD. Prérequis à BR-05-005-160-C et -D.
+PO: Prérequis MMD à porter au plan de master data. Les données relatives aux dates d'expiration doivent être gérées en amont par MMD. Si les règles de gestion relatives au BR-05-005-160-C sont nécessaires, celles-ci devront être gérées par MMD FI;
+ALT: 
+
+### GAP BR-05-005-160-C | Seuil minimal de péremption avant expédition, par profil client | STATUT=À confirmer avec MMD / MMD FI | CPLX=/ | TYPE=Enhancement | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ=oui / MMD, MMD FI | COUVERT=Gap
+TOBE: Le blueprint tague explicitement le seuil par profil client comme GAP. Exemples cités : SP1 — délai minimal plus long ; COPO avec chantier prévu le week-end suivant — délai minimal plus court.
+PO: La notion de « profil client » n'est pas définie (donnée porteuse à identifier : COPO, SP, type de destinataire).
+ALT: Le standard SAP gère la date de péremption sur le lot et une durée de vie résiduelle minimale par article. Côté S/4, la détermination de lot par stratégie (enregistrements de conditions, par exemple par client et article) peut imposer une durée résiduelle minimale aux lots livrés, et EWM prélève le lot indiqué dans la livraison. L'alternative consiste à appliquer un seuil par article, voire par destinataire via ces stratégies, si la détermination de lot s'applique aux livraisons de STO (à vérifier). La notion de « profil client » n'est pas définie et sa traduction en donnée SAP reste à identifier. L'écart porte sur la modulation du seuil par profil de destinataire ; à vérifier avant de confirmer le GAP.
+
+### GAP BR-05-005-160-D | Détection, blocage et évacuation des articles sous seuil de péremption | STATUT=À confirmer avec business | CPLX=/ | TYPE=Enhancement + Report | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ=oui / MMD, MMD FI | COUVERT=Gap
+TOBE: Quatre composantes : détection des articles sous seuil global, blocage au picking d'expédition client, affectation à une vague de picking dédiée permettant l'évacuation du stock au moment opportun, et rapport régulier vers Replenishment.
+PO: La notion de « profil client » n'est pas définie (donnée porteuse à identifier : COPO, SP, type de destinataire).
+ALT: 
+
+### GAP BR-05-005-120-D | Demande « ship complete » – annulation et réaffectation automatiques | STATUT=À confirmer avec business | CPLX=/ | TYPE=Enhancement + Workflow | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ=oui / Replenishment | COUVERT=Gap
+TOBE: Voir commentaire
+PO: l'indicateur ship complete determine soit si la livraison doit etre complete, soit si le post de livraison doit être complet.  | Le ship complete  sur toute la livraison concerne les ODD, PR et OF | Le ship complete sur un poste de livraison concerne les KIT et les BOM.
+ALT: Selon le fichier BR, le ship complete correspond à l'indicateur de livraison complète: pas de livraison partielle, la demande n'est relâchée que lorsque tout est disponible. Côté EWM, la simulation de la vague avant lancement permet de vérifier la disponibilité. L'alternative (commentaire BRM) consiste à détecter l'indisponibilité avant le picking par simulation de la vague, ce qui couvre la majorité des cas, hors pick denial. L'annulation en cascade de tous les ordres de prélèvement, la remise en stock automatique des articles déjà prélevés, la réaffectation automatique et la notification à Replenishment n'existent pas en standard. L'écart porte sur le traitement du pick denial ; pertinence métier à confirmer.
+
+### BR-05-005-120-E | Clôture d'une livraison partielle sur base des quantités prélevées | STATUT=A analyser | CPLX=XL | TYPE=— | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ= /  | COUVERT=Gap potentiel?
+TOBE: Blueprint : à défaut de stock, les pièces disponibles doivent être expédiées et le BL existant clôturé ; les quantités non prélevées sont rouvertes et un nouveau BL sera créé lorsque le stock sera à nouveau disponible.
+PO: Est-ce que les quantités restantes dans la STO (45*), vont générer automatiquement une outbound delivery (en fonction du stock) ? Ca fonctionne déja comme ca aujourd'hui |  |  | Expliquer concept de bon 85* après une GI partiel sur bon 800--> pas nécessaire car on cloture toujours le bon 800 (process code)
+ALT: 
+
+### BR-05-005-120-F | Remise en attente et réaffectation automatique du solde (backorder) | STATUT=A analyser avec Bernard | CPLX=/ | TYPE=Enhancement (à qualifier) | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ= /  | COUVERT=Gap potentiel?
+TOBE: Mécanisme de reprise automatique du reliquat sur reconstitution du stock. Le deck mentionne pour BR-05-005-120 l'envoi du magasinier vers une autre BIN ou une liste de backorder, sans automatisme de réaffectation.
+PO: le solde restant sera réaffecté au picking grâce à un BL qui sera crée lorsqu'il y'aura du stock (fonctionne deja ajd )
+ALT: 
+
+### GAP BR-05-005-060-B | Alignement des quantités du Supply Catalogue sur les conditionnements | STATUT=A confirmer avec business | CPLX=/ | TYPE=Interface / Enhancement hors EWM | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ=oui / ISC 61 - Michel Hainaut + MMD | COUVERT=Gap
+TOBE: Le périmètre est principalement hors EWM (Supply Catalog et master data de conditionnement) mais conditionne le comportement de picking de BR-05-005-060-A.
+PO: Ce GAP relève-t-il du périmètre EWM 2.0 ou du Supply Catalogue ?
+ALT: 
+
+### GAP BR-05-005-140 | Substitution de bobine avec code d'exception, photo et commentaire | STATUT=À analyser | CPLX= | TYPE=Enhancement | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Workflow de prise de photo suite à un souci rencontré durant le picking
+PO: Deck (12/6) : question ouverte sur le lien avec la gestion des plaintes — à mutualiser avec la FSP litiges / workflow incidents de l'inbound.
+ALT: 
+
+### GAP BR-05-005-190 | Mail automatique à Replenishment et au FMB sur code d'exception T8/T9 | STATUT=À analyser | CPLX= | TYPE=Enhancement (PPF) + Form | SECTION=3.4 – Flux de picking | OWNER=Bernard Dehant | AUTRES EQ=oui / Replenishment | COUVERT=Gap
+TOBE: Déclenchement d'une notification sur saisie d'un code d'exception dans le contexte d'une livraison T8/T9.  Proposer/valider une variante de la soltuion pour le processus lititges
+PO: Proposer/valider une variante de la soltuion pour le processus lititges
+ALT: 
+
+### GAP BR-08-010-090 | Réimpression d'une étiquette générée par EWM | STATUT=A Analyser | CPLX= | TYPE= | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Blueprint : lors du picking, le magasinier doit être en mesure de réimprimer les étiquettes déjà générées, pour diverses raisons. Le contenu de l'étiquette de picking reste à définir.
+PO: Périmètre à cadrer : toutes les étiquettes EWM ? C'est tout etiquette imprimé doit pouvoir être réimprimé.
+ALT: 
+
+### BR-05-005-100 | Article pické non déplacé – emplacement d'expédition virtuel et étiquette | STATUT=Analysé | CPLX=M | TYPE=Config / Enhancement | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ= /  | COUVERT=Gap possible?
+TOBE: Blueprint : si l'article ne quitte pas sa HU, le magasinier scanne la HU existante qui devient la HU de picking. Si la HU quitte la BIN, le flux se poursuit vers la vérification de fin de picking ; si elle reste en place, le système imprime une étiquette d'expédition. Créer un emplacement d'expédition virtuel — physiquement au même endroit que l'article prélevé mais non déplacé — avec impression d'une étiquette d'expédition.
+PO: La solution d'emplacement d'expédition virtuel est une proposition BRM du deck, non formalisée dans le blueprint — à confirmer avant spécification.
+ALT: 
+
+### GAP BR-05-005-110 | Article pické resté sur place – non repickable mais inventorié | STATUT=A analyser | CPLX=/ | TYPE=Enhancement | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Le stock pické mais physiquement présent sur la BIN doit rester visible pour l'inventaire tout en étant exclu de toute nouvelle tâche de prélèvement. Commentaire Moerenhout 21/08 : le critère est la présence physique de l'article sur la BIN, indépendamment du cas de figure (BIN vidée par un picking complet, ou pièces pickées laissées sur la BIN en attente de transport).
+PO: Suite au picking de l'article, le statut du stock est modifié. Business requirement à clarifier. |  | l'article doit quand même être repris dans l'inventaire même s'il a été pciké. ( 20/10) | Blocage de l'emplacement une fois l'article confirmé en staging. Si inventaire, le système doit indiqué attention article dispo en staging
+ALT: En standard EWM, une fois la tâche de picking confirmée, le stock quitte dans le système la BIN source pour la HU de picking ou l'emplacement de destination : il n'est plus proposé au picking, mais il n'est plus compté à l'inventaire de la BIN source. L'alternative (deck) consiste à confirmer le picking vers un emplacement d'expédition virtuel : le stock n'est plus pickable et reste inventoriable, mais sur l'emplacement virtuel et non sur la BIN physique ; le commentaire du 21/08 montre que ce montage ne répond pas à l'exigence d'inventaire. Un stock pické resté sur la BIN source, exclu du picking mais compté à l'inventaire de cette BIN, n'existe pas en standard. L'écart porte sur ce statut ; besoin métier à clarifier.
+
+### GAP BR-05-005-090 / | Champs de confirmation au picking, configurables par aire d'activité | STATUT=A confirmer avec business | CPLX=XL | TYPE=Config | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Les confirmations de picking peuvent porter sur l'emplacement, l'article (NN), la HU et les quantités ; ces champs de confirmation sont configurables par aire d'activité.LE fait que ce soit dynamique fait que ce besoin est un GAP
+PO: Commentaire Moerenhout 21/08 : côté source — si unicité article et BIN, scan d'un seul des deux éléments ; si plusieurs articles dans une BIN, scan de la BIN et de l'article. Côté destination — si une seule HU de picking, confirmation automatique par le système ; si plusieurs HU, scan de la HU. Commentaire Youssef 25/08 : adapter le texte du blueprint sur les champs obligatoires / non obligatoires lors du scan.
+ALT: 1	Standard EWM	Le scan dynamique n'existe pas en standard : il faut du développement spécifique, donc plus de coût, de tests et de maintenance. | 2	Traçabilité	Scanner la HU à chaque fois garantit la traçabilité jusqu'à la consolidation (BR-05-005-050). | 3	Simplicité terrain	C'est toujours le même geste : le magasinier n'a pas à réfléchir à ce qu'il doit scanner.
+
+### BR-05-005-040 | Critères de regroupement des tâches en ordres magasin | STATUT=A confirmer avec business | CPLX=/ | TYPE=Config (WOCR) | SECTION=3.2 – Lancer les vagues de picking | OWNER= | AUTRES EQ= /  | COUVERT=EWM Standard
+TOBE: Les critères de consolidation durant le picking sont définis par DC. Deck : le picking se fait par consolidation group au niveau des ordres magasin.
+PO: Commentaire Moerenhout 19/08 : il ne s'agit pas d'une consolidation mais d'une approche de picking — l'approche de picking déterminera le regroupement des tâches magasin en ordres magasin ; le BR doit être remonté sous le point 3.2.5. Commentaire Youssef 25/08 : compléter la description du flux et des configurations / critères possibles. Deck (3/6) : critère de prélèvement à clarifier. |  | Ajouter le BR BR-05-005-040 dans le Diagram?
+ALT: 
+
+### GAP BR-05-006-010 | Pilotage de l'emballage des HU de préparation vers les HU d'expédition | STATUT=Partiellement analysé | CPLX=XL | TYPE=Enhancement | SECTION=3.5 – Consolider le picking ; 3.6 – Consolider à l'expédition | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: La proposition de réemballage repose sur une logique de consolidation paramétrable, spécifique à la consolidation picking d'une part et à la consolidation expédition d'autre part. Le magasinier doit être guidé automatiquement dans ses choix de regroupement (voir Annexe 3 du blueprint).
+PO: Section 3.5.1 encore marquée « SECTION EN ATTENTE ». Commentaires : Kayali 10/08 — BRM proposera un tableau de proposition de consolidation ; Youssef 18/08 — définir les règles de consolidation selon les différents cas de figure ; Youssef 25/08 — en cours auprès de Moerenhout. Annexe 3 : définir les différents cas de consolidation picking et expédition (18/08) et rediscuter la consolidation pour plusieurs COPO (Kayali 14/08). Matrice de décision manquante = prérequis bloquant pour la FSP.
+ALT: Le standard EWM gère la consolidation au poste de travail de packing : consolidation group déterminé sur la livraison, contrôle qu'une HU ne contient qu'un seul consolidation group, création des HU d'expédition et transvasement du contenu des HU de picking. L'alternative consiste à utiliser la solution Bascoup, classée « standard Infrabel » puis « à clarifier » dans le deck (12/6). Une proposition guidée de regroupement selon des règles propres à chaque étape (consolidation picking puis expédition ; par destination, COPO, réservation, ODD) n'est pas identifiée comme standard. L'écart entre la solution Bascoup et le besoin Ronet porte sur ces règles et ce guidage ; matrice de l'Annexe 3 prérequise.
+
+### GAP BR-05-006-040 | Bypass de la consolidation selon critères | STATUT=Partiellement analysé | CPLX=M | TYPE=Enhancement | SECTION=3.5 – Consolider le picking ; 3.6 – Consolider à l'expédition | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Le système doit permettre de ne pas consolider certaines marchandises selon des critères définis ; dans ce cas le repackaging est bypassé et le flux se poursuit sans transvasement. Confirmation automatique des tâches de packing et mise en staging automatiquement.
+PO: Deck (remarque BRM) : selon le standard SAP EWM, la consolidation de plusieurs HU ayant des consolidation groups différents ne peut pas être bypassée. Les critères de bypass ne sont pas définis dans le blueprint — prérequis à lever avec le business.
+ALT: Le standard EWM définit les étapes du flux sortant (picking, packing, staging, chargement) par processus de stockage (POSC), déterminé par le type de processus magasin : un flux sans étape de packing est paramétrable. Le consolidation group reste le levier standard et, selon la remarque BRM du deck, la consolidation de HU de consolidation groups différents ne peut pas être contournée. L'alternative consiste à orienter les marchandises à exclure vers un type de processus sans étape de packing. Les critères de bypass ne sont pas définis. L'écart dépend de ces critères : standard si un type de processus dédié suffit, développement si le bypass doit être décidé dynamiquement ; à exprimer en critères exploitables avant d'arbitrer.
+
+### GAP BR-05-006-060 | Produits dangereux – pictogramme, points ADR, UN et étiquette grand format SSCC | STATUT=Analysé | CPLX=L | TYPE=Form + Enhancement | SECTION=3.5 – Consolider le picking ; 3.6 – Consolider à l'expédition | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: L'indication du pictogramme intervient au moment du packing. Après clôture de la HU mère, le système imprime l'étiquette de transport (points ADR, UN, classes de danger), l'étiquette grand format SSCC pour l'identification automatique par caméra, la packing list et le bon de livraison. Deck : modifier la smartform pour ajouter le pictogramme, le nombre de points ADR, les UN et les classes de danger ; générer plusieurs étiquettes (4 par palette) pour faciliter l'identification par caméra.
+PO: Commentaire Youssef 18/08 : définir si l'impression du pictogramme doit intervenir à la fin de la consolidation picking ou plus tard, à la fin de la consolidation expédition — arbitrage toujours en cours auprès de Moerenhout (25/08). Contrainte : master data ADR à jour. Deck : voir le développement Schaerbeek.
+ALT: Le standard EWM imprime les étiquettes HU et documents via PPF sur formulaires adaptables, avec un nombre de copies paramétrable, et peut numéroter les HU au format SSCC. L'indication du pictogramme au magasinier lors du packing n'est pas identifiée comme standard. L'alternative consiste à réutiliser les développements ADR de Schaerbeek et la FSP packing list existante avant d'ouvrir un nouveau développement de formulaire. L'écart porte sur le message pictogramme au packing et sur l'ajout des données ADR (points ADR, UN, classes de danger) aux formulaires ; détail en lignes BR-05-006-060-01 à -04. Prérequis : master data ADR à jour.
+
+### BR-05-006-030 (couvert) | Consolidation selon différents critères (COPO, réservation, magasin) | STATUT=À analyser | CPLX=— | TYPE=— | SECTION=3.5 – Consolider le picking | OWNER= | AUTRES EQ= /  | COUVERT=Standard Infrabel
+TOBE: Deck : standard Infrabel ; prérequis — l'adresse du COPO doit être présente dans le STO (bon 45**).
+PO: Prérequis master data (adresse COPO dans le STO) à valider pour Ronet.
+ALT: 
+
+### BR-05-006-050 (couvert) | HU d'expédition pour NNN / consommation directe sans référence | STATUT=À analyser | CPLX=— | TYPE=— | SECTION=3.5 – Consolider le picking | OWNER= | AUTRES EQ= /  | COUVERT=Standard Infrabel
+TOBE: Deck : standard Infrabel — solution Bascoup.
+PO: Recouvrement avec la GAP list Inbound (lien de tracking dans la notification) — à traiter une seule fois.
+ALT: 
+
+### GAP BR-05-006-020 | Interface avec le calculateur cubimétrique | STATUT=Analysé | CPLX=M | TYPE=Interface | SECTION=3.6 – Consolider à l'expédition | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Récupération automatique du poids et du volume mesurés lors de la consolidation d'expédition, pour exploitation dans le transport. En l'absence de réception des informations du calculateur, l'opérateur doit pouvoir encoder le poids et le volume directement sur son scanner.
+PO: Le mode dégradé (saisie manuelle sur RF) est une exigence du blueprint à spécifier au même titre que l'interface.
+ALT: 
+
+### GAP HU mère / HU filles (sans BR) | Traçabilité des HU filles au sein de la HU mère dans le transport | STATUT=À analyser | CPLX=L | TYPE=Enhancement | SECTION=3.6 – Consolider à l'expédition | OWNER= | AUTRES EQ= / SP | COUVERT=Gap
+TOBE: Concilier la minimisation du nombre de HU au transport (HU mère) et la traçabilité individuelle des HU filles jusqu'au destinataire final, afin de permettre au SP de réceptionner par destinataire / COPO.
+PO: Tagué « Besoins (GAP) » dans le blueprint, sans identifiant BR. Commentaire Youssef 18/08 : note pour BRM — à inclure dans la liste des GAP (moyen de tracer les HU filles dans le transport) afin de permettre au SP de faire la réception par destinataire / COPO. Un identifiant BR doit être attribué.
+ALT: Le standard EWM permet d'imbriquer des HU d'expédition dans une HU mère et conserve la hiérarchie HU mère / HU filles, consultable dans /SCWM/MON ; chaque HU fille garde son identifiant et la HU mère se retrouve à partir de la HU fille dans EWM. L'alternative consiste à utiliser cette imbrication standard au DC et à transmettre la HU mère au transport. L'exploitation de la hiérarchie hors du DC (transport, réception au SP par HU mère, réception par HU fille chez le COPO) dépend des systèmes de réception et n'est pas couverte par EWM seul. L'écart porte sur la restitution des HU filles au transport et à la réception ; doublon avec la ligne 3.6.2 « GAP (BR à créer ?) ».
+
+### Consolidation – Annexe 3 | Matrice des cas de consolidation picking et expédition | STATUT=À confirmer business | CPLX=— | TYPE=— | SECTION=Annexe 3 – Consolidation Picking et Expédition | OWNER= | AUTRES EQ= /  | COUVERT=(prérequis)
+TOBE: Tableau des cas de consolidation à produire par BRM, servant de base au paramétrage des logiques de consolidation picking et expédition.
+PO: Commentaires : Youssef 18/08 — définir les différents cas de consolidation picking et consolidation expédition ; Kayali 14/08 — à rediscuter, consolidation pour plusieurs COPO. Livrable prérequis, pas un GAP en soi.
+ALT: 
+
+### GAP BR-06-001-010 | Demande de transport dès la fin de consolidation, sans GI préalable | STATUT=Analysé | CPLX=M | TYPE=Enhancement / Interface | SECTION=4.1 – Flux expédition | OWNER=Youssef | AUTRES EQ= /  | COUVERT=Gap
+TOBE: La demande de transport doit pouvoir être effectuée dès la fin de la consolidation de l'ensemble des marchandises, sans procéder préalablement à la sortie de marchandises ; les HU restent suivies dans le système jusqu'à leur sortie physique du DC. Deck : modifier le moment où l'IDOC vers le transporteur est envoyé (AS-IS Bascoup : à la fin du chargement du camion).
+PO: Le moment exact de déclenchement reste à décider (fin de consolidation, création du numéro d'expédition, figeage de la liste des HU).
+ALT: 
+
+### GAP BR-06-001-030 | EDI vers le transporteur avant sortie de marchandises | STATUT=Partiellement analysé | CPLX= | TYPE=Interface + Enhancement | SECTION=4.1 – Flux expédition | OWNER=Youssef | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Dans le cas de la distribution, une demande d'expédition est envoyée automatiquement au transporteur avant la sortie de marchandises, incluant les données de conditionnement, l'ADR et l'identification des palettes.
+PO: 
+ALT: 
+
+### GAP BR-06-001-050 | EDI vers le transporteur | STATUT=Partiellement analysé | CPLX= | TYPE=Interface + Enhancement | SECTION=4.1 – Flux expédition | OWNER=Youssef | AUTRES EQ= /  | COUVERT=Gap
+TOBE: 
+PO: Voir avec Hicham
+ALT: 
+
+### GAP BR-06-001-050 | Informations ADR | STATUT=Partiellement analysé | CPLX= | TYPE=Interface + Enhancement | SECTION=4.1 – Flux expédition | OWNER=Youssef | AUTRES EQ= /  | COUVERT=Gap
+TOBE: 
+PO: 
+ALT: 
+
+### GAP BR-06-001-040 | Confirmation de prise en charge EDI par le transporteur | STATUT=Analysé | CPLX= | TYPE=Interface | SECTION=4.1 – Flux expédition | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Le système reçoit une confirmation de prise en charge de la demande EDI. Une fois la confirmation reçue, il envoie automatiquement les informations de transport au client destinataire par mail. Deck : communication à prévoir avec le transporteur pour la mise à jour du statut du TU.
+PO: Flux entrant — dépendance externe (transporteur). Enchaînement avec la notification client (BR-01-002-0020-B) à spécifier ensemble.
+ALT: 
+
+### GAP BR-06-001-080 | Impression CMR, documentation ADR et fiches MSDS | STATUT=Analysé | CPLX= | TYPE=Form | SECTION=4.1 – Flux expédition | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Une fois la demande d'expédition envoyée, le système imprime automatiquement la CMR en 4 exemplaires, la documentation ADR et les fiches MSDS en FR et NL. Deck : développer une nouvelle smartform pour le CMR et les MSDS.
+PO: Quid des fiches MSDS ? Cela est imprimé dans SAP ?
+ALT: 
+
+### GAP BR-01-002-0020-B | Mail automatique au demandeur à l'expédition (activable / désactivable) | STATUT=A clarifier avec business | CPLX=M | TYPE=Enhancement (PPF) + Form | SECTION=4.1 – Flux expédition | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Après réception de la confirmation du transporteur, le système envoie automatiquement les informations de transport au client destinataire par mail. Cette fonctionnalité doit pouvoir être activée / désactivée dans le système.
+PO: BR de la famille inbound BR-01-002 (notification NNN / conso directe) réutilisé côté outbound — vérifier la cohérence de numérotation et le recouvrement avec la FSP inbound de notification automatique au demandeur.
+ALT: 
+
+### GAP BR-05-007-010-B | Notification « marchandise prête » et prise de rendez-vous pour enlèvement | STATUT=À analyser | CPLX=L | TYPE=Enhancement (PPF) + Form | SECTION=4.1 – Flux expédition | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Dans le cas de l'enlèvement, le système envoie automatiquement un mail au destinataire pour l'informer que la marchandise est prête et lui permettre de prendre rendez-vous. La date et l'heure de prise de rendez-vous doivent être tracées par le système afin d'assurer un suivi.
+PO: Deck : le transfert de la HU vers la BIN d'expédition est standard EWM et sert de trigger ; la partie mail était classée « standard Infrabel (GZH) ». La prise de rendez-vous et le traçage date/heure sont des nouveautés du blueprint, non couvertes par la solution GZH.
+ALT: Le transfert de la HU vers la BIN d'expédition est standard EWM et peut servir de déclencheur (deck) ; l'envoi d'un e-mail est possible par action PPF, et une notification existe déjà à GZH (classée standard Infrabel dans le deck). L'alternative consiste à réutiliser le mécanisme de notification GZH pour l'alerte. La prise de rendez-vous par le destinataire et le traçage de la date et de l'heure du rendez-vous n'existent pas en standard. L'écart porte sur la prise de rendez-vous tracée, composant réellement nouveau.
+
+### GAP BR-05-007-020 | Track & Trace de chaque étape du flux sortant | STATUT=À analyser avec le business | CPLX=L | TYPE=Enhancement / Interface | SECTION=3.2 – Lancer les vagues de picking ; 4.1 – Flux expédition | OWNER= | AUTRES EQ=oui / SP, Excellence ? , autres ? | COUVERT=Gap
+TOBE: Suivi du statut des HU tout au long du flux, avec restitution vers le demandeur. Deck : intégration entre le Supply Catalogue et EWM ; update du 30/07 — suivre le statut des HU, c'est un GAP.
+PO: 04-08-2026 : Delphine - Action pour BA : retirer ce BR des différents BPMN (ex : picking et lancer vagues) et traiter ce BR comme une fonctionnalité à part
+ALT: 
+
+### GAP BR-06-003-040 | Lien de tracking transporteur associé à la HU / au numéro d'expédition | STATUT=Analysé | CPLX=XL | TYPE=Enhancement + Interface | SECTION=4.1 – Flux expédition | OWNER= | AUTRES EQ=oui / SP, Excellence ? , autres ? | COUVERT=Gap
+TOBE: Le système doit permettre de consulter, via un lien de tracking rattaché à une HU / un numéro de transport / un BL, le statut du numéro d'expédition jusqu'à son arrivée chez le destinataire. Deck : envoi du lien de tracking par le transporteur et intégration dans un nouveau champ de la HU.
+PO: Clarifier le moyen de communication utilisé pour faire remonter l'information
+ALT: 
+
+### GAP BR-06-003-030 | Sortie de marchandises déclenchée par la sortie physique (caméra SSCC / GPS) | STATUT=À analyser | CPLX=/ | TYPE=Interface | SECTION=4.1 – Flux expédition | OWNER=Youssef | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Blueprint : une fois la sortie de marchandises enregistrée dans EWM, la sortie IM est effectuée automatiquement au même moment ; la sortie physique doit correspondre à la sortie comptable. Pour les articles NNN / consommation directe, les articles quittent le DC sans enregistrement de la sortie comptable. Deck : la synchronisation EWM / S4 est standard ; le GAP porte sur l'interface avec le système caméra reconnaissant les étiquettes SSCC.
+PO: 
+ALT: 
+
+### GAP Flux expédition non géré par le DC | Détection automatique de la sortie des HU et rapprochement avec la liste prévue | STATUT=À analyser | CPLX= | TYPE=Interface + Enhancement | SECTION=4.1 – Flux expédition | OWNER=Youssef | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Trois cas à gérer automatiquement : HU prévues et emportées — enregistrement de la sortie de marchandises ; HU prévues et non emportées — dissociation automatique des HU du numéro d'expédition et notification au coordinateur ; HU non prévues et emportées — association automatique au numéro d'expédition et notification au coordinateur. Le même mécanisme de dissociation et de notification est décrit en 4.1.2.3 pour le flux géré par le DC.
+PO: Sous-chapitre entier tagué « (GAP) » dans le titre, sans identifiant BR — un BR doit être créé. Dépend entièrement du prérequis hardware (portiques / caméras SSCC) signalé le 20/08.
+ALT: 
+
+### BR-02-002-050 | Contrôle de la HU refusée enlevée par le transporteur | STATUT=A clarifier avec business | CPLX=/ | TYPE=— | SECTION=4.1 – Flux expédition | OWNER= | AUTRES EQ= /  | COUVERT=
+TOBE: 
+PO: Scan HU une par une + confirmation de l'endroit de sortie ? C'est déjà rattaché au TU avec une door qui est liée.A réexpliquer le BR
+ALT: 
+
+### GAP (BR à créer) – Confirmation des STO par Replenishment | Confirmation des STO reflétant la demande client et la disponibilité du stock | STATUT=À qualifier | CPLX= | TYPE= | SECTION= | OWNER= | AUTRES EQ=oui / Replenishment | COUVERT=
+TOBE: 
+PO: 
+ALT: Le standard S/4 confirme les STO par contrôle de disponibilité (ATP) : les quantités confirmées consomment la disponibilité et ne sont plus disponibles pour de nouvelles confirmations. Les règles de priorisation entre demandes relèvent du paramétrage ATP côté Replenishment. Hors périmètre EWM ; à qualifier avec Replenishment.
+
+### GAP BR-05-005-080 | Impression d'étiquette de picking | STATUT=À qualifier | CPLX= | TYPE=Form | SECTION=3.4 – Flux de picking | OWNER= | AUTRES EQ= /  | COUVERT=Gap
+TOBE: Picking label
+PO: 
+ALT: Le standard EWM imprime via PPF les ordres magasin et les étiquettes HU, sur formulaires adaptables. Une étiquette article imprimée automatiquement à chaque confirmation de ligne de picking n'est pas identifiée en standard, et son contenu reste à définir (blueprint 3.4.7). L'alternative consiste à s'appuyer sur l'impression de l'ordre magasin ou de l'étiquette de la HU de picking. L'écart porte sur le déclenchement à la confirmation et sur le formulaire (picking label).
+
+### GAP (BR à créer?) | Generation automatique HU Expédition | STATUT=À qualifier | CPLX= | TYPE=Form / Enhancement | SECTION=3.5 Consolider le picking | OWNER= | AUTRES EQ= /  | COUVERT=
+TOBE: Shipping label - génération automatique sur base de proposition
+PO: 
+ALT: Le standard EWM permet de créer la HU d'expédition au poste de travail de packing, avec proposition du matériel d'emballage par spécification d'emballage, et d'imprimer son étiquette via PPF. L'alternative consiste à créer la HU au poste de packing. La génération automatique à partir de la proposition de réemballage dépend de la logique de consolidation (GAP BR-05-006-010). L'écart porte sur cet automatisme ; à qualifier avec BR-05-006-010.
+
+### GAP (BR à créer?) | Consolidation selon différents critères (COPO, réservation, magasin) | STATUT=À qualifier | CPLX= | TYPE=Enhancement | SECTION=3.6 Consolider à l’expédition | OWNER= | AUTRES EQ= /  | COUVERT=
+TOBE: Besoins (GAP) : | •	Pour l’expédition, le nesting des HU d’expédition dans une HU de niveau supérieur permet de réduire le nombre d’unités de manutention à gérer au niveau du transport et d’optimiser les opérations de manutention. | •	Pour le Track & Trace, le système conserve la relation entre la HU mère et les HU filles, afin d’assurer la traçabilité de chaque HU tout au long du flux. | •	Pour la réception au SP, la HU mère permet de réduire le nombre de scans nécessaires lors de la réception du transport, tout en conservant l’identification des HU filles qu’elle contient. | •	Pour le besoin du COPO, chaque HU fille reste identifiable individuellement et peut être réceptionnée par scan de son numéro HU, sans devoir scanner les articles ou les lignes qu’elle contient.
+PO: Slide consolidation Bernard
+ALT: Le standard EWM permet d'imbriquer des HU d'expédition dans une HU de niveau supérieur (HU mère) et conserve la hiérarchie HU mère / HU filles, consultable dans /SCWM/MON ; chaque HU fille garde son identifiant. L'alternative consiste à utiliser cette imbrication standard. L'écart porte sur l'exploitation de la hiérarchie hors du DC (transport, réception au SP, réception par HU fille chez le COPO) ; même besoin que la ligne « GAP HU mère / HU filles », à ne compter qu'une fois.
+
+### GAP BR-05-006-060-01 | Etiquette de transport | STATUT=À qualifier | CPLX= | TYPE=Form | SECTION=3.6 Consolider à l’expédition | OWNER= | AUTRES EQ= /  | COUVERT=
+TOBE: 
+PO: 
+ALT: Le standard EWM imprime les étiquettes HU via PPF sur un formulaire adaptable. L'ajout du nombre de points ADR, des numéros UN et des classes de danger passe par une adaptation de formulaire (deck : modifier la smartform) ; les développements ADR de Schaerbeek sont à réutiliser. L'écart se limite au formulaire ; prérequis : master data ADR à jour.
+
+### GAP BR-05-006-060-02 | Etiquette SSCC Grand format | STATUT=À qualifier | CPLX= | TYPE=Form | SECTION=3.6 Consolider à l’expédition | OWNER= | AUTRES EQ= /  | COUVERT=
+TOBE: 
+PO: 
+ALT: Le standard EWM peut numéroter les HU au format SSCC et imprime les étiquettes HU via PPF, avec un nombre de copies paramétrable. L'alternative consiste à imprimer l'étiquette HU existante en plusieurs exemplaires (deck : 4 par palette). L'écart se limite au format grand format lisible par caméra (nouveau formulaire ou adaptation).
+
+### GAP BR-05-006-060-03 | Packing list | STATUT=À qualifier | CPLX= | TYPE=Form | SECTION=3.6 Consolider à l’expédition | OWNER= | AUTRES EQ= /  | COUVERT=
+TOBE: 
+PO: 
+ALT: Le standard EWM imprime les documents liés à la HU et à la livraison via PPF, déclenchables à la clôture de la HU. Une FSP packing list existe déjà (voir GAP BR-05-006-060). L'alternative consiste à réutiliser ce formulaire existant. L'écart se limite à l'adaptation éventuelle de son contenu (produits dangereux).
+
+### GAP BR-05-006-060-04 | Bon de livraison | STATUT=À qualifier | CPLX= | TYPE=Form | SECTION=3.6 Consolider à l’expédition | OWNER= | AUTRES EQ= /  | COUVERT=
+TOBE: 
+PO: 
+ALT: Le standard EWM imprime le bon de livraison via PPF depuis la livraison sortante. L'alternative consiste à utiliser cette impression standard. L'écart porte sur le déclenchement à la clôture de la HU mère et sur le contenu attendu (produits dangereux), non détaillé dans le blueprint.
+
+### GAP BR *** | Consolidation selon différents critères (COPO, réservation, magasin) | STATUT=A clarifier avec business | CPLX= | TYPE= | SECTION=3.6 Consolider à l’expédition | OWNER= | AUTRES EQ= /  | COUVERT=
+TOBE: 
+PO: 
+ALT: 
+
+### GAP BR-06-001-070 | Expédition | STATUT=A clarifier avec business | CPLX= | TYPE= | SECTION=4.1 Flux expédition | OWNER= | AUTRES EQ= /  | COUVERT=
+TOBE: 
+PO: Une fois la demande d’expédition envoyée, le système imprime automatiquement les documents suivants (BR-06-001-080 – GAP BR-06-001-080) :  |  | CMR en 4 exemplaires (nb palettes, poids, destination, référence aux produits dangereux (code UN..)  |  | Documentation ADR  |  | Fiches MSDS en FR & NL
+ALT: 
+
