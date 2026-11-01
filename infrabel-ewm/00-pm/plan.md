@@ -83,7 +83,7 @@ Dossier racine : « Projet EWM 2.0 - Ronet » (id `12JmO_QYHHomfQLEQDxn22v7x0uZC
 | Consultant | Accès Drive | Remarques | Date |
 |---|---|---|---|
 | GAP | Non confirmé | — | — |
-| Solution | OK (lecture partielle) | Connecteur Sheets : structure + 1re ligne seulement ; méthode export xlsx du QA transmise | 2026-11-01 |
+| Solution | OK (via export xlsx) | Lecture complète. QM : 25 lignes dont 21 avec GAP ID ; Immat : 4 lignes dont 2 avec GAP ID (lignes sans ID à clarifier) | 2026-11-01 |
 | Blueprint | Non confirmé | — | — |
 | QA | OK (lecture) | BR « Business Requirements 20260220 » = 209 BR. GAP 27-10 : Inbound 52, Outbound 56, Internal 9, Reporting 17, QM 21, Immat 2, NNN 12 ; onglets Retours et Intégration Tours vides. Lecture texte des Sheets partielle → utilise l'export xlsx | 2026-11-01 |
 | Support | Non confirmé | — | — |
