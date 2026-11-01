@@ -32,11 +32,14 @@ Solution ──« Solutions retenues »─► Blueprint
 Blueprint ──« BPR à relire »──────► QA
 QA ──« BPR validé QA »────────────► PM ──► livraison à Moustafa (validation / diffusion)
 
-Support (tests SIS, support quotidien) : flux parallèle, reporting direct au PM.
+Support (tests SIS, support quotidien) : flux parallèle, sollicitable par tous.
+QA ──« corrections »──────────────► Blueprint
 ```
 
-Règles :
-- Chaque transmission passe par le PM (relai `send_message` avec branche + chemin du fichier).
+Règles (décision D-003, cf. `decisions.md`) :
+- Les consultants se transmettent directement les livrables (`send_message`), avec branche + chemin du fichier + résumé en 3 lignes max.
+- Le PM est en copie de chaque transmission de livrable et met à jour ce plan à chaque copie reçue.
+- Au-delà de 3 allers-retours sur un même sujet : escalade au PM. Périmètre, priorités, planning et arbitrages : PM.
 - Aucun BPR n'est livré à Moustafa sans statut « validé QA » ; à défaut, le signaler explicitement.
 - Aucune nouvelle session n'est lancée sans l'accord de Moustafa.
 
