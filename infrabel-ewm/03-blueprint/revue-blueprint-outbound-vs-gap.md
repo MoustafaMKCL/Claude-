@@ -27,7 +27,7 @@
     - le tag GAP sur la HU refusée.
   - **Picking** : #11, #13 à #15, #17, #19 et #22 à #24 (péremption, ship complete, reliquat, scan dynamique, stock resté sur la BIN).
 
-**(b) Ce qui est seulement en contradiction avec le texte :** **4 lignes** se corrigent sans nouvel arbitrage métier.
+**(b) Ce qui est seulement en contradiction avec le texte :** **4 lignes** se corrigent dans le texte sans nouvel arbitrage métier sur le fond. #2 et #5 restent conditionnées à une confirmation : Q1 (reformuler ou non le BR) et Q3 (job S/4 = occurrence).
 - **2 contradictions**, détaillées en §2 :
   - #2 (calendrier milkrun) : le blueprint dit que le coordinateur gère le calendrier. La décision du 27/10 confie la modification à REPL, au moyen d'une transaction spécifique. Il reste à savoir si le BR lui-même doit être reformulé (Q1).
   - #25 : le blueprint parle de « critères de consolidation » là où la GAP List parle d'approche de picking (regroupement en ordres magasin).
