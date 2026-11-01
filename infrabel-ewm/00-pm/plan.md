@@ -52,7 +52,9 @@ Règles (décision D-003, cf. `decisions.md`) :
 | ID | Tâche | Responsable | Entrée (branche / fichier) | Sortie attendue | Statut | Échéance |
 |---|---|---|---|---|---|---|
 | PM-001 | Initialiser le suivi PM (plan, risques, décisions) | PM | — | `infrabel-ewm/00-pm/*` | Fait | 2026-11-01 |
-| PM-002 | Recevoir et qualifier les BR / drafts de Moustafa | PM | Moustafa | Inventaire des inputs | En attente input | À définir |
+| PM-002 | Recevoir et qualifier les BR / drafts de Moustafa | PM | Drive « Projet EWM 2.0 - Ronet » | Inventaire des inputs (§7) | Fait | 2026-11-01 |
+| PM-003 | Informer l'équipe de l'emplacement des inputs (Drive) | PM | — | Message aux 5 consultants | Fait | 2026-11-01 |
+| PM-004 | Proposer le planning et la délégation initiale à Moustafa | PM | §7 | Planning à valider | À faire | À définir |
 | — | *(tâches GAP / Solution / Blueprint / QA / Support à créer après réception des inputs)* | | | | | |
 
 ## 6. Livraisons à Moustafa
@@ -60,3 +62,18 @@ Règles (décision D-003, cf. `decisions.md`) :
 | Date | Livrable | Version / branche | Statut QA | Retour Moustafa |
 |---|---|---|---|---|
 | — | — | — | — | — |
+
+## 7. Inputs (Google Drive de Moustafa)
+
+Dossier racine : « Projet EWM 2.0 - Ronet » (id `12JmO_QYHHomfQLEQDxn22v7x0uZCEu5u`)
+
+| Input | Fichier | Type | ID Drive |
+|---|---|---|---|
+| Business Requirements | Business Requiremens eWM 2-0 (2) | Sheet | `1i_gU0lllY9zc0nFiBbZ_k_5oqVSoVCHaVj6BqzgE7y8` |
+| GAP List (la plus récente, 27-10) | GAP_List_EWM2.0_Ronet 27-10 | Sheet | `1m5QFzkRKBt7v1KFAU6XKheWaYlInt0hs5Hh_x8h_61s` |
+| GAP List (version antérieure) | GAP_List_EWM2.0_Ronet (1) | Sheet | `1fHZrw8a_ZICsbDO4B6u8nK6TQcuJjmG19Oouik8EQL4` |
+| Blueprint Outbound FR (Final v1.0) | Infrabel SAP EWM 2.0 Blueprint - Outbound Document FR_Final v1.0 (2) | Doc | `1420ge1w5ENWCdJW1APztJh7J3AoX_7t7V4tiOF5ZjEU` |
+| Blueprint Outbound FR (Draft1) | Infrabel SAP EWM 2.0 Blueprint - Outbound Document FR_Draft1 (1) | Doc | `1kIwLlal9cyLWMYs0byi4eR26j994bOEmZVHauKn44gs` |
+| Suivi | Follow-up - Ronet | Sheet | `1G8BX6Axh6DYg5uShPktWBV96ilVCXgkb2OqcnhY9_jo` |
+| Réf. SAP | Dossier « SAP EWM Embedded - Guides de configuration » | Dossier | `1zOCd7RjDR1mnNcuW2pRGYTu-YzyWR9CD` |
+| FSP existantes | Dossier « FSP Infrabel » | Dossier | `1NvhkVytlkLLJAm6S9AjL1cI7zpqTPXCX` |
