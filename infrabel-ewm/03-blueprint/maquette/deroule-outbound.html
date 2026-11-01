@@ -1,0 +1,595 @@
+<title>Déroulé Outbound Ronet</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout : barre de séance en haut (sections + minutage), rail des étapes à gauche, étape = maquette d'écran | règles du blueprint + décision. */
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --surface-2:#f6f8fa; --line:#d5dbe2; --fg:#16202b; --muted:#566373;
+  --accent:#1f5f8b; --accent-soft:#dbe9f3;
+  --std:#1d7a55; --std-soft:#dcf0e6;
+  --gap:#a85b00; --gap-soft:#fbead2;
+  --open:#b3263e; --open-soft:#f9dfe3;
+  --rf-bg:#1e2a33; --rf-fg:#e6f1ea; --rf-dim:#8fa6b3; --rf-hi:#ffd65a; --rf-field:#2c3b46;
+  --sap-shell:#2b3b4c; --sap-shell-fg:#f2f5f8; --sap-row:#f3f6f9; --sap-sel:#e3eef8;
+  --stamp:#b3263e;
+  --f-display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10161c; --surface:#18212a; --surface-2:#1d2731; --line:#2f3c49; --fg:#e4eaf0; --muted:#9aa8b6;
+  --accent:#6fb0de; --accent-soft:#1d3446;
+  --std:#5cc79a; --std-soft:#173428; --gap:#f0a548; --gap-soft:#3a2a14; --open:#f27b8f; --open-soft:#3d1c23;
+  --rf-bg:#0b1115; --rf-fg:#d8ecdf; --rf-dim:#7f96a3; --rf-hi:#ffd65a; --rf-field:#1a262e;
+  --sap-shell:#0f1922; --sap-shell-fg:#e4eaf0; --sap-row:#1d2731; --sap-sel:#22384b; --stamp:#f27b8f;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10161c; --surface:#18212a; --surface-2:#1d2731; --line:#2f3c49; --fg:#e4eaf0; --muted:#9aa8b6;
+  --accent:#6fb0de; --accent-soft:#1d3446;
+  --std:#5cc79a; --std-soft:#173428; --gap:#f0a548; --gap-soft:#3a2a14; --open:#f27b8f; --open-soft:#3d1c23;
+  --rf-bg:#0b1115; --rf-fg:#d8ecdf; --rf-dim:#7f96a3; --rf-hi:#ffd65a; --rf-field:#1a262e;
+  --sap-shell:#0f1922; --sap-shell-fg:#e4eaf0; --sap-row:#1d2731; --sap-sel:#22384b; --stamp:#f27b8f;
+  color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.45}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+button,select,textarea,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* ===== Barre de séance ===== */
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar-in{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding-block:10px}
+.brand{display:flex;flex-direction:column;min-width:0}
+.brand b{font-family:var(--f-display);font-size:22px;font-weight:700;letter-spacing:.01em;line-height:1.05}
+.brand span{font-size:12px;color:var(--muted)}
+.sections{display:flex;gap:6px;flex:1 1 520px;min-width:0;overflow-x:auto;padding-bottom:2px}
+.sec{flex:1 0 96px;border:1px solid var(--line);background:var(--surface-2);border-radius:var(--r);padding:6px 8px;cursor:pointer;text-align:left;min-width:96px}
+.sec[aria-current="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.sec .n{font-family:var(--f-display);font-weight:600;font-size:14px;display:flex;justify-content:space-between;gap:6px}
+.sec .t{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.prog{height:5px;background:var(--line);border-radius:3px;margin-top:5px;overflow:hidden;display:flex}
+.prog i{display:block;height:100%}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface-2);border-radius:var(--r);padding:7px 11px;cursor:pointer;font-size:14px;white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn[aria-pressed="true"]{background:var(--open-soft);border-color:var(--open);color:var(--open);font-weight:600}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.timer{font-family:var(--f-mono);font-size:14px;font-variant-numeric:tabular-nums;padding:6px 10px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2)}
+
+/* ===== Corps ===== */
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:18px;padding-block:16px}
+nav.rail{position:sticky;top:96px;align-self:start;max-height:calc(100vh - 110px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:8px}
+.rail h3{font-family:var(--f-display);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:10px 6px 4px}
+.rail a{display:grid;grid-template-columns:34px 1fr auto;gap:6px;align-items:center;padding:6px;border-radius:4px;color:inherit;text-decoration:none;font-size:13px}
+.rail a:hover{background:var(--surface-2)}
+.rail a[aria-current="page"]{background:var(--accent-soft)}
+.rail a .no{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.rail a.todo{opacity:.55}
+.dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--line)}
+.dot.ok{background:var(--std);border-color:var(--std)} .dot.mod{background:var(--gap);border-color:var(--gap)} .dot.rep{background:var(--muted);border-color:var(--muted)}
+
+main{min-width:0}
+.step-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 16px;margin-bottom:12px}
+.step-head .eyebrow{font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.04em}
+.step-head h1{font-family:var(--f-display);font-size:30px;line-height:1.1;margin:2px 0 0;text-wrap:balance}
+.kind{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-display);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:3px;border:1.5px solid}
+.k-std{color:var(--std);border-color:var(--std);background:var(--std-soft)}
+.k-gap{color:var(--gap);border-color:var(--gap);background:var(--gap-soft)}
+.k-open{color:var(--open);border-color:var(--open);background:var(--open-soft)}
+.legend{display:flex;gap:8px;flex-wrap:wrap}
+
+.split{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:18px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);min-width:0}
+.panel>h2{font-family:var(--f-display);font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0;padding:10px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;align-items:center}
+
+/* Maquette */
+.mock-wrap{padding:14px;position:relative}
+.stamp{position:absolute;top:8px;right:10px;z-index:2;font-family:var(--f-display);font-weight:700;font-size:12px;letter-spacing:.12em;color:var(--stamp);border:2px solid var(--stamp);padding:2px 8px;transform:rotate(-2deg);background:var(--surface)}
+.specnote{margin:10px 0 0;font-size:13px;color:var(--gap);background:var(--gap-soft);border-left:3px solid var(--gap);padding:7px 10px}
+.mock-caption{font-size:12px;color:var(--muted);margin-top:8px}
+.variants{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.variants .btn{font-size:13px;padding:5px 9px}
+.variants .btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--fg)}
+
+/* Écran desktop type SAP (indicatif) */
+.sap{border:1px solid var(--line);border-radius:4px;overflow:hidden;font-size:13px;background:var(--surface)}
+.sap-top{background:var(--sap-shell);color:var(--sap-shell-fg);padding:7px 10px;display:flex;justify-content:space-between;gap:8px;font-size:12.5px}
+.sap-top b{font-weight:600}
+.sap-tb{display:flex;gap:6px;flex-wrap:wrap;padding:7px 10px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.sap-tb span{border:1px solid var(--line);border-radius:3px;padding:3px 8px;background:var(--surface);font-size:12px}
+.sap-tb span.warn{border-color:var(--open);color:var(--open)}
+.sap-tb span.gapb{border-color:var(--gap);color:var(--gap)}
+.sap-body{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.sap-body.two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.tree{border-right:1px solid var(--line);padding:8px 10px;font-size:12.5px;background:var(--surface-2)}
+.tree div{padding:2px 0} .tree .sel{background:var(--sap-sel);font-weight:600}
+.tblw{overflow-x:auto}
+table.t{border-collapse:collapse;width:100%;font-size:12.5px;font-variant-numeric:tabular-nums}
+.t th{text-align:left;font-weight:600;background:var(--surface-2);border-bottom:1px solid var(--line);padding:5px 8px;white-space:nowrap}
+.t td{border-bottom:1px solid var(--line);padding:5px 8px;white-space:nowrap}
+.t tr:nth-child(even) td{background:var(--sap-row)}
+.t tr.hl td{background:var(--sap-sel)}
+.pill{display:inline-block;padding:1px 6px;border-radius:9px;font-size:11px;font-weight:600;border:1px solid}
+.p-std{color:var(--std);border-color:var(--std)} .p-gap{color:var(--gap);border-color:var(--gap)} .p-open{color:var(--open);border-color:var(--open)} .p-mut{color:var(--muted);border-color:var(--line)}
+.box{padding:10px;border-top:1px solid var(--line)}
+.box h4{margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.alert{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--gap);background:var(--gap-soft);padding:6px 8px;border-radius:3px;margin-top:6px;font-size:12.5px}
+.alert.o{border-color:var(--open);background:var(--open-soft)}
+.alert b{font-family:var(--f-mono);font-size:11px}
+
+/* Terminal RF (indicatif) */
+.rfrow{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.rf{width:300px;max-width:100%;background:var(--rf-bg);color:var(--rf-fg);border-radius:14px;padding:14px 12px 12px;font-family:var(--f-mono);font-size:13.5px;box-shadow:0 0 0 6px var(--line)}
+.rf .hd{display:flex;justify-content:space-between;color:var(--rf-dim);font-size:11.5px;border-bottom:1px dashed var(--rf-dim);padding-bottom:5px;margin-bottom:8px}
+.rf .ln{display:grid;grid-template-columns:92px 1fr;gap:6px;padding:2px 0}
+.rf .ln span:first-child{color:var(--rf-dim)}
+.rf .fld{background:var(--rf-field);padding:1px 6px;border-radius:2px;min-height:1.4em}
+.rf .fld.act{outline:2px solid var(--rf-hi)}
+.rf .fld.auto{color:var(--rf-dim);font-style:italic}
+.rf .big{font-size:20px;color:var(--rf-hi);font-weight:600}
+.rf .msg{margin-top:8px;padding:5px 6px;border:1px solid var(--rf-hi);color:var(--rf-hi);font-size:12px}
+.rf .fk{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:10px;font-size:11.5px}
+.rf .fk span{border:1px solid var(--rf-dim);border-radius:3px;padding:2px 5px;color:var(--rf-dim)}
+.rf .fk span.g{border-color:var(--gap);color:var(--gap)}
+.rfside{flex:1 1 220px;min-width:0;font-size:13px}
+.rfside ol{margin:0;padding-left:18px} .rfside li{margin:3px 0}
+
+/* Règles */
+.rules{padding:6px 14px 12px}
+.rule{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.rule:last-child{border-bottom:0}
+.rule .tag{grid-column:2;display:flex;flex-wrap:wrap;gap:4px}
+.rule .tag code{font-family:var(--f-mono);font-size:11.5px;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:0 5px;color:var(--muted)}
+.mark{width:8px;align-self:stretch;border-radius:2px}
+.m-std{background:var(--std)} .m-gap{background:var(--gap)} .m-open{background:var(--open)}
+.rule p{margin:0}
+.open-box{margin:0 14px 12px;border:2px solid var(--open);border-radius:var(--r);background:var(--open-soft)}
+.open-box h3{margin:0;padding:8px 12px;font-family:var(--f-display);font-size:16px;color:var(--open);letter-spacing:.04em;text-transform:uppercase}
+.open-box ul{margin:0;padding:0 12px 10px 30px} .open-box li{margin:5px 0}
+.open-box .src{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.decision{margin:0 14px 14px;border:1px solid var(--line);border-radius:var(--r);padding:12px;background:var(--surface-2)}
+.decision h3{margin:0 0 4px;font-family:var(--f-display);font-size:17px}
+.decision .q{margin:0 0 10px}
+.states{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.states button{flex:1 1 110px;border:2px solid var(--line);background:var(--surface);border-radius:var(--r);padding:8px;cursor:pointer;font-weight:600}
+.states button[data-v="ok"][aria-pressed="true"]{border-color:var(--std);background:var(--std-soft);color:var(--std)}
+.states button[data-v="mod"][aria-pressed="true"]{border-color:var(--gap);background:var(--gap-soft);color:var(--gap)}
+.states button[data-v="rep"][aria-pressed="true"]{border-color:var(--muted);background:var(--surface-2);color:var(--fg)}
+.decision textarea{width:100%;min-height:72px;border:1px solid var(--line);border-radius:var(--r);padding:8px;background:var(--surface);resize:vertical}
+.savestate{font-size:12px;color:var(--muted);margin-top:4px;min-height:1.2em}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+.placeholder{padding:28px 18px;text-align:center;color:var(--muted)}
+.placeholder b{display:block;font-family:var(--f-display);font-size:20px;color:var(--fg);margin-bottom:6px}
+
+/* Synthèse */
+.syn{display:grid;gap:16px}
+.syn-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.card .v{font-family:var(--f-display);font-size:32px;font-weight:700;font-variant-numeric:tabular-nums}
+.card .l{font-size:13px;color:var(--muted)}
+.plan td.num{text-align:right;font-family:var(--f-mono)}
+.export{width:100%;min-height:240px;font-family:var(--f-mono);font-size:12.5px;border:1px solid var(--line);border-radius:var(--r);padding:10px;background:var(--surface)}
+.note{font-size:13px;color:var(--muted)}
+
+@media (max-width:1100px){.split{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:820px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  nav.rail{position:static;max-height:none}
+  .syn-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sap-body.two{grid-template-columns:minmax(0,1fr)}
+  .tree{border-right:0;border-bottom:1px solid var(--line)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="bar"><div class="wrap bar-in">
+  <div class="brand"><b>Déroulé Outbound · DC Ronet</b><span>Séance de validation du blueprint Outbound FR Final v1.0 · SAP EWM 2.0</span></div>
+  <div class="sections" id="sections" role="tablist" aria-label="Grandes sections du flux"></div>
+  <div class="tools">
+    <button class="btn" id="fOpen" aria-pressed="false" title="Raccourci : O">Points ouverts seulement</button>
+    <button class="btn" id="bSyn" title="Raccourci : S">Synthèse</button>
+    <span class="timer" id="timer" title="Temps de séance écoulé">00:00 / 4:00</span>
+    <button class="btn" id="bTimer">Démarrer</button>
+  </div>
+</div></header>
+
+<div class="wrap layout">
+  <nav class="rail" id="rail" aria-label="Étapes du flux"></nav>
+  <main id="main" tabindex="-1"></main>
+</div>
+
+<script>
+/* ---------- Contenu : blueprint Final v1.0 + revue BP-001 (revue-blueprint-outbound-vs-gap.md) ---------- */
+const SECTIONS=[
+ {id:"s31",n:"3.1",t:"Livraisons 8*",min:20,slot:5},
+ {id:"s32",n:"3.2",t:"Vagues & T8/T9",min:40,slot:2},
+ {id:"s34",n:"3.4",t:"Picking",min:50,slot:4},
+ {id:"s35",n:"3.5",t:"Consolidation picking",min:40,slot:1},
+ {id:"s36",n:"3.6",t:"Consolidation expédition",min:20,slot:1},
+ {id:"s41",n:"4.1",t:"Expédition",min:45,slot:3}
+];
+/* slot = ordre de passage proposé en séance (blocages d'abord) */
+const SESSION_EXTRA={open:10,close:15};
+
+const K={std:"Standard",gap:"GAP · développement",open:"À trancher"};
+
+const STEPS=[
+ {id:"e01",sec:"s31",title:"Génération des bons 8*",bp:"3.1",todo:true},
+ {id:"e02",sec:"s31",title:"Calendrier milkrun",bp:"3.1 · Annexe 1",todo:true},
+ {id:"e03",sec:"s32",title:"Création automatique des vagues",bp:"3.2 · 3.2.1 · 3.2.4",kind:"open",mock:"waves",
+  rules:[
+   {k:"std",t:"Dès la création d’un bon de livraison, le système crée ou met à jour automatiquement une vague de picking.",tags:["BR-05-004-010","BR-05-004-090"]},
+   {k:"open",t:"Une livraison est affectée à une vague par sa route (série de vagues) et sa date de besoin (occurrence). La vague retenue est celle dont la fenêtre de besoins contient cette date ; la date de création du BL n’intervient pas.",tags:["BR-05-004-090","GAP potentiel BR-05-004-090"]},
+   {k:"std",t:"Une fenêtre commence le jour du lancement de la route et se termine la veille du lancement suivant, sans recouvrement. Exemple du blueprint, route Luttre (lancement le jeudi) : besoin du mardi 09/07 → vague du jeudi 04/07.",tags:["BR-05-004-090"]},
+   {k:"std",t:"Les demandes T8 et T9 sont affectées automatiquement à des vagues urgentes distinctes. Les vagues T9 sont lancées immédiatement ; les autres, deux fois par jour.",tags:["BR-05-004-120-C","BR-05-004-010"]},
+   {k:"std",t:"Les demandes ODD sont regroupées dans une vague distincte, prélevées dans leur intégralité.",tags:["BR-05-004-010","décision 27/10"]},
+   {k:"std",t:"Avant son lancement, une partie d’une vague peut être isolée dans une nouvelle vague (par exemple un client).",tags:["BR-05-004-100-B"]},
+   {k:"open",t:"Signal T8/T9 pour tout le DC : vue filtrée du Warehouse Monitor sur les vagues urgentes (standard) ou affichage dynamique développé.",tags:["BR-05-004-120-A","GAP BR-05-004-120-A"]}
+  ],
+  open:[
+   {t:"Critères de vague : le blueprint liste encore la disponibilité du stock, des ressources et l’aire d’activité. Les décisions du 27/10 les retirent (pas de stock = pas de BL ; ressources gérées par blocage d’emplacement ; pas de split par aire d’activité). Texte à corriger.",src:"GL #5 · revue §3.2 · décision 27/10"},
+   {t:"Relation 1:1 entre le job milkrun et la vague milkrun : absente du texte, à ajouter.",src:"GL #5 · décision 27/10"},
+   {t:"Si le job planifié S/4 détermine l’occurrence de la vague, aucun développement EWM n’est requis (le tag « GAP potentiel » tombe). À confirmer avec Bernard.",src:"GL #5 · Q3"},
+   {t:"Écran T8/T9 : standard filtré ou développement ? À coordonner avec le blueprint Reporting.",src:"GL #6"}
+  ],
+  ask:"Valider la règle d’affectation (route + date de besoin), la liste de critères corrigée et l’option « job S/4 = occurrence, sans développement »."},
+ {id:"e04",sec:"s32",title:"Ajustement manuel, split et tourets",bp:"3.2.3 · 3.2.4",todo:true},
+ {id:"e05",sec:"s32",title:"Regroupement en ordres magasin",bp:"3.2.5",todo:true},
+ {id:"e06",sec:"s34",title:"Connexion ressource et file d’attente",bp:"3.4.1 · 3.4.2",todo:true},
+ {id:"e07",sec:"s34",title:"Picking RF : instructions et confirmation",bp:"3.4.3 · 3.4.5 · 3.4.6 · 3.4.7 · 3.4.8",kind:"open",mock:"rf",
+  rules:[
+   {k:"std",t:"Le magasinier se connecte à sa ressource, scanne son imprimante et choisit la file d’attente de son aire d’activité (ou un ordre magasin).",tags:["BR-05-005-010"]},
+   {k:"gap",t:"Le système affiche le NN, la quantité et la BIN, et guide de manière optimale vers les BIN, y compris pour les tours.",tags:["BR-05-005-030","GAP BR-05-005-030"]},
+   {k:"std",t:"Le magasinier confirme la quantité effectivement prélevée.",tags:["BR-05-005-070"]},
+   {k:"std",t:"Piece picking ou picking à l’arrondi : l’arrondi passe par l’overpick avec le code d’exception DIFS.",tags:["BR-05-005-060-A"]},
+   {k:"open",t:"Scan dynamique : un seul scan si l’article est seul dans la BIN, sinon BIN + article ; HU de destination confirmée automatiquement s’il n’y en a qu’une, scannée sinon.",tags:["BR-05-005-090","GAP BR-05-005-090 (XL)"]},
+   {k:"std",t:"Le scan du numéro de série est imposé si l’article en a un.",tags:["BR-05-005-170"]},
+   {k:"gap",t:"Une étiquette de picking s’imprime automatiquement à chaque ligne confirmée. Son contenu reste à définir.",tags:["BR-05-005-080","GAP BR-05-005-080"]},
+   {k:"gap",t:"Le magasinier peut réimprimer toute étiquette générée par EWM.",tags:["BR-08-010-090","GAP BR-08-010-090"]}
+  ],
+  open:[
+   {t:"Scan dynamique (GAP XL, développement) ou scan systématique de la HU (standard, même geste à chaque fois, traçabilité jusqu’à la consolidation) ? Comparer les deux variantes sur la maquette.",src:"GL #24 · Q10"},
+   {t:"Tours : trois exigences absentes du texte (alternance de tours, plusieurs utilisateurs sur plusieurs tours, flux simultanés). Renvoi à la session du 09/11.",src:"GL #9"},
+   {t:"Contenu de l’étiquette de picking à définir.",src:"GL #48"}
+  ],
+  ask:"Choisir la variante de scan (A ou B) et valider le reste du déroulé RF."},
+ {id:"e08",sec:"s34",title:"Câbles et découpe",bp:"3.4.3",todo:true},
+ {id:"e09",sec:"s34",title:"Lot, FEFO et péremption",bp:"3.4.4",todo:true},
+ {id:"e10",sec:"s34",title:"Exceptions : quantité manquante, ship complete",bp:"3.4.5.2",todo:true},
+ {id:"e11",sec:"s34",title:"HU source conservée, stock resté sur la BIN",bp:"3.4.8",todo:true},
+ {id:"e12",sec:"s35",title:"Poste de consolidation picking",bp:"3.5.1 · 3.5.2 · 3.5.3 · 3.5.4",kind:"open",mock:"pack",
+  rules:[
+   {k:"std",t:"Les HU de picking sont déposées en zone de consolidation ; la HU et la BIN sont scannées.",tags:["BR-05-005-180"]},
+   {k:"open",t:"Le système propose le réemballage selon des règles paramétrables propres à cette étape et guide le magasinier. Critères (destination, COPO, réservation) à définir.",tags:["BR-05-006-010","GAP BR-05-006-010 (XL)"]},
+   {k:"open",t:"Certaines marchandises peuvent contourner la consolidation selon des critères définis.",tags:["BR-05-006-040","GAP BR-05-006-040"]},
+   {k:"open",t:"Une HU de picking contenant un kit est traitée séparément pour garder tous ses composants ensemble.",tags:["BR-05-004-130_B","GAP BR-05-004-130_B"]},
+   {k:"open",t:"Pour une marchandise dangereuse, le système indique au magasinier le pictogramme à apposer pendant l’emballage.",tags:["BR-05-006-060","GAP BR-05-006-060"]},
+   {k:"gap",t:"Le numéro de HU d’expédition est généré automatiquement à partir de la proposition.",tags:["GAP potentiel","BR à créer"]},
+   {k:"std",t:"Repacking au poste de packing, contrôle de complétude, clôture de la HU : statut « consolidation 1 terminée » et impression de l’étiquette de HU d’expédition.",tags:["3.5.3","3.5.4","3.5.5"]},
+   {k:"std",t:"Consolidation par COPO / réservation / magasin : standard Infrabel, avec l’adresse du COPO présente dans le STO (bon 45**). Prérequis absent du texte.",tags:["BR-05-006-030"]}
+  ],
+  open:[
+   {t:"Bloquant : la matrice des cas de consolidation (Annexe 3) n’existe pas encore. Sans elle, pas de spécification de la proposition de réemballage. Cas « plusieurs COPO » à rediscuter.",src:"GL #26 · #33"},
+   {t:"Critères de bypass non définis. Si un type de processus sans étape de packing suffit, c’est du standard ; sinon développement.",src:"GL #27 · Q11"},
+   {t:"Définition du kit à figer : kit Infrabel (plusieurs NN, kitting standard) ou kit à 1 NN en plusieurs composants (Annexe 2, non standard). Responsabilité master data.",src:"GL #8 · Q4"},
+   {t:"Pictogramme ADR : à la consolidation picking ou à la consolidation expédition ? Le blueprint le place aux deux étapes.",src:"GL #28 · Q12"}
+  ],
+  ask:"Obtenir un responsable et une date pour la matrice de l’Annexe 3, les critères de bypass, la définition du kit et l’étape du pictogramme."},
+ {id:"e13",sec:"s35",title:"Clôture et étiquette de HU d’expédition",bp:"3.5.4 · 3.5.5",todo:true},
+ {id:"e14",sec:"s36",title:"HU mère / HU filles",bp:"3.6.1 · 3.6.2 · 3.6.3 · 3.6.4",todo:true},
+ {id:"e15",sec:"s36",title:"Calculateur cubimétrique et documents",bp:"3.6.5 · 3.6.6",todo:true},
+ {id:"e16",sec:"s41",title:"Numéro d’expédition et demande de transport",bp:"4.1.1 · 4.1.1.1 · 4.1.1.2",kind:"open",mock:"tu",
+  rules:[
+   {k:"std",t:"Le coordinateur crée une unité de transport (TU) par véhicule, choisit le moyen de transport (camion-grue, semi-remorque…) et y affecte les HU positionnées sur les emplacements d’expédition.",tags:["BR-06-001-020"]},
+   {k:"std",t:"La fonction « Fin de chargement » fige la liste des HU de la TU : plus aucun ajout ni retrait.",tags:["BR-06-001-020"]},
+   {k:"open",t:"La demande de transport peut être faite dès la fin de la consolidation, sans sortie de marchandises préalable ; les HU restent suivies en stock jusqu’à leur sortie physique.",tags:["BR-06-001-010","GAP BR-06-001-010"]},
+   {k:"gap",t:"Distribution : une demande d’expédition EDI part vers le transporteur avant la sortie de marchandises, avec les données de conditionnement (palettes, poids, dimensions, identification).",tags:["BR-06-001-030","GAP BR-06-001-030"]},
+   {k:"open",t:"Les informations ADR (dont le poids brut des marchandises dangereuses) sont intégrées dans l’EDI.",tags:["BR-06-001-070","GAP BR-06-001-070"]},
+   {k:"open",t:"Un « EDI light » peut aussi être envoyé avant la sortie de marchandises.",tags:["BR-06-001-050"]},
+   {k:"std",t:"Enlèvement : les articles et HU d’un même ensemble sont regroupés sous une référence unique, lisible au comptoir.",tags:["BR-06-002-010"]}
+  ],
+  open:[
+   {t:"Déclencheur de la demande de transport : fin de consolidation, création du numéro d’expédition ou liste des HU figée ? Le texte en sous-entend deux.",src:"GL #34 · Q13"},
+   {t:"Contenu de l’EDI light non défini (« voir avec Hicham ») ; tag GAP manquant.",src:"GL #36"},
+   {t:"ADR dans l’EDI : en attente de confirmation du DC (commentaires du 25/08). Numérotation à aligner dans la GAP List (-050 / -070).",src:"GL #37 · #56"},
+   {t:"« Fin de chargement » a deux sens dans le texte : figeage de la liste par le coordinateur (4.1.1.1) et fin effective du chargement (4.1.2.2).",src:"revue §5"}
+  ],
+  ask:"Choisir le déclencheur de la demande de transport et nommer les responsables du contenu EDI light et ADR."},
+ {id:"e17",sec:"s41",title:"Documents et notifications de distribution",bp:"4.1.1.2",todo:true},
+ {id:"e18",sec:"s41",title:"Chargement par le DC et sortie",bp:"4.1.2",todo:true},
+ {id:"e19",sec:"s41",title:"Expédition non gérée par le DC",bp:"4.1.3",todo:true}
+];
+
+/* ---------- Maquettes (indicatives) ---------- */
+function stamp(){return '<div class="stamp">MAQUETTE INDICATIVE</div>'}
+const MOCKS={
+ waves(){return `${stamp()}
+  <div class="sap">
+   <div class="sap-top"><b>Warehouse Monitor · Vagues</b><span>Entrepôt Ronet · données d’exemple</span></div>
+   <div class="sap-tb"><span>Lancer</span><span>Scinder la vague</span><span>Affecter BL</span><span>Simuler</span><span class="warn">T8/T9 : 3 en cours</span></div>
+   <div class="sap-body two">
+    <div class="tree"><div>▾ Sortant</div><div>&nbsp;&nbsp;▾ Vagues</div><div class="sel">&nbsp;&nbsp;&nbsp;&nbsp;Toutes</div><div>&nbsp;&nbsp;&nbsp;&nbsp;Urgentes T8/T9</div><div>&nbsp;&nbsp;&nbsp;&nbsp;ODD</div><div>&nbsp;&nbsp;&nbsp;&nbsp;Tourets</div><div>&nbsp;&nbsp;▸ Livraisons sortantes</div><div>&nbsp;&nbsp;▸ Ordres magasin</div></div>
+    <div class="tblw"><table class="t">
+     <tr><th>Vague</th><th>Type / route</th><th>Lancement</th><th>Fenêtre de besoins</th><th>BL</th><th>Statut</th></tr>
+     <tr class="hl"><td>V-0412</td><td>Milkrun · Luttre</td><td>jeu 04/07</td><td>04/07 → 10/07</td><td>14</td><td><span class="pill p-mut">À lancer</span></td></tr>
+     <tr><td>V-0418</td><td>Milkrun · Luttre</td><td>jeu 11/07</td><td>11/07 → 17/07</td><td>6</td><td><span class="pill p-mut">Ouverte</span></td></tr>
+     <tr><td>V-0420</td><td>Urgent · T8</td><td>2×/jour</td><td>—</td><td>2</td><td><span class="pill p-open">Urgent</span></td></tr>
+     <tr><td>V-0421</td><td>Urgent · T9</td><td>immédiat</td><td>—</td><td>1</td><td><span class="pill p-open">Lancée</span></td></tr>
+     <tr><td>V-0422</td><td>ODD</td><td>2×/jour</td><td>—</td><td>3</td><td><span class="pill p-mut">Ouverte</span></td></tr>
+     <tr><td>V-0423</td><td>Tourets</td><td>manuel</td><td>—</td><td>2</td><td><span class="pill p-mut">Hors vague</span></td></tr>
+    </table></div>
+   </div>
+   <div class="box"><h4>BL sélectionné · affectation calculée</h4>
+    <div class="tblw"><table class="t"><tr><th>BL 8*</th><th>Route</th><th>Date de besoin</th><th>Créé le</th><th>Vague</th></tr>
+    <tr><td>8xxxxxxx</td><td>Luttre</td><td>mar 09/07</td><td>21/06</td><td>V-0412 (jeu 04/07)</td></tr></table></div>
+    <div class="alert o"><b>À TRANCHER</b><span>Critères affichés ici sans disponibilité du stock, des ressources ni aire d’activité (décisions du 27/10). Le blueprint les liste encore.</span></div>
+   </div>
+  </div>
+  <p class="mock-caption">Données d’exemple. Seule la route Luttre et ses dates viennent du blueprint. Numéros de vague fictifs ; transaction réelle à confirmer (le blueprint cite le Warehouse Monitor).</p>`},
+ rf(v){const A=v!=="B";return `${stamp()}
+  <div class="variants" role="group" aria-label="Variante de scan">
+   <button class="btn" data-variant="A" aria-pressed="${A}">A · scan dynamique (GAP)</button>
+   <button class="btn" data-variant="B" aria-pressed="${!A}">B · scan systématique de la HU (standard)</button>
+  </div>
+  <div class="rfrow">
+   <div class="rf" aria-label="Écran RF de picking, maquette">
+    <div class="hd"><span>PICKING · Tâche 2/5</span><span>Aire : exemple</span></div>
+    <div class="ln"><span>BIN</span><span class="fld act">R-04-03-B</span></div>
+    <div class="ln"><span>Article NN</span><span class="fld ${A?"auto":""}">${A?"(non requis : seul dans la BIN)":"scanner le NN"}</span></div>
+    <div class="ln"><span>Lot</span><span class="fld auto">non géré par lot</span></div>
+    <div class="ln"><span>À prélever</span><span class="big">18 PC</span></div>
+    <div class="ln"><span>Prélevé</span><span class="fld">__</span></div>
+    <div class="ln"><span>HU picking</span><span class="fld ${A?"auto":"act"}">${A?"HU 1 seule : auto":"scanner la HU"}</span></div>
+    <div class="msg">${A?"Scans requis : BIN + quantité":"Scans requis : BIN + NN + quantité + HU"}</div>
+    <div class="fk"><span>F1 Exception</span><span>F2 Réimprimer</span><span>F3 BIN suivante</span><span class="g">F4 Étiquette picking</span></div>
+   </div>
+   <div class="rfside">
+    <ol>
+     <li>Connexion à la ressource, scan de l’imprimante, choix de la file d’attente.</li>
+     <li>Le système affiche BIN, NN et quantité ; guidage optimal (tours compris).</li>
+     <li>${A?"Scan d’un seul élément si l’article est seul dans la BIN ; HU de destination confirmée automatiquement.":"Scan systématique : BIN, article et HU de destination à chaque ligne."}</li>
+     <li>Confirmation de la quantité ; arrondi par overpick (code DIFS).</li>
+     <li>Étiquette de picking imprimée à la confirmation (contenu à définir).</li>
+    </ol>
+    <p class="specnote">${A?"Variante A = GAP BR-05-005-090 (XL). Cette maquette sert de spécification de la logique de scan.":"Variante B = alternative standard proposée dans la GAP List : même geste à chaque fois, traçabilité HU garantie."}</p>
+   </div>
+  </div>
+  <p class="mock-caption">Disposition de l’écran RF indicative. Codes de touches fictifs, sauf DIFS (blueprint 3.4.5.2). BIN et quantités d’exemple (18 pièces : exemple du BR-05-005-060).</p>`},
+ pack(){return `${stamp()}
+  <div class="sap">
+   <div class="sap-top"><b>Poste de packing · Consolidation picking</b><span>Zone de consolidation · données d’exemple</span></div>
+   <div class="sap-tb"><span>Nouvelle HU d’expédition</span><span>Transvaser</span><span>Clôturer la HU</span><span class="gapb">Proposition de réemballage (GAP)</span><span class="gapb">Bypass (GAP)</span></div>
+   <div class="sap-body two">
+    <div class="tblw"><table class="t">
+     <tr><th>HU de picking</th><th>Destinataire</th><th>Critère</th><th>Contenu</th></tr>
+     <tr class="hl"><td>HU-P-101</td><td>COPO A</td><td>COPO</td><td>3 lignes</td></tr>
+     <tr class="hl"><td>HU-P-102</td><td>COPO A</td><td>COPO</td><td>1 ligne</td></tr>
+     <tr><td>HU-P-103</td><td>SP Luttre</td><td>Destination</td><td>2 lignes</td></tr>
+     <tr><td>HU-P-104</td><td>COPO B</td><td>Réservation</td><td>Kit · 1/3</td></tr>
+     <tr><td>HU-P-105</td><td>SP Luttre</td><td>Destination</td><td>ADR</td></tr>
+    </table></div>
+    <div class="box" style="border-top:0">
+     <h4>Proposition du système</h4>
+     <div class="tblw"><table class="t"><tr><th>HU d’expédition</th><th>Regroupe</th></tr>
+      <tr><td>auto · n° généré</td><td>HU-P-101 + HU-P-102</td></tr>
+      <tr><td>auto · n° généré</td><td>HU-P-103</td></tr>
+      <tr><td>séparée · kit</td><td>HU-P-104 (attend 2/3, 3/3)</td></tr>
+     </table></div>
+     <div class="alert"><b>KIT</b><span>Traiter séparément : tous les composants dans le même emballage.</span></div>
+     <div class="alert"><b>ADR</b><span>HU-P-105 : apposer le pictogramme de danger avant clôture.</span></div>
+     <div class="alert o"><b>À TRANCHER</b><span>Règles de regroupement : matrice de l’Annexe 3 inexistante.</span></div>
+    </div>
+   </div>
+  </div>
+  <p class="specnote">GAP BR-05-006-010 / -040 / -060 et BR-05-004-130_B : cette maquette sert de base de spécification. Arbitrage de conception à prévoir avec le Consultant Solution (proposition guidée, bypass, kit).</p>
+  <p class="mock-caption">Destinataires, critères et contenus fictifs. Le standard EWM consolide par consolidation group au poste de packing (GAP List, analyse standard) ; la proposition guidée n’est pas standard.</p>`},
+ tu(){return `${stamp()}
+  <div class="sap">
+   <div class="sap-top"><b>Unité de transport · Création</b><span>Coordinateur DC · données d’exemple</span></div>
+   <div class="sap-tb"><span>Créer TU</span><span>Affecter HU</span><span>Fin de chargement (figer)</span><span class="warn">Envoyer demande de transport</span><span>Documents</span></div>
+   <div class="box" style="border-top:0">
+    <div class="tblw"><table class="t">
+     <tr><th>TU</th><th>Moyen de transport</th><th>Scénario</th><th>Transporteur</th><th>Statut</th></tr>
+     <tr class="hl"><td>TU-exemple-01</td><td>Semi-remorque</td><td>Distribution</td><td>à renseigner</td><td><span class="pill p-mut">HU affectées : 4</span></td></tr>
+    </table></div>
+   </div>
+   <div class="box"><h4>HU disponibles sur les emplacements d’expédition</h4>
+    <div class="tblw"><table class="t">
+     <tr><th></th><th>HU</th><th>Type</th><th>Poids</th><th>Volume</th><th>ADR</th><th>Consolidation</th></tr>
+     <tr><td>☑</td><td>HU mère M-01</td><td>Palette</td><td>412 kg</td><td>1,4 m³</td><td>oui</td><td>2 terminée</td></tr>
+     <tr><td>☑</td><td>HU mère M-02</td><td>Palette</td><td>288 kg</td><td>1,1 m³</td><td>non</td><td>2 terminée</td></tr>
+     <tr><td>☐</td><td>HU-E-207</td><td>Colis</td><td>18 kg</td><td>0,1 m³</td><td>non</td><td>1 terminée</td></tr>
+    </table></div>
+    <div class="alert o"><b>À TRANCHER</b><span>Quand part la demande de transport ? Fin de consolidation · création du n° d’expédition · liste figée.</span></div>
+    <div class="alert"><b>EDI</b><span>Avant sortie de marchandises : conditionnement, identification des palettes, ADR (à confirmer), EDI light (contenu à définir).</span></div>
+   </div>
+  </div>
+  <p class="mock-caption">Moyens de transport cités par le blueprint (camion-grue, semi-remorque). Poids, volumes et numéros fictifs. Écran réel et libellés à confirmer.</p>`}
+};
+
+/* ---------- État des décisions : db de l'artefact, repli navigateur ---------- */
+const state={cur:"e03",filterOpen:false,view:"step",variant:{e07:"A"},dec:{},dbOk:false,timer:{run:false,start:0,acc:0}};
+const LS="deroule-outbound-v1";
+function lsGet(){try{return JSON.parse(localStorage.getItem(LS)||"{}")}catch(e){return {}}}
+function lsSet(){try{localStorage.setItem(LS,JSON.stringify({dec:state.dec,timer:{acc:curElapsed()},cur:state.cur}))}catch(e){}}
+let db=null;
+(async()=>{
+ try{ db = window.claude?.use ? await window.claude.use("db") : null }catch(e){db=null}
+ if(!db){setSave("Enregistrement local à ce navigateur. Pensez à l’export texte.");return}
+ state.dbOk=true;
+ const to=setTimeout(()=>setSave("Base de données injoignable pour l’instant ; décisions gardées localement."),10000);
+ db.collection("decisions").onSnapshot(snap=>{
+   if(!snap.metadata.fromCache) clearTimeout(to);
+   snap.docs.forEach(d=>{const v=d.data(); if(v) state.dec[d.id]={s:v.s||"",c:v.c||"",at:v.at||""}});
+   render(true);
+ },err=>{clearTimeout(to);state.dbOk=false;setSave("Enregistrement partagé indisponible ("+err.code+") ; décisions gardées localement.")});
+})();
+let saveTimers={};
+function saveDec(id){
+ lsSet();
+ if(!db||!state.dbOk){setSave("Enregistré dans ce navigateur.");return}
+ clearTimeout(saveTimers[id]);
+ saveTimers[id]=setTimeout(async()=>{
+  const d=state.dec[id]||{};
+  try{await db.doc("decisions/"+id).set({s:d.s||"",c:d.c||"",at:new Date().toISOString(),step:titleOf(id)});setSave("Décision enregistrée.")}
+  catch(e){setSave("Échec de l’enregistrement partagé ("+e.code+") ; gardée dans ce navigateur.")}
+ },600);
+}
+function setSave(t){const el=document.getElementById("savestate");if(el)el.textContent=t;state.lastSave=t}
+
+/* ---------- Rendu ---------- */
+const $=s=>document.querySelector(s);
+const titleOf=id=>(STEPS.find(s=>s.id===id)||{}).title||id;
+const secOf=id=>SECTIONS.find(s=>s.id===id);
+const visibleSteps=()=>STEPS.filter(s=>!state.filterOpen||(!s.todo&&s.open&&s.open.length));
+const kindChip=k=>`<span class="kind k-${k}">${K[k]}</span>`;
+function esc(t){return String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+function renderSections(){
+ $("#sections").innerHTML=SECTIONS.map(sec=>{
+  const st=STEPS.filter(s=>s.sec===sec.id),n=st.length;
+  const c=k=>st.filter(s=>(state.dec[s.id]||{}).s===k).length;
+  const ok=c("ok"),mod=c("mod"),rep=c("rep");
+  const cur=(STEPS.find(s=>s.id===state.cur)||{}).sec===sec.id&&state.view==="step";
+  return `<button class="sec" role="tab" aria-current="${cur}" data-sec="${sec.id}">
+   <span class="n"><span>${sec.n} ${sec.t}</span></span>
+   <span class="t">${sec.min} min · passage n°${sec.slot} · ${ok+mod+rep}/${n} traités</span>
+   <span class="prog" aria-hidden="true"><i style="width:${ok/n*100}%;background:var(--std)"></i><i style="width:${mod/n*100}%;background:var(--gap)"></i><i style="width:${rep/n*100}%;background:var(--muted)"></i></span>
+  </button>`}).join("");
+}
+function renderRail(){
+ const vs=visibleSteps();
+ $("#rail").innerHTML=SECTIONS.map(sec=>{
+  const st=vs.filter(s=>s.sec===sec.id); if(!st.length) return "";
+  return `<h3>${sec.n} · ${sec.t}</h3>`+st.map(s=>{
+   const d=(state.dec[s.id]||{}).s||"";
+   return `<a href="#${s.id}" class="${s.todo?"todo":""}" ${s.id===state.cur&&state.view==="step"?'aria-current="page"':""}>
+    <span class="no">${s.bp.split(" ")[0]}</span><span>${esc(s.title)}${s.todo?" · à venir":""}</span><span class="dot ${d}" aria-label="${d?({ok:"Validé",mod:"À modifier",rep:"Reporté"})[d]:"Non traité"}"></span></a>`}).join("")}).join("")
+  + (state.filterOpen?`<p class="note" style="margin:10px 6px">Filtre actif : seules les étapes avec des points ouverts sont listées.</p>`:"");
+}
+function renderStep(){
+ const s=STEPS.find(x=>x.id===state.cur)||STEPS[0];
+ const sec=secOf(s.sec);
+ const vs=visibleSteps(), i=vs.findIndex(x=>x.id===s.id);
+ const prev=vs[i-1], next=vs[i+1];
+ let body;
+ if(s.todo){
+  body=`<div class="panel"><div class="placeholder"><b>Écran à venir</b>Cette étape sera maquettée à l’étape 2, après validation du style sur les quatre écrans représentatifs (3.2, 3.4, 3.5, 4.1).<br>Blueprint : section ${esc(s.bp)}.</div></div>`;
+ } else {
+  const d=state.dec[s.id]||{s:"",c:""};
+  const rules=s.rules.filter(r=>!state.filterOpen||r.k!=="std");
+  body=`<div class="split">
+   <section class="panel" aria-label="Maquette d’écran"><h2><span>Écran</span><span class="legend">${s.rules.some(r=>r.k==="gap"||r.k==="open")?kindChip("gap"):kindChip("std")}</span></h2>
+    <div class="mock-wrap" id="mock">${MOCKS[s.mock](state.variant[s.id])}</div></section>
+   <section class="panel" aria-label="Règles du blueprint et décision"><h2><span>Règles du blueprint</span><span class="note">${rules.length} / ${s.rules.length}</span></h2>
+    <div class="rules">${rules.map(r=>`<div class="rule"><span class="mark m-${r.k}" title="${K[r.k]}"></span><p>${esc(r.t)}</p><div class="tag"><span class="pill p-${r.k}">${K[r.k]}</span>${r.tags.map(t=>`<code>${esc(t)}</code>`).join("")}</div></div>`).join("")}</div>
+    <div class="open-box"><h3>Points à trancher (${s.open.length})</h3><ul>${s.open.map(o=>`<li>${esc(o.t)} <span class="src">[${esc(o.src)}]</span></li>`).join("")}</ul></div>
+    <div class="decision"><h3>Décision attendue</h3><p class="q">${esc(s.ask)}</p>
+     <div class="states" role="group" aria-label="État de la décision">
+      <button data-v="ok" aria-pressed="${d.s==="ok"}">Validé</button>
+      <button data-v="mod" aria-pressed="${d.s==="mod"}">À modifier</button>
+      <button data-v="rep" aria-pressed="${d.s==="rep"}">Reporté</button>
+     </div>
+     <label for="c-${s.id}" class="note">Commentaire, responsable, échéance</label>
+     <textarea id="c-${s.id}" data-step="${s.id}">${esc(d.c||"")}</textarea>
+     <div class="savestate" id="savestate">${esc(state.lastSave||"")}</div>
+    </div>
+   </section></div>`;
+ }
+ $("#main").innerHTML=`<div class="step-head"><div><div class="eyebrow">${sec.n} ${esc(sec.t).toUpperCase()} · BLUEPRINT ${esc(s.bp)} · ÉTAPE ${STEPS.indexOf(s)+1}/${STEPS.length}</div><h1>${esc(s.title)}</h1></div>
+   <div class="legend">${s.todo?"":kindChip(s.kind||"std")}</div></div>
+   ${body}
+   <div class="pager"><button class="btn" id="prev" ${prev?"":"disabled"}>← ${prev?esc(prev.title):"Début"}</button><button class="btn primary" id="next" ${next?"":"disabled"}>${next?esc(next.title):"Fin"} →</button></div>`;
+ $("#prev")?.addEventListener("click",()=>prev&&go(prev.id));
+ $("#next")?.addEventListener("click",()=>next&&go(next.id));
+ document.querySelectorAll(".states button").forEach(b=>b.addEventListener("click",()=>{
+  const d=state.dec[s.id]||(state.dec[s.id]={s:"",c:""}); d.s=d.s===b.dataset.v?"":b.dataset.v; saveDec(s.id); render();
+ }));
+ const ta=document.querySelector(".decision textarea");
+ ta?.addEventListener("input",()=>{const d=state.dec[s.id]||(state.dec[s.id]={s:"",c:""});d.c=ta.value;saveDec(s.id)});
+ document.querySelectorAll("[data-variant]").forEach(b=>b.addEventListener("click",()=>{state.variant[s.id]=b.dataset.variant;$("#mock").innerHTML=MOCKS[s.mock](b.dataset.variant);bindVariants(s)}));
+}
+function bindVariants(s){document.querySelectorAll("[data-variant]").forEach(b=>b.addEventListener("click",()=>{state.variant[s.id]=b.dataset.variant;$("#mock").innerHTML=MOCKS[s.mock](b.dataset.variant);bindVariants(s)}))}
+
+function exportText(){
+ const L=["JOURNAL DES DÉCISIONS — Séance de validation Blueprint Outbound (Ronet)","Date : "+new Date().toLocaleDateString("fr-BE")+" · Source : blueprint Outbound FR Final v1.0 + revue BP-001",""];
+ SECTIONS.forEach(sec=>{
+  L.push("== "+sec.n+" "+sec.t+" ==");
+  STEPS.filter(s=>s.sec===sec.id).forEach(s=>{
+   const d=state.dec[s.id]||{};
+   const st=d.s?({ok:"VALIDÉ",mod:"À MODIFIER",rep:"REPORTÉ"})[d.s]:(s.todo?"non présenté":"NON TRAITÉ");
+   L.push("- ["+st+"] "+s.title+" (BP "+s.bp+")"+(d.c?" — "+d.c.replace(/\s+/g," ").trim():""));
+   if(!s.todo&&d.s!=="ok") s.open.forEach(o=>L.push("    · reste à trancher : "+o.t+" ["+o.src+"]"));
+  });
+  L.push("");
+ });
+ return L.join("\n");
+}
+function renderSyn(){
+ const shown=STEPS.filter(s=>!s.todo);
+ const c=k=>shown.filter(s=>(state.dec[s.id]||{}).s===k).length;
+ const none=shown.length-c("ok")-c("mod")-c("rep");
+ const order=[...SECTIONS].sort((a,b)=>a.slot-b.slot);
+ const total=SECTIONS.reduce((a,s)=>a+s.min,0)+SESSION_EXTRA.open+SESSION_EXTRA.close;
+ $("#main").innerHTML=`<div class="step-head"><div><div class="eyebrow">VUE DE SYNTHÈSE</div><h1>Décisions de la séance</h1></div></div>
+ <div class="syn">
+  <div class="syn-cards">
+   <div class="card"><div class="v" style="color:var(--std)">${c("ok")}</div><div class="l">Validé</div></div>
+   <div class="card"><div class="v" style="color:var(--gap)">${c("mod")}</div><div class="l">À modifier</div></div>
+   <div class="card"><div class="v">${c("rep")}</div><div class="l">Reporté</div></div>
+   <div class="card"><div class="v" style="color:var(--open)">${none}</div><div class="l">Non traité (sur ${shown.length} écrans maquettés)</div></div>
+  </div>
+  <section class="panel"><h2><span>Minutage proposé · ${Math.floor(total/60)} h ${String(total%60).padStart(2,"0")}</span></h2>
+   <div class="tblw" style="padding:6px 14px 12px"><table class="t plan">
+    <tr><th>Passage</th><th>Section</th><th class="num">Minutes</th></tr>
+    <tr><td>0</td><td>Ouverture : objectifs, légende Standard / GAP / À trancher</td><td class="num">${SESSION_EXTRA.open}</td></tr>
+    ${order.map(s=>`<tr><td>${s.slot}</td><td>${s.n} ${s.t}</td><td class="num">${s.min}</td></tr>`).join("")}
+    <tr><td>7</td><td>Clôture : relecture du journal des décisions</td><td class="num">${SESSION_EXTRA.close}</td></tr>
+   </table>
+   <p class="note">Les blocages passent d’abord (consolidation, T8/T9 et vagues, EDI et transport) : ils conditionnent les spécifications et demandent les arbitrages des personnes présentes en début de séance. Les sections largement standard (picking, livraisons 8*) suivent.</p></div>
+  </section>
+  <section class="panel"><h2><span>Journal des décisions (texte à copier)</span><button class="btn" id="copy">Copier</button></h2>
+   <div style="padding:12px 14px"><textarea class="export" id="exp" readonly aria-label="Journal des décisions">${esc(exportText())}</textarea>
+   <p class="note" id="copyst">${state.dbOk?"Décisions enregistrées dans la base de l’artefact.":"Décisions enregistrées dans ce navigateur uniquement."}</p></div>
+  </section>
+ </div>`;
+ $("#copy").addEventListener("click",async()=>{const t=$("#exp");try{await navigator.clipboard.writeText(t.value);$("#copyst").textContent="Journal copié."}catch(e){t.focus();t.select();$("#copyst").textContent="Texte sélectionné : copiez-le avec Ctrl+C."}});
+}
+function render(fromDb){
+ if(fromDb && document.activeElement && document.activeElement.tagName==="TEXTAREA"){renderSections();renderRail();return}
+ renderSections();renderRail();
+ state.view==="syn"?renderSyn():renderStep();
+ $("#bSyn").setAttribute("aria-pressed",state.view==="syn");
+ $("#fOpen").setAttribute("aria-pressed",state.filterOpen);
+}
+function go(id){state.view="step";state.cur=id;if(location.hash!=="#"+id)location.hash=id;else render();lsSet();window.scrollTo({top:0})}
+
+/* ---------- Minuteur de séance ---------- */
+function curElapsed(){return state.timer.acc+(state.timer.run?Date.now()-state.timer.start:0)}
+function tick(){const m=Math.floor(curElapsed()/60000);$("#timer").textContent=Math.floor(m/60)+":"+String(m%60).padStart(2,"0")+" / 4:00"}
+$("#bTimer").addEventListener("click",()=>{const t=state.timer;if(t.run){t.acc=curElapsed();t.run=false;$("#bTimer").textContent="Reprendre"}else{t.start=Date.now();t.run=true;$("#bTimer").textContent="Pause"}lsSet();tick()});
+setInterval(()=>state.timer.run&&tick(),15000);
+
+/* ---------- Commandes ---------- */
+$("#fOpen").addEventListener("click",()=>{state.filterOpen=!state.filterOpen;const vs=visibleSteps();if(state.view==="step"&&!vs.find(s=>s.id===state.cur)&&vs[0])state.cur=vs[0].id;render()});
+$("#bSyn").addEventListener("click",()=>{state.view=state.view==="syn"?"step":"syn";if(state.view==="syn")location.hash="synthese";else location.hash=state.cur;render()});
+$("#sections").addEventListener("click",e=>{const b=e.target.closest("[data-sec]");if(!b)return;const f=visibleSteps().find(s=>s.sec===b.dataset.sec)||STEPS.find(s=>s.sec===b.dataset.sec);go(f.id)});
+document.addEventListener("keydown",e=>{
+ if(/TEXTAREA|INPUT|SELECT/.test(e.target.tagName)||e.metaKey||e.ctrlKey||e.altKey)return;
+ const vs=visibleSteps(),i=vs.findIndex(s=>s.id===state.cur);
+ if(e.key==="ArrowRight"&&state.view==="step"&&vs[i+1]){go(vs[i+1].id);e.preventDefault()}
+ else if(e.key==="ArrowLeft"&&state.view==="step"&&vs[i-1]){go(vs[i-1].id);e.preventDefault()}
+ else if(e.key==="o"||e.key==="O"){$("#fOpen").click()}
+ else if(e.key==="s"||e.key==="S"){$("#bSyn").click()}
+});
+function fromHash(){const h=location.hash.slice(1);if(h==="synthese"){state.view="syn"}else if(STEPS.find(s=>s.id===h)){state.view="step";state.cur=h}render()}
+window.addEventListener("hashchange",fromHash);
+
+/* ---------- Démarrage ---------- */
+(function(){const s=lsGet();if(s.dec)state.dec=s.dec;if(s.timer&&s.timer.acc)state.timer.acc=s.timer.acc;if(s.cur&&STEPS.find(x=>x.id===s.cur))state.cur=s.cur;tick();fromHash()})();
+</script>
