@@ -7,3 +7,4 @@ Exportés le 2026-11-01 pour les consultants sans accès Drive confirmé (risque
 | Blueprint_Outbound_FR_Final_v1.0.txt | Blueprint Outbound FR_Final v1.0 (id 1420ge1w5ENWCdJW1APztJh7J3AoX_7t7V4tiOF5ZjEU) | Texte intégral (~72 000 car.). Les tableaux et commentaires Google Doc (repères [e], [j]…) sont en texte brut |
 | GAP_List_EWM2.0_Ronet_27-10.xlsx | GAP_List_EWM2.0_Ronet 27-10 (id 1m5QFzkRKBt7v1KFAU6XKheWaYlInt0hs5Hh_x8h_61s) | Tous les onglets ; Outbound = « GAP List Outbound » (56 lignes, 21 colonnes) |
 | GAP_List_Outbound_27-10_lecture-texte.txt | idem, onglet Outbound | Lecture texte rapide (1 bloc par GAP) |
+| Inventaire_Fiori_EWM_LE_Infrabel_V0_4.xlsx | Fourni par Moustafa le 2026-11-06 | Inventaire documentaire des apps Fiori EWM/LE (bibliothèque SAP PCE 2025 + relevés on-premise 2022 partiels). « NON ACTIVABLE », bibliothèque ≠ activation. Voir onglets Lisez-moi et Réserves essentielles |
