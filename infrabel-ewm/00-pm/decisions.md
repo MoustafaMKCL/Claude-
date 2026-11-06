@@ -22,3 +22,5 @@
 | ID | Sujet | Options | Demandée le | Échéance |
 |---|---|---|---|---|
 | D-003 | Confirmer le passage aux transmissions directes entre consultants (PM en copie) | Confirmer / revenir à D-002 | 2026-11-01 | Avant délégation initiale |
+
+| D-004 | 2026-11-06 | Version de référence de la demande d'activation Fiori à BC (SOL-001) : PCE 2025 FPS02, car migration prochaine ; le relevé on-premise 2022 reste en colonne d'information. Version réelle du système de test à confirmer par BC | Moustafa | Décidé (à confirmer : système de test) |
