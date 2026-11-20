@@ -1,6 +1,6 @@
 # Flux RETOUR – DC Ronet : dossier consolidé des décisions, points ouverts et contradictions
 
-> Mission GAP-001 (PM → Consultant GAP), demande de Moustafa. Version 0.1 du 20/11/2026, à relire par le QA avant transmission à Moustafa.
+> Mission GAP-001 (PM → Consultant GAP), demande de Moustafa. Version 0.2 du 20/11/2026 : corrections après la relecture QA-005 (voir « Historique » en fin de document).
 > Branche `ewm/gap`, dossier `infrabel-ewm/01-gap/retour/`. Même contenu en tableur : `dossier-retour-consolide.xlsx`.
 > Règles appliquées : chaque ligne cite sa source. « Écrit » signifie que la source le dit noir sur blanc ; « déduit » signifie une lecture de notre part, à confirmer. Aucune solution SAP n'est proposée ici. Aucune source ni aucun blueprint n'a été modifié.
 
@@ -32,7 +32,7 @@
 **Signalements sur les sources :**
 - **BPv02-PM ≠ BPv02.** L'export Drive du PM ne contient que les titres et les légendes. Le fichier de la branche `ewm/blueprint` contient en plus le texte rédigé par Moustafa (paragraphes 17-18, 21-22, 27, 30, 41, 54, 66, 73, 85) et deux commentaires Word du 02/11. Ce sont deux versions différentes du même document. Ce dossier s'appuie sur la version `ewm/blueprint`.
 - **Figures du flux 1 absentes.** Les figures 4 et 5 de BPv02 (vérification documentaire : check-list, motifs de refus, document de refus) ne figurent dans aucune image de `media/`. Leur contenu n'est connu que par les légendes et par BPv01 l.60-66.
-- **IMG 8 sans légende.** L'image 8 (incidents, mouvement 108, décision acheteur) ne correspond à aucune légende de BPv02. Son flux d'origine n'est pas établi.
+- **IMG 8 sans légende propre.** L'image 8 (incidents, mouvement 108, décision acheteur) n'a pas de légende « Figure n ». Dans BPv02, elle suit directement le §41 de Moustafa, qui se termine par « Cela concerne ceci dans le BPMN reception 2 : ». Son rattachement à la réception 2 est donc écrit. Reste à confirmer que « reception 2 » désigne le flux 3 (étape 2 Stock).
 - Les onglets « GAP List Retours » de G05 et de G27 sont **vides**. L'onglet BR « 8 BR Retour » ne contient qu'une ligne : « Qui s'occupe des retours? Comment? ».
 - Plaud : aucun enregistrement avant le 12/11. La « session Retours » prévue la semaine du 2/11 (PD Synth. L53 ; FU « Blueprint » L9, L15) n'a laissé aucune trace écrite.
 
@@ -46,7 +46,7 @@
 6. **Contradiction 1 – périmètre :** l'E2E met le « flux retour » hors scope (IMG 2). Le draft de Moustafa précise « retours de matériel défectueux vers Schaerbeek » (BPv02 §17). La v0.1 incluait le refus à la vérification documentaire et les retours internes, la v0.4 les exclut.
 7. **Contradiction 2 – mouvement :** « pas de mouvement de stock » (BPv02 §41) ; « 108 » (IMG 8, G05 Inbound L24) ; « 922 visible sur le PO » (BPv02 §66) ; « 122 » (standard cité, G05). Aucune source ne tranche.
 8. **Contradiction 3 – mitraille :** « consommation automatique dans la bin mitraille » (BPv02 §22, repris en v0.4 l.200) contre « vérification humaine, zone d'attente » pour les retraits de stock (P18a, notes). La mitraille Z3 de stock (BR-04-002-010-A, vague dédiée) est absente de la v0.4.
-9. **Trou 4 – où isoler :** l'isolement en litige à l'étape 1 ou à l'étape 2 fait l'objet d'un désaccord (P16b [01:18:39]-[01:27:44]). La v0.4 rattache l'IMG 8 (sans légende) au flux 3 « étape 2 » sans preuve. Elle affirme aussi (point ouvert 9) que le blocage de livraison NNN n'a ni BR ni GAP, alors que G05 NNN L5 / Inbound L39 (GAP BR-01-003-020, FS-16, XL) le couvrent.
+9. **Trou 4 – où isoler :** l'isolement en litige à l'étape 1 ou à l'étape 2 fait l'objet d'un désaccord (P16b [01:18:39]-[01:27:44]). Par ailleurs, la v0.4 affirme (point ouvert 9) que le blocage de livraison NNN n'a ni BR ni GAP, alors que G05 NNN L5 / Inbound L39 (GAP BR-01-003-020, FS-16, XL) le couvrent.
 10. **Trou 5 – retours labo / échantillons et retours entrants :** les sujets BR-02-000-010/020, BR-02-001-010, les mouvements 331/332, 243A/243L, la destruction des échantillons, l'ASN des retours labo et immatriculation, le retour d'immatriculation (BPI §4) et BR-08-010-030 sont dispersés et non traités dans la v0.4.
 
 ## 2. Décisions
@@ -66,11 +66,10 @@ Quand deux sources se contredisent, la plus récente prévaut, mais les deux son
 | D09 | Mitraille / retour sans mouvement si non réceptionné | « comme les articles ne sont pas réceptionné, le 109 pas effectué, il n'y aura pas de mouvement de stock » pour les articles à retourner ou à mitrailler. ⚠ Voir D10 et le point ouvert PO01 (108). | BPv02 §41 ; BPv02 §54 (NNN : « sans mouvement de stock ») | 02/11/2026 | Moustafa | Écrit (draft), mais concurrencé par l'option 108 de G05 (05/11) |
 | D10 | Mitraille d'un lot QM stocké | « toutes les quantités (lot entier) ou les quantités partielles refusé doivent être envoyées dans l'emplacement dédié à la mitraille. La consommation des articles dans la bin mitraille est automatique. Le flux mitraille après le contrôle qualité est fini. » ⚠ Voir D19. | BPv02 §22 | 02/11/2026 | Moustafa | Écrit (draft) |
 | D11 | Mitraille NNN refusée | « si on a décidé de mitraille, il ne faut pas essayer d'avoir un transport… il n'y a pas de 551 ». Réponse de Moustafa : « On est d'accord ». | P18a [01:43:33]-[01:43:47] (notes au conditionnel) | 18/11/2026 | Locuteur 4, Moustafa | Écrit |
-| D12 | NNN : blocage et 101 | Pas de 107 ni de 109. 101 automatique quand toutes les HU sont contrôlées et déposées sans litige. Un litige ouvert bloque toute la livraison (blocage groupé). Acceptation → déblocage sans nouveau contrôle ; refus → « retour fournisseur ou mitraille de toute la livraison ». | P18a [01:19:09], [01:27:11]-[01:38:24] ; P17 [00:48:34], [00:54:24] ; G05 NNN L5, Inbound L39 (GAP BR-01-003-020, FS-16, XL, Analysé) ; IMG 10 | 18/11/2026 | Moustafa | Écrit |
+| D12 | NNN : blocage et 101 | Pas de 107 ni de 109. 101 automatique quand toutes les HU sont contrôlées et déposées sans litige. Un litige ouvert bloque toute la livraison (blocage groupé). Acceptation → déblocage sans nouveau contrôle ; refus → « retour fournisseur ou mitraille de toute la livraison ». | P18a [01:19:09], [01:27:11]-[01:38:24] ; P17 [00:48:34], [00:54:24] ; G05 NNN L5, Inbound L39 (GAP BR-01-003-020, FS-16, XL, Analysé) ; IMG 10. ⚠ G05 NNN L6 (même liste) : « Aucune clôture, annulation ou solution de retour n'est arrêtée à ce stade » | 18/11/2026 | Moustafa | Écrit (présenté), mais la clôture n'est pas arrêtée selon G05 NNN L6 |
 | D13 | NNN : pas de mouvement retour | Le 101 n'ayant jamais été fait, « il n'y a jamais… comme un 102 ou un 122, un retour fournisseur ». | P18a [01:38:40] | 18/11/2026 | Locuteur 4 | Écrit |
 | D14 | Retour fournisseur NNN : principe | Outbound delivery / bon 8000 sans référence, portant les HU (pas de stock), mis dans un transport (l'enlèvement compte comme un transport), clôturé avec la signature du fournisseur. | P18a [01:41:05]-[01:41:43] ; G05 NNN L6 (bon 8* sans référence VL01NO cité comme standard) | 18/11/2026 | Locuteurs 4 et 5 | Déduit (« il nous paraît logique » ; flux à schématiser, voir PO05) |
-| D15 | HU refusée enlevée par le transporteur | « Ce point est un BR et non un gap. » ⚠ G05 Outbound L47 : « A clarifier avec business » ; AFG L59 : GAP ; BPO l.832 : « BR-02-002-050 – GAP ». | P18b [00:34:01]-[00:34:26] | 18/11/2026 | Moustafa | Écrit (P18b plus récent que G05 et BPO) |
-| D16 | Expédition : exclusion des HU en litige | Le système ne doit pas sélectionner automatiquement les HU d'une livraison en litige, même déjà déposées (spécifique). | P17 [00:58:16]-[00:59:31] | 17/11/2026 | Moustafa, Yassine | Écrit |
+| D16 | Expédition : exclusion des HU en litige | Le système ne doit pas sélectionner automatiquement les HU d'une livraison en litige, même déjà déposées (spécifique). | P17 [00:58:16]-[00:59:31] | 17/11/2026 | Locuteur 1 (non identifié) ; Locuteur 2 relie au blocage de toute la livraison [00:59:02] | Écrit |
 | D17 | Localisation des HU en litige | Toutes les HU doivent être localisables, y compris celles en litige ; classé Must. | P16b [01:18:35], [01:32:24], [01:32:44] | 16/11/2026 | Locuteur 6, Moustafa, Locuteur 3 | Écrit |
 | D18 | Mitraille de stock Z3 | Vague dédiée sur le statut Z3, sans validation du coordinateur ; liste des statuts au Build. | BR L79 (BA, 03-09-2026) ; G05 Internal L3 (« En attente de confirmation business » ; G27 : « À analyser ») | 03/09/2026 (G05 : 05/11) | Discussion avec le Business ; Replenishment (liste des statuts) | Écrit (03/09), mais à reconfirmer selon G05 |
 | D19 | Retrait Z* : vérification avant élimination | Vérification humaine avant élimination (risque cité : 50 000 € de batteries par mois) ; la MIGO 551 est une sortie comptable, d'où « le groupe a donc retenu le principe d'une zone d'attente ». | P18a, notes | 18/11/2026 | Non identifié | Écrit (notes) |
@@ -111,7 +110,7 @@ Quand deux sources se contredisent, la plus récente prévaut, mais les deux son
 | PO07 | Étendue du blocage et des HU litige | Bloquer toute la ligne ou une partie ? Une HU litige par article ou une seule ? | « on bloque que la ligne » / HU litigieuses par article | P16b [01:22:25]-[01:24:43] ; G05 Inbound L39 (« on bloque la ligne de la livraison concernée globale ») | – |
 | PO08 | Repérage visuel du litige | Indication sur l'étiquette (couleur, pictogramme) pour signaler une sur-livraison ou un litige ? | – | P16b [01:23:02] + notes | – |
 | PO09 | Étiquette du matériel refusé (BR-02-002-030) | Étiquette physique ou information système ? Quel contenu, à quel moment ? | Formulaire spécifique / étiquette HU PPF / info système | BPv02, commentaire Word (02/11 12:13) ; G05 QM L13 ; PO L120 ; BPv01 Q09 | Business |
-| PO10 | Scan de la HU refusée à l'enlèvement (BR-02-002-050) | Le chargement RF sur TU avec porte suffit-il ? Le transporteur a-t-il accès à SAP ? | TU + porte (standard) / guidage HU par HU | G05 Outbound L47, QM L15 ; PO L74, L122 (doublon D8 de PD) ; à confronter à D15 | Business |
+| PO10 | Scan de la HU refusée à l'enlèvement (BR-02-002-050) | Le chargement RF sur TU avec porte suffit-il ? Le transporteur a-t-il accès à SAP ? | TU + porte (standard) / guidage HU par HU | G05 Outbound L47, QM L15 ; PO L74, L122 (doublon D8 de PD) ; voir PO37 | Business |
 | PO11 | Étapes au scanner (BR-02-002-020) | Quelles étapes de refus et de renvoi guider au scanner ? Le cockpit suffit-il (D40) ? | – | G05 QM L12 ; PO L119 ; BPv02 §85 | Business |
 | PO12 | Canal / objet litige commun (BR-01-003-100) | Base de litiges spécifique ou avis qualité Q2 ? Le GAP est-il confirmé ? SLA ? | Base spécifique / Q2 ; SLA évoqués : réponse 48 h, traitement 7 jours | G05 Inbound L22 ; PD L4 (prio 1, bloquant) ; PO L10 ; P16a [01:13:44], [01:14:21] | Bernard ; Replenishment |
 | PO13 | Démo du litige overdelivery (BR-01-003-020-F) | Replenishment valide-t-il la démo BRM ? | – | G05 Inbound L18 ; PD L9 ; PO L7 | Replenishment |
@@ -127,7 +126,7 @@ Quand deux sources se contredisent, la plus récente prévaut, mais les deux son
 | PO23 | Traitement des vagues de mitraille | Comment les magasiniers traitent-ils les vagues ? | File dédiée (Bernard) | P17, notes [00:07:15]-[00:07:52] | – |
 | PO24 | Statut Z5 / retours CLI | Comment traiter les articles supprimés qui reviennent d'un CLI ? | Rapport BI LSI existant | P18a [00:04:41] + notes | – |
 | PO25 | Statuts Z2/Z3/Z5/ZD (BR-07-005-070) | Quel traitement par statut ? Tout va-t-il d'office à la mitraille ? | Par statut / cas par cas Replenishment | G05 Reporting L12 ; PO L102 | BA ; Christophe |
-| PO26 | Mitraille : « automatique » ou vérifiée | La consommation dans la bin mitraille est-elle automatique (BPv02 §22) ou soumise à vérification humaine en zone d'attente (P18a) ? Les deux cas (lot QM refusé / retrait Z*) sont-ils traités pareil ? | Automatique / zone d'attente + vérification | BPv02 §22 ; P18a notes | – |
+| PO26 | Mitraille : « automatique » ou vérifiée | Pour un lot QM refusé, BPv02 §22 (repris en v0.4 §4) prévoit une consommation automatique dans la bin mitraille. Pour les retraits de stock Z* / péremption, P18a retient une zone d'attente avec vérification humaine. Ce sont deux périmètres distincts : la règle du lot QM refusé doit-elle rester automatique ? | Automatique / zone d'attente + vérification | BPv02 §22 ; P18a notes | – |
 | PO27 | Non-conformité en stock (BR-04-001-020-B, « BR 90 », « 80-20 ») | Qui statue, sur quel objet, avec quel workflow ? La partie B (communication avec Replenishment) est-elle dans le blueprint ? | Q3 + blocage / workflow litiges ; photos seules | G05 Internal L2, QM L18 ; PO L85, L125 ; P18a [00:55:09]-[01:08:08] | Gilles Moerenhout, Delphine Demoulin, Replenishment ; Christophe (question posée) |
 | PO28 | Indicateur de motif de blocage | Comment le coordinateur sait-il qu'il doit isoler une pièce, et pourquoi ? | Indicateur « envoyer en gestion des litiges » | P17 [00:38:06]-[00:38:27] | « à discuter » |
 | PO29 | Rapport des litiges par ligne de PO (BR-07-002-030) | Quelles sources agréger (check-list, 107, 109) ? Pour quels utilisateurs ? | – | G05 QM L21 ; PO L128 ; BPv01 Q17 | Replenishment |
@@ -137,6 +136,8 @@ Quand deux sources se contredisent, la plus récente prévaut, mais les deux son
 | PO33 | Périmètre « flux retour » | Portée exacte de l'annotation E2E ; sens de la phrase tronquée « Le flux retour qui est hors s » ; refus documentaire, retours internes et HU non emportées dans ou hors du blueprint Retour ? | – | IMG 2 ; BPv02 §17, §27, §30 ; BPv01 Q01, Q02 ; BRR [Questions] L4-L7 | Moustafa |
 | PO34 | HU prévues mais non emportées | Faut-il une BR ou un GAP dédié (retour en stock) ? | – | BPO l.845, l.874-885 ; BRR [Questions] L7 ; BR-06-003-020/-030 | – |
 | PO35 | BR-08-010-030 et BR-06-002-010 sans ligne GAP | Ces BR, explicitement « retour » (FT : « A traiter dans les flux "retour" » ; « ex : retour litige fournisseur »), n'ont aucune ligne dans G05, ni dans PD/PO. AFG : GAP (L207) et FIT (L180), couverture à confirmer. | – | G05 AFG L180, L207 ; BR L175, L202 | – |
+| PO37 | Qualification de BR-02-002-050 (HU refusée enlevée) | Remarque du 18/11 : « je n'ai pas mis GAP, donc c'est un BR, autant pour moi. Donc ça, c'est pas un GAP » (sur l'étiquetage de la liste présentée). Les notes Plaud en tirent « Ce point est un BR et non un gap ». Est-ce une requalification ? | BR (signal du 18/11, à confirmer) / GAP (texte du BR dans BPv02 §72 « - GAP – » ; G05 Outbound L47 « A clarifier avec business » ; AFG L59 GAP ; BPO l.832 « GAP ») | P18b [00:34:01]-[00:34:26] + notes ; BPv02 §72 ; G05 Outbound L47, AFG L59 ; v0.4 point ouvert 4 | Moustafa |
+| PO38 | BR-06-003-020 sur le BPMN expédition | Pourquoi BR-06-003-020 (encodage du retrait des HU par le chauffeur milkrun en cas de problème technique) est-il relié à « Confirmer la sortie », « Confirmer l'endroit de sortie » et « Confirmer la fin du chargement » ? Son texte ne correspond pas à ces étapes. | Rattachement à confirmer ou à corriger sur le BPMN | IMG 13 ; BR texte (BRR [Liées indirectement] L10) ; G05 AFG L181 (FIT) | Moustafa / auteur du BPMN |
 | PO36 | Qualification BR-02-002-010 / -040 | « Standard » en G05 (AFG : FIT) mais « Gap » en FT, et BR-02-002-040 est classé prio 1 bloquant en PD. | Standard / Gap | G05 QM L11, L14 ; FT L161, L163 ; PD L100 | – |
 
 ## 4. BR du retour
@@ -161,13 +162,13 @@ Statut GAP List 05-11 (G05), avec la 27-10 (G27) seulement si elle diffère.
 | BR-02-002-020 | Étapes de refus et de renvoi guidées au scanner | QM L12 · A clarifier avec business · Gap – HU managed | = | D40 ; PO11 |
 | BR-02-002-030 | Étiquette du matériel rebuté (entier ou partiel) pour le retour fournisseur | QM L13 · A clarifier · Gap · Form | = | PO09 |
 | **BR-02-002-040** | Renvoi sur base d'un document (ex. bon 8000) lié au PO ; référence transmise par Replenishment, utilisée par le transporteur | QM L14 · À analyser · **Standard** · « à aligner avec GAP BR-01-003-110 (mvt 108 vs flux retour / mvt 922) » ; AFG L58 FIT ; PD L100 prio 1 | = | D38 ; PO02, PO36 |
-| BR-02-002-050 | Contrôler par scan que le transporteur enlève la bonne HU refusée | Outbound L47 · A clarifier avec business · « Le transporteur a t'il accès à SAP ? » ; QM L15 · A clarifier ; AFG L59 GAP | G27 Outbound L47 : sans la question sur le transporteur | D15 ; PO10 |
+| BR-02-002-050 | Contrôler par scan que le transporteur enlève la bonne HU refusée | Outbound L47 · A clarifier avec business · « Le transporteur a t'il accès à SAP ? » ; QM L15 · A clarifier ; AFG L59 GAP | G27 Outbound L47 : sans la question sur le transporteur | PO10, PO37 |
 | BR-04-001-010 | Photo en pièce jointe pour enrichir une plainte (Nice to have) | Internal L2 (avec 020-A/B) · À analyser · L ; QM L16 · Gap | = | PO27 |
 | BR-04-001-020-A | Isoler / mettre en quarantaine les pièces problématiques | QM L17 · À analyser · EWM GZH · Config ; AFG L81 FIT | = | D23 |
 | BR-04-001-020-B | Suivi de la décision sur un article bloqué (ID34) | QM L18 · À analyser · « — » ; Internal L2 | = | PO27 |
 | BR-04-002-010-A | Tâches de picking sur les articles Z3 (mitraille) | Internal L3 · **En attente de confirmation business** · M | **À analyser** | D18, D21 ; PO21-PO23 |
 | BR-06-002-010 | Référence unique regroupant plusieurs HU à enlever (« ex : retour litige fournisseur ») | **Aucune ligne GAP** ; AFG L180 FIT (couverture à confirmer) | – | D39 ; PO35 |
-| BR-06-003-020 | Encoder le retrait des HU d'expédition par le chauffeur milkrun en cas de problème technique | Absent de G05 (selon v0.4, absent de G27) | – | Section 6 (mauvais rattachement en v0.4) |
+| BR-06-003-020 | Encoder le retrait des HU d'expédition par le chauffeur milkrun en cas de problème technique | **Aucune ligne dans les onglets GAP** ; AFG L181 FIT | – | PO38 (rattachement sur le BPMN) |
 | BR-07-002-020 | Reporting des livraisons et camions refusés, même sans MIGO | Reporting L6 · Analysé · GAP · Report · S | = | PO30 |
 | BR-07-002-030 | Rapport par ligne de PO des litiges de réception (check-list, 107, 109) | QM L21 · À analyser · Gap · Report | = | PO29 |
 | BR-07-005-070 | Articles au statut Z2/Z3/Z5/ZD pour un traitement spécifique | Reporting L12 · Analysé · GAP | = | PO25 |
@@ -183,7 +184,7 @@ Mentions sans BR dédiée : BR Management Summary L2 (Replenishment, « BR valid
 | Étape | Ce que montrent les sources | Décidé | Manque / ouvert |
 |---|---|---|---|
 | 1. Refus à la vérification documentaire | Check-list phase 1 et 2 ; refus → motifs, incident, document de refus au transporteur → « Réception refusée » (légendes des fig. 4-5 de BPv02 ; BPv01 l.60-66) | D26, D27 (P16b, 16/11) ; hors du flux retour selon Moustafa (D36) | Figures absentes des images ; contenu du document de refus et liste des motifs (BPv01 Q03) ; reporting camions refusés (PO30) ; TOM (PO17) ; rattachement au blueprint Inbound ou Retour (PO33) |
-| 2a. Litige à la réception 1re étape (sur-livraison, article non commandé, incident) | IMG 8 (sans légende) : incident → nouvelle HU → lane Litige → décision ; branche « 108 » (diminution du stock en valeur) ; IMG 9 : cas 1 à 4 de la 1re étape | D01-D05, D17 | Étape 1 ou 2 pour l'isolement (PO06) ; étendue du blocage (PO07) ; repérage visuel (PO08) ; condition de la branche 108 (v0.4 PO8) ; flux d'origine de l'IMG 8 |
+| 2a. Litige à la réception (sur-livraison, article non commandé, incident) | IMG 8 (« BPMN reception 2 », BPv02 §41) : incident → nouvelle HU → lane Litige → décision ; branche « 108 » (diminution du stock en valeur) ; IMG 9 : cas 1 à 4 de la 1re étape | D01-D05, D17 | Étape 1 ou 2 pour l'isolement (PO06) ; étendue du blocage (PO07) ; repérage visuel (PO08) ; condition de la branche 108 (v0.4 PO8) |
 | 2b. Refus en réception 2e étape stock | IMG 9 : qté supp refusées / toutes refusées → décision acheteur ; 18* mis à jour automatiquement | D03, D06, D07 | Mode de traçage (PO01) |
 | 2c. Refus NNN / consommation directe | IMG 10 : blocage de toute la livraison 18* → toutes les HU en lane Litige → décision ; au moins un refus → clôture du 18* | D12, D13 | Retour fournisseur NNN à schématiser (PO05) ; réception forcée (PO31) |
 | 2d. Retour du contrôle Q / labo (échantillons) | IMG 5-7 : provenance « Retour contrôle Q » → décision « Refusé » → lane Litige → consolidation avec le lot QM stocké (la décision de l'inspecteur génère les ordres de picking) ; BPv02 §21 | D37, D40 | Lien avec le PO 45* (PO18) ; ASN retours (PO19) ; cycle de vie des échantillons, 331/332 (PO15) ; notification DU (PO14) ; échantillons détruits (PO16) |
@@ -191,7 +192,7 @@ Mentions sans BR dédiée : BR Management Summary L2 (Replenishment, « BR valid
 | 3. Attente et décision de l'acheteur | HU en lane Litige / zone 990 ; décision via plainte / base litiges ; SLA évoqués 48 h / 7 jours | D06, D07, D24, D25 | Qui enregistre la décision, canal, délai (BPv01 Q04 ; PO12) ; exclusion des HU en litige à l'expédition (D16) |
 | 4a. Retour fournisseur – document | Bon sans ref 8* par le coordinateur DC, « Num PO (cas QM) » (IMG 12) ; bon 8000 lié au PO (BR-02-002-040) ; bon 8* lié au PO + 922 (BPv02 §66) | Principe d'un document lié au PO (BR L53) | Type de document (PO02) ; mouvement (PO01) ; moment du 922 (PO04) ; génération des bons pour les litiges (PO03) |
 | 4b. Retour fournisseur – préparation | Stocké (QM) : prélèvement des quantités refusées et consolidation avec le lot d'inspection (BPv02 §21) ; non stocké : HU déjà en lane Litige | D37 | Étiquette (PO09) ; scanner (PO11) ; HU dédiées (BR-02-002-010, PO36) |
-| 4c. Retour fournisseur – enlèvement | IMG 13 : activer le chargement (BR-06-002-010) → sortir les HU → confirmer la sortie (BR-02-002-050) → confirmer l'endroit (BR-06-003-020) → fin de chargement ; référence unique remise au fournisseur (BPO l.785-791) | D15, D39 | Contrôle par scan ou TU + porte (PO10) ; RDV transporteur ; clôture avec signature du fournisseur (D14, déduit) ; HU non emportées (PO34) |
+| 4c. Retour fournisseur – enlèvement | IMG 13 : activer le chargement (BR-06-002-010) → sortir les HU → confirmer la sortie (BR-02-002-050) → confirmer l'endroit (BR-06-003-020) → fin de chargement ; référence unique remise au fournisseur (BPO l.785-791) | D39 | Contrôle par scan ou TU + porte (PO10) ; qualification BR / GAP de BR-02-002-050 (PO37) ; rattachement de BR-06-003-020 (PO38) ; RDV transporteur ; clôture avec signature du fournisseur (D14, déduit) ; HU non emportées (PO34) |
 | 5a. Mitraille après décision acheteur | IMG 11 : « Mettre à disposition », porteur « Mitraille (ex. décision acheteur REC2) », BIN « Mitraille » | D08-D11 | Consommation automatique ou vérification (PO26) ; pas de BR formalisée (BPv01 F4, GAP) |
 | 5b. Mitraille de stock (Z3 / Z*) | Aucun BPMN ; vague dédiée, zone de clarification, zone d'attente | D18-D22 | Séquence IM/EWM, destination, liste des statuts (PO21-PO25) |
 | 5c. Réparation par le fournisseur au DC | IMG 7 seulement : « Articles disponibles pour réception 1° étape » | – | Hors ou dans le flux retour ? Aucune BR (PO32) |
@@ -204,7 +205,7 @@ Mentions sans BR dédiée : BR Management Summary L2 (Replenishment, « BR valid
 
 | ID | Élément omis | Source |
 |---|---|---|
-| E01 | Les décisions des réunions du 16 au 18/11 : article non commandé renvoyé (D04), pas de 107 en litige (D02), HU en litige localisables Must (D17), exclusion des HU en litige à l'expédition (D16), NNN sans 102/122 et retour par bon 8000 sans référence (D13, D14), mitraille NNN sans 551 ni transport (D11), BR-02-002-050 « BR et non gap » (D15) | P16a, P16b, P17, P18a, P18b |
+| E01 | Les décisions des réunions du 16 au 18/11 : article non commandé renvoyé (D04), pas de 107 en litige (D02), HU en litige localisables Must (D17), exclusion des HU en litige à l'expédition (D16), NNN sans 102/122 (D13) et principe de retour par bon 8000 sans référence (D14, classée « déduit »), mitraille NNN sans 551 ni transport (D11) ; ainsi que le signal du 18/11 sur la qualification de BR-02-002-050 (PO37) | P16a, P16b, P17, P18a, P18b |
 | E02 | L'imputation de la mitraille décidée le 30/09 (D08) | BR [Blueprint - questions] L25 |
 | E03 | La mitraille de stock Z3 / Z* (BR-04-002-010-A, BR-07-005-070, vague dédiée, zone de clarification, zone d'attente, vérification humaine) | D18-D22 ; G05 Internal L3, Reporting L12 |
 | E04 | Le refus à la vérification documentaire (BR-01-001-010, document de refus, BR-07-002-020). La v0.4 suit le « Pas pertinent » de BPv02 §30, mais la v0.1 et P16b le traitent | BPv01 l.58-78 ; D26 |
@@ -223,20 +224,17 @@ Mentions sans BR dédiée : BR Management Summary L2 (Replenishment, « BR valid
 | ID | Affirmation de la v0.4 | Ce que disent les sources |
 |---|---|---|
 | C01 | Point ouvert 9 (l.184, l.357) : les besoins NNN (blocage de toute la livraison, statut « clôturé ») « ne portent pas encore de référence BR ni GAP » | G05 NNN L5 et Inbound L39 : « GAP BR-01-003-020 » (famille BR-01-003-020), FS-16, XL, Analysé |
-| C02 | 5.3.4 (l.315) : « scanner chaque HU refusée au moment de son enlèvement (BR-06-003-020, lu sur la figure 12) » | Sur IMG 13, BR-06-003-020 est annoté sur « Confirmer l'endroit de sortie », et BR-02-002-050 sur « Confirmer la sortie ». Le texte de BR-06-003-020 porte sur l'encodage du retrait par le chauffeur milkrun en cas de problème technique (BRR [Liées indirectement] L10) |
-| C03 | 3.4 (l.192) : « Le flux de vérification documentaire n'est pas concerné » | Conforme à BPv02 §30, mais contraire à BPv01 F1 et au traitement en P16b (D26). À trancher (PO33) |
-| C04 | 5.3.4 / point ouvert 4 : BR-02-002-050 présenté comme « GAP BR-02-002-050 », qualification à confirmer | P18b (18/11) : « Ce point est un BR et non un gap » (D15). La v0.4 date du 20/11 mais ne cite pas cette décision |
-| C05 | §4 (l.200) : « La consommation des articles dans l'emplacement mitraille sera automatique » présenté comme règle | Reprend BPv02 §22 (02/11) ; P18a (18/11) retient une zone d'attente avec vérification humaine pour les retraits de stock (D19). Le cas QM stocké n'est pas tranché (PO26) |
-| C06 | Annexe : BR-06-003-020 « Absent de la GAP List 27-10 » et rattaché au scan | Voir C02 ; rattachement à revoir |
 
-### 6.3 Ce que la v0.4 « invente » (non trouvé dans les sources, ou rattachement non prouvé)
+Les autres écarts relevés en v0.1 de ce dossier ont été requalifiés après QA-005 : rattachement de BR-06-003-020 sur le BPMN (PO38), qualification de BR-02-002-050 (PO37), mitraille automatique ou vérifiée (PO26), inclusion de la vérification documentaire (question de périmètre, PO33 ; la v0.4 suit BPv02 §30 « Pas pertinent »).
+
+### 6.3 Ce que la v0.4 présente sans le marquer « à valider »
 
 | ID | Élément de la v0.4 | Constat |
 |---|---|---|
-| I01 | Figure 4 (image 8) légendée « Réception étape 2 : incidents… » et classée sous « 3.1 Litige à la réception (étape 2 – Stock) » ; tableau des scénarios (l.81) qui l'attribue au flux 3 | L'image 8 ne correspond à aucune légende de BPv02. Elle contient « disponibles pour réception 1° étape » et la branche 108, ce qui oriente plutôt vers la 1re étape (**déduit**). Flux d'origine à confirmer |
 | I02 | Tableau des 4 scénarios avec la colonne « Articles en stock EWM ? » | Synthèse déduite, déclarée comme telle dans les notes v0.3 mais non marquée dans le document |
-| I03 | 3.1.1 « Si les articles concernés ne disposent pas encore d'un numéro de HU, le magasinier générera un nouveau numéro de HU » présenté comme règle de l'étape 2 | Lu sur l'IMG 8, sans légende (voir I01) |
-| I04 | Sous-titre « validé QA le 20/11/2026 » | Validation de forme interne. Aucune validation métier n'est tracée dans les sources ; le document reste « pour discussion » |
+| I03 | 3.1.1 « Si les articles concernés ne disposent pas encore d'un numéro de HU, le magasinier générera un nouveau numéro de HU » | Lu sur l'IMG 8 (« Générer nouveau numéro HU (si nécessaire) »), mais sans la mention « lu sur la figure, à valider » appliquée ailleurs dans la v0.4 |
+
+Remarque : le sous-titre « validé QA le 20/11/2026 » est exact (QA-004 v2). Aucune validation **métier** n'est tracée dans les sources ; le document reste « pour discussion ».
 
 Ce qui est conforme et sourcé dans la v0.4 : le hors scope « retour vers Schaerbeek / vente de mitraille » (BPv02 §17-18), l'absence de 109 (BPv02 §41), le NNN sans mouvement (BPv02 §54), la visibilité coordinateur (BPv02 §21), le bon 8* lié au PO + 922 en option (BPv02 §66), les options 108/922 (G05 Inbound L24), le moment du 922 et l'étiquette ou info système (commentaires Word de BPv02), et les notes BRM des IMG 10-12.
 
@@ -245,9 +243,9 @@ Ce qui est conforme et sourcé dans la v0.4 : le hors scope « retour vers Schae
 **Moustafa (arbitrage interne, avant les ateliers)**
 1. Quelle version du draft v0.2 fait foi : celle avec texte (`ewm/blueprint`) ou l'export Drive du PM sans texte ?
 2. Périmètre du blueprint Retour : y inclut-on le refus à la vérification documentaire, le retour labo/échantillons, le retour d'immatriculation, la mitraille de stock Z3/Z*, les HU non emportées, BR-08-010-030 ? Que complète la phrase « Le flux retour qui est hors s… » (BPv02 §27) ?
-3. De quel flux vient l'image 8 (incidents + 108) : réception 1re étape ou 2e étape ?
+3. L'image 8 (incidents + 108) est rattachée par BPv02 §41 au « BPMN reception 2 » : désigne-t-il bien le flux 3 (étape 2 Stock) ? Et pourquoi BR-06-003-020 (retrait par le chauffeur milkrun) est-il relié aux étapes de confirmation de sortie sur le BPMN expédition (PO38) ?
 4. L'action du 18/11 « schématiser le retour fournisseur NNN » (PO05) : est-elle à intégrer au blueprint Retour ?
-5. La décision du 18/11 « BR-02-002-050 est un BR, pas un gap » doit-elle être reportée dans la GAP List et le blueprint Outbound (l.832 : « GAP ») ?
+5. Le 18/11, en relisant ta liste, tu as dit de BR-02-002-050 « je n'ai pas mis GAP, donc c'est un BR » : est-ce une requalification à reporter dans la GAP List et le blueprint Outbound (l.832 : « GAP »), ou seulement une remarque sur l'étiquetage ? (PO37)
 
 **Bernard (owner GAP BR-01-003-110) et Replenishment**
 6. Retour fournisseur : AS-IS (mail + 108), flux retour standard (922), 122, ou aucun mouvement si non réceptionné ? La session Retours de la semaine du 2/11 a-t-elle eu lieu, et avec quelle conclusion ? (PO01)
@@ -275,3 +273,10 @@ Ce qui est conforme et sourcé dans la v0.4 : le hors scope « retour vers Schae
 
 **Immatriculation (DC / garage Draisine)**
 22. Qui crée le document de retour, sur quelle référence ? Le retour passe-t-il par les deux étapes de réception ou seulement par la 2e (BPI l.20 vs l.55) ? (PO20)
+
+## Historique
+
+| Version | Date | Commentaire |
+|---|---|---|
+| 0.1 | 20/11/2026 | Première version complète (commit 38ee989) |
+| 0.2 | 20/11/2026 | Corrections QA-005. MAJ-1 : l'image 8 est rattachée au « BPMN reception 2 » par BPv02 §41 ; I01 retiré, §0, §1.9 et question 3 corrigés. MAJ-2 : C02 devient le point ouvert PO38, C06 retiré. MAJ-3 : D15 devient le point ouvert PO37, C04 retiré. MAJ-4 : C05 retiré (périmètres distincts, PO26 reformulé). Mineurs : D16 (Locuteur 1), BR-06-003-020 (AFG L181 FIT), I04 sorti des « inventions », C03 renvoyé à la question de périmètre PO33, E01 (D14 déduit), D12 (⚠ G05 NNN L6). Les ID retirés (D15, C02-C06, I01, I04) ne sont pas réattribués. |
