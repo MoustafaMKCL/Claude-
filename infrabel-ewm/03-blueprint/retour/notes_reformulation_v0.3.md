@@ -50,3 +50,24 @@
 **Hors note, mais à garder en tête** :
 - La figure 1 indique « flux retour » hors scope, alors que ce document décrit un flux retour. La formulation de la section 1 lève l'ambiguïté. Il faudra peut-être aussi corriger l'annotation du BPMN E2E.
 - Ronet est le site cible. Les exemples de Schaerbeek (table mezzanine, ateliers, atelier courant fort, ICT Ring station) sont conservés comme exemples, sans en faire des règles.
+
+---
+
+## 4. Suivi QA-004 (v0.4)
+
+| Remarque | Traitement en v0.4 |
+|---|---|
+| BLQ-1 | La « règle structurante » sans mouvement de stock est retirée. Le choix entre l'option AS-IS (mail et mouvement 108) et le flux retour standard (livraison de retour, mouvement 922) est déclaré ouvert au chapitre 3 et en 3.1.2 (point ouvert 6). La justification du GAP est retirée. La branche « Diminution du stock en valeur (mouvement 108) » de la figure 4 est décrite en 3.1.4 (point ouvert 8). En 5.1.2, le mouvement 922 est présenté comme une option. |
+| MAJ-1 | Les éléments lus sur les figures sont marqués « lu sur la figure X, à valider » dans le texte, avec une remarque d'avertissement au §1. La note 993 est complétée (« mais R2E… contrôle qualité ») et rattachée à la branche « Articles acceptés ». Les notes « Pour BRM » des figures 9, 10 et 11 sont présentées comme des besoins à qualifier (point ouvert 9). Le numéro de PO est limité au « cas QM ». |
+| MAJ-2 | Le type de document de retour est déclaré ouvert en 5.1.2 et fusionné au point ouvert 6. |
+| MAJ-3 | Annexe corrigée : BR-02-002-040 (QM, Standard, À analyser), BR-06-002-010 (absent de la GAP List 27-10), BR-02-002-050 (Outbound et QM). La note §2 est corrigée ci-dessous. |
+| MIN-1 | BR-05-006-050-A, BR-05-003-010-B, BR-06-003-020, BR-06-003-040 et BR-07-007-010 sont ajoutés à l'annexe. BR-06-003-020 est tagué en 5.3.4 et 5.3.5. |
+| MIN-2 | 5.3.5 reçoit le même point ouvert que 5.3.4 (point ouvert 4 élargi). |
+| MIN-3 | Le registre reste au futur dans l'attente de la convention commune. Question posée au PM. |
+| MIN-4 | Point ouvert 7 : portée de « Hors Scope : flux retour » et phrase inachevée de la v0.2. |
+| MIN-5 | « Augmenter le stock en valeur (mouvement 107) » repris. « Le mouvement 109 ne sera pas effectué » rétabli en 3.1.2. |
+| MIN-6 | Note « Cas 2 : Replenishment a mis à jour le PO (nouvelle ligne) » reprise en 3.1.3. |
+
+**Correction du §2 :**
+- Statut de BR-02-002-040 : « QM – Standard – À analyser », et non « non vérifié ».
+- Statut de BR-06-002-010 : « absent de la GAP List 27-10 ».
