@@ -25,4 +25,4 @@
 
 ## Note pour le PM
 
-La v0.4 a été envoyée à Moustafa en remplacement de la v0.3. Ses sous-titres indiquent encore « non validé QA ». Il faudra les mettre à jour à la prochaine version.
+Le sous-titre de la v0.4 indique encore « non validé QA ». Il est à mettre à jour avant de la transmettre à Moustafa en remplacement de la v0.3.
