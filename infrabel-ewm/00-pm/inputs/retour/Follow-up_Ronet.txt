@@ -1,0 +1,53 @@
+===== Onglet : Ronet =====
+[Ronet] L1: N° | Description | Responsible | Statut | Commentaire | Echéance | BR n°
+[Ronet] L2: 1.0 | SIS  | Youssef/Moustafa | In progress
+[Ronet] L3: 2.0 | Préparation S&T | Youssef/Moustafa | Not started | En attente réunion BRM
+[Ronet] L4: 3.0 | Update Gap List - Outbound | Youssef/Moustafa | Not started | Mercredi meeting pour update
+[Ronet] L5: 4.0 | Blueprint EWM 2.0 |  | Completed | A discuter de l'approche avec Bernard
+[Ronet] L6: 5.0 | Custo QM | Youssef/Moustafa | In progress | Urgent semaine du 01/06
+[Ronet] L7: 6.0 | Check Critère picking | Youssef/Moustafa | en cours | Par COPO/Rerservation/destination |  | BR-05-005-040
+[Ronet] L8: 7.0 | Blueprint EWM 2.0 | Moustafa | Not started | Retravailler Blueprint - ce qui a déja été fait | lundi 8/06 matin 
+[Ronet] L9: 8.0 | Bug SIS - Consolidation group | Moustafa / Barch | In progress | GAP S4 Embedded/ Decentral
+[Ronet] L10: 9.0 | Bug SIS - Dump process code | Moustafa
+[Ronet] L11: 10.0 | Blueprint EWM 2.0 - QM | Moustafa |  | Ajouter ce qui a été fait dans le BPR QM sur BPR Inbound
+===== Onglet : CR BRM  =====
+[CR BRM ] L1: N° | Description | Responsible | Statut | Commentaire | Echéance | CR n*
+[CR BRM ] L2: 1.0 | CR PGP3 LGP3 | Moustafa  | In progress | discuter avec Nicolas | wave novembre 
+===== Onglet : Blueprint =====
+[Blueprint] L1: Domaine | Action | Responsable | Échéance | Statut | Commentaire
+[Blueprint] L2: Outbound | Rédiger le BPR | Mouss | 2026-09-18T00:00:00 | En cours  | Liste GAP presentation Bernard - Consolider + Rajouter partie Bernard dans BPR
+[Blueprint] L3: Inbound  | Rédiger le BPR | Youssef | 2026-09-18T00:00:00 | En cours  | Mise en forme
+[Blueprint] L4: Cross | Lister GAP et leur eventuelles solution standard  | Mouss/Youssef | 2026-09-25T00:00:00 | Fait | A livrer à Bernard  pour Steerco
+[Blueprint] L5: Inbound  | Lister GAP   | Mouss/Youssef | 2026-09-18T00:00:00 | Fait
+[Blueprint] L6: Outbound | Lister GAP   | Mouss/Youssef | 2026-09-18T00:00:00 | Fait | ajouter GAP Consolidation, +KIT
+[Blueprint] L7: Internal  | Lister GAP   | Youssef  | 2026-09-18T00:00:00 | Fait
+[Blueprint] L8: Reporting | Lister GAP   | Moustafa | 2026-09-18T00:00:00 | Fait
+[Blueprint] L9: Retours | Lister GAP   | Youssef  | 2026-09-18T00:00:00 | En cours | Session prévu la semaine du 2/11
+[Blueprint] L10: QM | Lister GAP   | Yassine | 2026-09-18T00:00:00 | En cours  | presentation prévu le 29/11 pour faire valider nouvelle solution 
+[Blueprint] L11: Immatriculation | Lister GAP   | Moustafa/Youssef | 2026-09-18T00:00:00 | A faire | Gap RF Receiving au moment où on entre le SN, a ce moment là ce SN = sn fabricant et derriere ca il y'a un developpement pour générer le numero d'inventaire qui est  le numero d'immatriculation et   generation du SN SAP+ Génération d'etiqueette SAP contenant SN SAP + N d'immatriculation  + Analyser si d'autres GAP identifié
+[Blueprint] L12: Général | Rédiger le BPR | Moustafa/Yassine/Youssef |  | À faire | Key_input en cours d'ecriture / RACI à rédigé par Yassine/ Session proposition structure orga + RACI doit être validé par DC, MDM et MDM Finance
+[Blueprint] L13: Internal  | Rédiger le BPR | Youssef |  | Fait
+[Blueprint] L14: Reporting | Rédiger le BPR | Moustafa |  | En cours | Open point to be discussed
+[Blueprint] L15: Retours | Rédiger le BPR | Youssef |  | A faire | Open point to be discussed Session prévu la semaine du 2/11
+[Blueprint] L16: QM | Rédiger le BPR | Moustafa |  | Blocked | Open point to be discussed
+[Blueprint] L17: Immatriculation | Rédiger le BPR | Youssef  |  | A faire | Ajouter ne pas prendre en compte ZIMA
+[Blueprint] L18: NNN | Lister GAP   | Youssef  | 2026-09-18T00:00:00 | Fait
+[Blueprint] L19: NNN | Rédiger le BPR | Youssef  |  | Fait
+[Blueprint] L20: Cross-docking | Rédiger le BPR | Yassine |  | En cours  | analyser le besoin si standard on le met dans le BPR sinon proposer solution et revenir vers le business ⏎ Analyser l'analyse de Deloitte quand cela a été evoqué par le passé. analyser les contraintes techniques 
+[Blueprint] L21: Tours (Kardex & Hanelle) | Rédiger le BPR | Moustafa/Youssef/Yassine |  | À faire | Meeting 9/11
+[Blueprint] L22: Autres | BPR - Livraison directes qui ne passe pas par EWM | Mouss/Youssef |  | À faire | en parler 13/10 - demander au BA 
+[Blueprint] L23: Cross | Consolider GAPs dans un seul fichier | Youssef |  | Fait
+[Blueprint] L24: Cross | Rapatrier GAPs cross fonctionnels | Youssef |  | Fait
+[Blueprint] L25: Tester SIS - Development | https://infrabel.sharepoint.com/:x:/r/sites/104379/_layouts/15/Doc.aspx?sourcedoc=%7B92E89EB9-D1ED-4A69-94B9-67235B0FF1BE%7D&file=EWM%202.0%20SIS%20Test.xlsx&action=default&mobileredirect=true&wdwpf=doclib-t | Jamel/Yassine/Moustafa  |  | En cours 
+[Blueprint] L26: Session GAP  | Fournir nombre de sessions nécessaires à Bernard + préparer Slide | Moustafa/Youssef |  | Fait | 4 sessions de 4 heures 
+[Blueprint] L27: Blueprint - Slide | Rédaction slide pour chaque BPR | Moustafa/Youssef | 2027-01-01T00:00:00 | À faire | A faire par Meeting DC
+[Blueprint] L28: Warehouse Structure  | Key input - Remplir le fichier avec le business | Moustafa/Youssef | 2026-12-01T00:00:00 | En cours 
+[Blueprint] L29: Intégration Tours/Kardex | Session spécifique pour les détails des requirements pour pilotage des tours | Moustafa/Youssef | 2026-11-09T00:00:00 | À faire | Préparer liste de quesiton 
+[Blueprint] L30: Configuration SI4 - Build | A partir de Janvier, déplacement régulier à Ronet pour collecter les information nécessaire pour la configuration du systeme | Moustafa/Youssef/Yassine | 2026-01-15T00:00:00 | À faire
+[Blueprint] L31: Gap - Slide | Slide pour les session de novembre et decembre (priorisation) | Moustafa/Youssef/Yassine | 2026-11-10T00:00:00 | À faire
+[Blueprint] L32: Immatriculation meeting | Clarifier fonctionnement business aux DC mais surtout Ronet dans l'immédiat | Youssef/Moustafa | 2026-11-03T00:00:00 | A faire
+[Blueprint] L33: RACI - Master Data | Clarifier rôle dans la gestion des master data  | Yassine | 2026-11-05T00:00:00 | En cours  | Validation avec Bernard - meeting 
+===== Onglet : BUG =====
+[BUG] L1: Site | Action | Responsable | Échéance | Statut | Commentaire
+[BUG] L3: Cross | Livraisons bloqués dans les queues - Qty packed | Moustafa |  | à faire
+[BUG] L4: Cross | Livraisons bloqués dans les queues UOM PS | Moustafa |  | à faire

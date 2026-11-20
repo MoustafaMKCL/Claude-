@@ -1,0 +1,264 @@
+# Comptes rendus des meetings – 13/11/2026
+Nov 13, 2026 · @Mouss
+## Vue d'ensemble
+Quatre meetings enregistrés sur Plaud le 13/11/2026, soit environ 4 h 35. Aucune décision définitive n'a été prise sur l'interface cible, la consolidation ou les règles SP : la journée produit surtout des orientations, des points ouverts et 11 actions.
+[TABLEAU 1]
+# | Début (approx., heure de Bruxelles) | Durée | Meeting | Enjeu principal
+1 | 09:39 | 1 h 28 | Démonstration EWM : réception, rangement, picking et consolidation | Valider si le standard RF et les développements Bascoup/Gand couvrent les besoins des DC
+2 | 11:18 | 1 h 12 | Revue EWM : consolidation, PDA et interfaces de préparation | Sortie, consolidation, staging ; critique de l'ergonomie PDA et options de surcouche
+3 | 13:15 | 1 h 10 | GAP Session – SP | Notifications client, péremption, ship complete, consolidation HU, horizon de planification
+4 | 14:39 | 0 h 36 | Analyse technique : étiquettes d'expédition pont 300 Bascoup | Étiquettes d'expédition vides pour le gros matériel (ZRGM) ; tickets support
+[FIN TABLEAU 1]
+Messages clés de la journée
+Standard EWM retenu comme socle pour réception, rangement, picking, repacking, consolidation, clôture et staging, sous réserve d'améliorations d'ergonomie et de guidage.
+Interface PDA jugée peu moderne : besoin de guidage, photos, alertes et progression ; options Personas / surcouche (Kinaptis, 750–800 par utilisateur et par an) à évaluer.
+Pilotage des tours automatisées (Kardex, Mecalux 1,5 M€) : la responsabilité de l'optimisation des appels de plateaux (SAP, WMS intermédiaire ou WCS) doit être fixée.
+Consolidation HU : sujet transversal « mini-projet » ; blocage côté SP/IM (une HU = un BL, pas de multi-niveaux), pas côté EWM.
+Session SP du 23/11 requalifiée en réunion d'alignement, pas de validation.
+## Plan d'actions consolidé
+11 actions issues des résumés Plaud, dont 4 pour Moustafa. Deux échéances sont datées : le document d'intégration de Yacine et l'appel à Nicolas.
+[TABLEAU 2]
+# | Action | Responsable | Échéance | Meeting
+1 | Livrer le document d'intégration (basé sur un workshop précédent) | Yacine | Nov 20, 2026 (fin de semaine prochaine) | 1
+2 | Revenir vers SAP avec le document d'intégration ; consulter en parallèle DDD Technics et Kardex sur leurs capacités logicielles, pour choisir la couche de pilotage des tours | Locuteur 4 (non identifié) | Après action 1 | 1
+3 | Relancer l'option d'un mini-PC connecté en permanence affichant une vue de suivi rafraîchie automatiquement | Locuteur 4 (non identifié) | — | 1
+4 | Explorer Fiori et les cockpits standard de shipping pour le guidage de la consolidation | Moustafa | — | 1
+5 | Trouver une solution pour que le magasinier sache, en consolidation, si les livraisons sont clôturées, tout en gardant un suivi coordinateur | Moustafa | — | 1
+6 | Planifier une réunion interne avec Gaëtan, Wesley et Jonathan pour préparer les positions ; inviter Jean-Sébastien et Laurence | Mathieu | Avant le 23/11 | 3
+7 | Vérifier les accès à la présentation et envoyer son lien dans le chat pour l'ajouter à l'invitation | Bernard | Avant le 23/11 | 3
+8 | Répondre à Cindy | Moustafa | — | 4
+9 | Contacter Brice (en congé) sur le problème d'annulation lié à la livraison « 813 222 75 post 20 813 » (référence dictée, à vérifier) | Moustafa | Au retour de Brice | 4
+10 | Contacter Nicolas pour clarifier l'imprimante et le flux du pont 300 | Moustafa + collègue support | Nov 17, 2026 (mardi) | 4
+11 | Prendre des captures d'écran pendant l'explication du processus et les intégrer à la procédure | Collègue support | — | 4
+[FIN TABLEAU 2]
+## Points ouverts et décisions à prendre
+18 sujets restent à trancher, regroupés par thème. La colonne « Meeting » renvoie au compte rendu détaillé ci-dessous.
+[TABLEAU 3]
+Thème | Point ouvert | Meeting
+Interface RF / PDA | Garder le standard amélioré, passer par Personas, ou une surcouche externe (Kinaptis) ? | 2
+Interface RF / PDA | Support cible : PDA, TC53, ProGlove (long range), tablette, écran embarqué Clark ? Lisibilité et confort à valider avant achat | 1, 2
+Interface RF / PDA | Revoir les libellés des codes d'exception ; codes purement numériques possibles (non testés) | 1
+Interface RF / PDA | Recueillir le retour des opérateurs de Gand et Bascoup sur l'intuitivité réelle | 2
+Automatisation | Qui optimise la séquence d'appel des plateaux des 9 tours : SAP, WMS intermédiaire ou WCS fournisseur ? | 1
+Rangement | Rangement cible guidé par porteur et priorité HU ; double scan de confirmation à conserver ou adapter | 1
+Réception | Conformité GS1 / SSCC des étiquettes HU (format Schaerbeek différent ; correction DSV à Gand) | 1
+Consolidation | Consolidation avant clôture (HU ouverte) ou après clôture (packing list déjà imprimée) ? Gestion de la 2e packing list | 2
+Consolidation | Emplacement et position des postes de travail ; bins de packing (pack colis 01/02/03) ; déplacement unique vers l'expédition | 1, 2
+Consolidation | Guidage simple « destination complète » (feu vert/rouge) sur PDA ou grand écran | 1
+Consolidation HU (SP) | HU mère / HU filles : faisabilité côté IM et applications SP ; harmonisation Nord / Sud | 3
+Étiquettes / scan | Normaliser les codes : 1D pour HU, DataMatrix pour articles, rejet des scans non conformes | 2
+ADR | Contenu documentaire à imprimer ou à transmettre par EDI | 2
+Reporting | Définir les jalons et KPI communs avant toute comparaison inter-sites (MB51, Power BI) | 2
+Communication client | Une ou deux notifications (réception DC / départ) ; contenu et moment | 3
+Péremption | Règle unique ou seuils différenciés par profil d'usage ; priorité du besoin | 3
+Ship complete | Priorité (indispensable / souhaitable / optionnel) et périmètre exact (ODD, Pick Requests, OF, kits) | 3
+Étiquettes pont 300 | Dans quel flux l'étiquette sort vide ? Quelle imprimante (003, 671 ou 262) ? | 4
+[FIN TABLEAU 3]
+## Meeting 1 – Démonstration EWM : réception, rangement, picking, consolidation
+Le standard RF et les développements déjà déployés à Bascoup et Gand peuvent servir de base, ce qui évite de repartir de zéro. L'objectif était de valider les principes et le matériel, pas le détail des champs écran.
+Cadre de la démo
+Application web reproduisant les écrans scanner (pas un client installé) ; une entrée de menu = une application.
+Look and feel de Bascoup à valider ; évolution ProGlove possible sur l'existant, plus rapide qu'un développement complet.
+### Réception
+Cas montré : réception à Gand d'une palette venant de Schaerbeek. L'étape comptoir (création de l'inbound) n'a pas été montrée ; priorisation et pilotage futurs pas encore disponibles.
+Parcours : scan HU → article (ou scan code-barres / n° de série) → quantité. Clavier PDA numérique par défaut.
+Création d'une HU destination (ex. BA22) avec numéro et étiquette, ou réemploi de la HU existante. Réemploi utile pour de vrais STO entre les 3 DC, pas pour tous les flux actuels (types de HU différents). Déconsolidation possible.
+Étiquettes : SSCC EWM ≠ format Schaerbeek. À Gand-Maritime, structure SSCC non conforme, corrigée pour DSV (zéros en tête). Conformité GS1/SSCC à vérifier.
+Bouton EM → mouvement 109 ; HU en zone réception/staging avant rangement.
+Réception possible par inbound sans HU. Cible : guidage vers les HU en staging selon urgence, date de besoin et date de création de l'inbound.
+Écarts : 8 reçus sur 10 → livraison mise à 8, 2 pièces rouvertes sur la PO ; motif d'écart obligatoire (manquant, non-conformité). Lot / n° de série / date de production exigés selon l'article.
+### Rangement
+Un autre magasinier peut prendre la HU sans re-réceptionner ; réemballage PDA possible en cas d'erreur.
+Emplacement calculé (type magasin, section, bin) ; modification via code d'exception (X ouvre la liste) puis scan de confirmation.
+Double scan discuté : utile si le code est simple et visible (ex. « 17 » en hauteur), moins pertinent en extérieur ou en hauteur.
+Matériel : TC53 avec laser rouge et vert (lecture plus lointaine) ; ProGlove long range à 3–4 m ; lecture difficile en plein soleil. Ne pas acheter avant validation de la lisibilité.
+Rangement multi-HU standard. Demande : afficher le dernier n° scanné (4 derniers chiffres mis en avant), utile pour un porteur de 40 bacs.
+Cible : HU associées au chariot/porteur dès la réception, puis file de rangement guidant vers la HU prioritaire du porteur. La démo ne reflète pas encore ce processus.
+### Stockage automatisé (Kardex, tours)
+Des iDocs peuvent demander l'ouverture des tiroirs dès la création de l'OT ou le scan HU.
+L'ordre d'appel des plateaux doit être optimisé (plateau 18 proche de la sortie vs plateau 1 à 11 m de haut). Avec 9 tours, un appel non optimisé dégrade fortement la productivité.
+Répartition des rôles SAP / WMS intermédiaire / contrôleur fournisseur (WCS) à définir clairement pour éviter les renvois de responsabilité.
+Enjeu financier : projet Mecalux à 1,5 M€ ; la productivité annoncée doit être vérifiable avant de choisir l'architecture.
+### Picking
+Connexion à une file (ex. Pick BCO1), scannable à Bascoup pour les opérateurs gantés.
+Contrôles selon l'aire d'activité (bin, article, HU destination ou allégés). Étiquette HU de picking selon l'imprimante associée à l'utilisateur (diffère entre Gand et Bascoup).
+Deux variantes : Pick Multiple Delivery (plusieurs livraisons avant dépôt) et Single Consolidation Group (une seule livraison).
+Écarts : quantité trouvée + code d'exception obligatoire (saisie directe 4 caractères ou X). Libellés jugés peu clairs, à revoir. Codes numériques non testés par Moustafa.
+Profils RF différents entre Gand et Bascoup (site de production). Objectif exprimé : le même SAP sur les 3 DC pour qu'un magasinier puisse aider un autre site.
+### Numéros de série
+Déballer des cartons à 13 m de haut pour trouver un n° précis n'est pas praticable (Schaerbeek).
+Aujourd'hui : scan à l'expédition si pas de traçabilité par emplacement ; déclaration au picking si géré par emplacement.
+Position : conserver la logique actuelle (déclarer quelle pièce a été prise, pas demander une pièce précise). Des versions différentes = articles distincts ou lots, sinon le MRP voit un stock qui n'existe pas. Guidage vers un n° précis techniquement possible mais non retenu (« boîte de Pandore »).
+### Suivi des exceptions
+Selon le code : inventaire généré, blocage d'emplacement, message.
+Recherche dans le moniteur par tâche ou livraison, sur la date de confirmation. Filtre BID* = pick denial du 13/11 ; inventaire visible avec raison P-D-E-N (absent en démo, mauvais code utilisé).
+Blocage d'emplacement existant à Bascoup, configurable à Gand ; règles à définir au design. Variantes prédéfinies possibles (ex. vue « anomalie picking »).
+### Consolidation, emballage, staging
+Dépôt en zone de consolidation (Gand : pack colis) ; tâche remettable dans le spool.
+Étape oubliée en démo : clôturer la HU avant staging (étiquette d'expédition, packing list à Gand).
+À décider : fermer immédiatement ou attendre les autres zones ; où placer les postes de travail et quand y envoyer les tâches.
+Besoin utilisateur : savoir si une destination est complète avant de commencer une palette. Le moniteur montre HU, statuts (prélevé, emballé, chargé) et filtres (destination, date, livraison, vague, route), colorisation limitée.
+L'information existe mais le guidage opérationnel n'est pas disponible. Attente : indicateur simple type feu vert/rouge sur PDA ; moniteur pour la vue globale. Piste : vue rafraîchie en continu sur mini-PC ou grand écran sans login.
+### Actions
+☐ Yacine : document d'intégration, fin de semaine prochaine
+☐ Locuteur 4 : revenir vers SAP avec ce document ; consulter DDD Technics et Kardex
+☐ Locuteur 4 : relancer l'option mini-PC de suivi
+☐ Moustafa : explorer Fiori et les cockpits shipping
+☐ Moustafa : solution « livraisons clôturées » visible en consolidation + suivi coordinateur
+## Meeting 2 – Revue EWM : consolidation, PDA et interfaces de préparation
+La mécanique standard (picking, repacking, consolidation, clôture, staging) n'est pas rejetée et peut servir de socle. L'interface est en revanche jugée très basique : aucune décision n'a été prise sur l'interface cible.
+### Expédition et contraintes de scan
+Confirmer un OT avec scan de n° de série impose que le colis soit dans une HU : contrainte pas encore intégrée.
+Flux OGA confirmés par bin, pas par article. Confirmer bin + article demain implique des étiquettes adaptées ; bins mixtes = risque de scans ambigus.
+Projet Wi-Fi extérieur et antennes (Olivier) prévu jusqu'en juin 2027.
+### ADR
+Calcul des points ADR clos sur le principe (sélection des articles concernés puis calcul).
+Contenu à imprimer ou à transmettre par EDI encore à préciser (documents internes Infrabel à consolider).
+### Réimpression des étiquettes
+Standard confirmé : réimpression depuis PC de toute étiquette déjà générée (bin, HU), par identifiant ; fonction « dernière impression » aussi disponible.
+Réimprimer ne crée pas de nouvelle HU (2 colis = 2 HU). Chemin utilisé dans un cas antérieur pour les bins à revérifier.
+### Power BI et productivité
+Écarts de chiffres dus au mauvais scénario affiché : 476 vs 463 lignes de réception ; un mois à 4 600 réceptions EWM.
+Rapport Excel de Steve (inbound productivité) terminé ; vues inbound et outbound développées par Delphine.
+Inbound à couvrir : mouvements 101, 109 et autres mouvements de réception. Power BI alimenté par Excel écarté.
+MB51 des 3 DC à partager. Mouvements EWM / IM non comparables (un 101 peut correspondre à un 411) : définir quoi mesurer et entre quels jalons avant de comparer les sites.
+Kardex/Fox valide le picking et met à jour l'outbound, mais pas la sortie de marchandises (faite dans IM à la clôture du transport) : Power BI ne peut pas la déduire.
+### Consolidation des HU
+Deux logiques coexistent, sans choix définitif ; le système devra peut-être couvrir les deux.
+[TABLEAU 4]
+ | Approche 1 – avant clôture | Approche 2 – après clôture (Gand)
+HU de picking | Reste ouverte | Clôturée en fin de picking, avec packing list
+Regroupement | Dans une nouvelle HU, puis clôture | Dans une palette de transport
+Question ouverte | — | Garder, réimprimer ou bloquer la 2e packing list ?
+[FIN TABLEAU 4]
+Impression paramétrable par poste : on peut distinguer poste de consolidation sortie picking et poste expédition.
+Même destination ≠ consolidation autorisée : contrôle par groupe de consolidation. Règle visée : 1 BL par HU.
+Limitation côté SP / application OPR (pas EWM) ; à aborder avec SP. Un bon 8000 peut techniquement être réparti sur plusieurs HU et inversement.
+HU multi-niveaux non supportées : lien conservé en arrière-plan, vue aplatie à un niveau. L'historique HU garde la trace (BL, tâches, repacking). La réception doit permettre HU globale ou boîte par boîte.
+### Repacking (démo PDA)
+Menu reconditionnement.
+Scan de la HU source.
+Sélection de l'article ou du contenu.
+HU existante vide ou création d'une nouvelle HU (n° + étiquette générés).
+Collage de l'étiquette, puis confirmation du transfert.
+Version plus simple existante à Bascoup (HU entière sans ligne par ligne) ; le menu par ligne ne doit pas devenir le parcours courant.
+HU créée en WCPA (pack colis). Logique à définir : bins « pack colis 01/02/03 », héritage de la zone de travail, mouvement unique vers l'expédition une fois tout consolidé.
+### Clôture, poids, staging, chargement
+Clôture HU → statut « Completed » et tâche magasin automatique vers la bin suivante.
+Poids saisi à la clôture ; interface Cubis Scan prévue pour le remplir automatiquement.
+Staging : scan HU → bin proposée (ex. Gand HAL 2 130 262) → scan de confirmation. Gand fait la SM manuellement ; Bascoup a une étape de chargement.
+Chargement = transaction distincte (scan HU puis quai), transport créé et affecté à une porte au préalable.
+Pas une bin de staging par destination ; bins à ajuster au modèle opérationnel.
+### Picking Bascoup
+Scan bin, article, quantité ; pas de scan bin ni HU destination ; zone de regroupement ZR45 ; picking par file.
+Ressaisie de quantité : inutile pour HU entière → HU entière ; utile pour split ou réception à risque (ex. 5 bobines de 2 000 m sur un STO de 10 000 m).
+### Codes-barres
+Le système doit rejeter un code qui ne correspond pas à l'action (exemple Ariane : DataMatrix attendu, code linéaire refusé).
+Piste : 1D pour HU / n° de suivi, DataMatrix pour articles. Plusieurs identifiants dans un seul DataMatrix : non retenu.
+### Guidage et interface
+Le PDA guide une action à la fois et montre la progression (ex. « 10 sur 120 ») ; la vue globale (tournées, statuts prêt/en cours/bloqué, priorités) va sur un moniteur.
+Support selon l'information : ProGlove pour validations simples (connectable à SAP, boutons latéraux) ; PDA si saisie, consignes ou visuels. Contraintes : Wi-Fi, robustesse, gants, taille d'écran, clavier physique.
+Interface jugée peu moderne (« champs texte habillés de blocs colorés »). Fonctions Fox appréciées : photo article, chargement photo depuis scanner, messages de conditionnement, pop-up obligatoire, kits/colis associés, rappel de boîtes restantes.
+Couche photo jugée indispensable à terme (ex. perche caténaire : ne pas oublier le sac associé) ; distinction de SKU par conditionnement pas encore en place.
+### Options d'interface
+[TABLEAU 5]
+Option | Apport | Limites
+Standard amélioré | Libellés, couleurs, préremplissage | Reste basique
+Surcouche SAP (Personas) | Gras, couleurs, potentiellement photos | Ne change pas la mécanique des champs
+Surcouche externe (Kinaptis) | Affichage libre des données SAP « en 15 jours » (promesse jugée optimiste) | 750–800 par utilisateur et par an, non par utilisateur actif ; fournisseur et support en plus
+[FIN TABLEAU 5]
+Fiori évoqué ; SAP le juge trop lourd pour les transactions intensives.
+Améliorations à spécifier avant de choisir : présélection des champs, héritage de la zone de travail, actions fréquentes visibles, exceptions bien placées, moins de séquences de touches, cas extérieur / palettes complètes / écran Clark.
+Recueillir le retour de Gand et Bascoup : les opérateurs s'y sont habitués, cela ne prouve pas que c'est intuitif. Cible : un magasinier formé rapidement comprend le flux seul.
+### Sujets à approfondir
+Modèle de consolidation, packing lists, groupes de consolidation, normalisation des codes-barres, guidage terrain, vues de pilotage, photos, alertes et options de surcouche. Aucune action nominative n'a été attribuée dans ce meeting.
+## Meeting 3 – GAP Session SP
+Aucun des quatre sujets structurants (communication client, péremption, ship complete, consolidation HU) n'a été tranché. La session du Nov 23, 2026 devient une réunion d'alignement, précédée d'une préparation interne.
+Participants cités : Jonathan, Delphine, Mathieu, Gilles, Bernard.
+### Synthèse par GAP
+[TABLEAU 6]
+GAP | Sujet | Statut
+GAP BR-01-002-020-A | E-mail auto après réception d'un article NNN / consommation directe (n° HU, localisation, n° PO, départ avec la prochaine tournée sauf contre-indication du TOM) | Nombre et moment des notifications ouverts
+GAP BR-05-005-160 | Seuil de péremption selon profil d'usage (court si usage immédiat, long si stockage) | Option à évaluer, priorité non fixée
+GAP BR-05-005-120-D | Ship complete : annulation des ordres si prélèvement incomplet, remise en stock, re-picking au retour du stock, alerte Replenishment | Besoin reconnu, priorité à décider
+GAP XX (consolidation) | HU mère pour l'expédition et la réception SP ; HU filles pour la traçabilité et la réception CoPa | Sujet transversal, non tranché
+GAP BR-06-003-040 | Lien de suivi transporteur rattaché à une HU, un n° de transport ou un BL | Peut relever d'un projet track and trace distinct
+[FIN TABLEAU 6]
+La classification MoSCoW affichée sur les slides reste « M,S,C,W ? » pour ces GAP : aucune n'a été confirmée.
+### Notifications client
+Jonathan : deux messages utiles (réception DC + départ) si le délai est significatif ; comparaison avec le suivi Amazon.
+Delphine : approche sobre, le client veut surtout savoir quand l'article part et quand il arrive.
+Mathieu : des e-mails ont déjà été retirés d'un autre flux ; le client reçoit déjà une confirmation au point d'enlèvement. Risque de noyer le client.
+Critère de choix = le délai : départ de Gand livré le jour même → notification de réception inutile ; 1 à 2 semaines avant tournée → suivi intermédiaire utile.
+Ne pas confondre consommation directe (pas de stockage local) et livraisons directes. Attentes différentes selon maintenance et travaux.
+### Péremption
+La fiche article porte déjà une durée (ex. 6 mois). Le débat porte sur la durée restante minimale à l'expédition.
+Option 1 – règle unique (Jonathan) : simple à expliquer et maintenir. Argument : un chantier retardé peut garder le matériel des mois.
+Option 2 – seuils différenciés (Mathieu, Gilles) : plus long pour stock déporté / points de service, plus court pour consommation rapide. Argument : le magasin commande selon son besoin et replanifie si report.
+ISO non bloquant (Gilles) : l'ISO contrôle surtout l'absence de stock périmé.
+Bernard : d'abord décider si la différenciation doit être possible ; profils et valeurs au design ; mesurer la priorité.
+### Livraisons complètes (ship complete)
+Cas : stock théorique 2, physique 1 découvert au picking. Les articles prélevés sont remis de côté puis tout part en une fois.
+Périmètre visé : ODD, Pick Requests, ordres de fabrication, kits / BOM (« une vis sans le tournevis ne sert à rien »). Demande aussi portée par les opérations.
+Exclu : réservations classiques et STO du STO Planning Board, livrés au fil des disponibilités.
+Séquence ODD : réservation sur une période → appel à une date de chantier → création de l'ODD → picking → si manque, attente du réassort et message à Finishment → re-picking et expédition complète.
+Remonté comme gap, mise en œuvre plus complexe.
+### Consolidation des colis
+Proposition sur deux niveaux : consolidation au picking puis à l'expédition, vers point de service ou magasin. Bénéfice : le coût transport dépend du nombre de HU.
+La solution actuelle ne supporte pas plusieurs livraisons ou plusieurs niveaux de HU dans une même unité de transport. EWM gère le multi-niveaux, IM et les SP non.
+Règle historique OPE (Mathieu) : 1 STO, 1 réservation, 1 date de besoin, 1 CoPa ; pas de mélange de CoPa dans un colis.
+Réception SP actuelle : scan du code HU sur la packing list → réception → le CoPa ouvre le colis → mise à disposition.
+Piste (Gilles) : HU mère regroupant les HU filles ; réceptionner la mère déclencherait la réception de chaque fille. Impacts : réception, sortie, outbounds, réservations, programmes de support, harmonisation Gand / Ronse / autres DC.
+Sujet de conception transversal, proche d'un mini-projet ; réponse en 15 jours jugée difficile (Mathieu). Team leads à associer ; solution unique ou Nord/Sud (Jonathan).
+Pratiques actuelles : Sud = plusieurs réservations d'un même CoPa par palette ; Nord = séparation par réservation et date de besoin. Ronse pas encore en HU (ancien système). À Gand, la palette n'est pas une unité de transport système.
+### Track and trace
+Le tracking doit exister en interne (Supply : localiser, débloquer, traiter une réclamation) ; la communication client est un choix explicite séparé (Gilles).
+Traçabilité bout en bout chez le transporteur et au point de service : possible projet distinct (Bernard).
+### Horizon de planification
+Bons auto pour les magasins 1, 2, 3 ; horizon paramétrable (ex. livraison max 7 jours avant la date de besoin).
+Pas forcément un gap (Bernard) : horizons différents déjà possibles par client, donc par magasin / storage location (J+1, J+3, J+15…). Valeurs à fixer avec Replenishment, qui déclenche la création des bons.
+### Prochaines étapes
+Session SP du 23/11 = point d'alignement, validation éventuelle plus tard. Horaire à confirmer : 10 h 30 selon l'échange, 11 h–12 h selon la slide calendrier. Autres créneaux « TBC ».
+Réunion interne préparatoire évoquée de 13 h à 14 h 30, date non arrêtée.
+### Actions
+☐ Mathieu : planifier la réunion interne avec Gaëtan, Wesley, Jonathan (+ Jean-Sébastien et Laurence)
+☐ Bernard : vérifier les accès à la présentation et partager le lien pour l'invitation
+## Meeting 4 – Analyse technique : étiquettes d'expédition pont 300 Bascoup
+La piste retenue est de restreindre les règles d'impression ZHU_SHPLABEL par Work Center, mais rien n'a été enregistré. Il faut d'abord confirmer avec Nicolas le Nov 17, 2026 dans quel flux l'étiquette sort vide et quelle imprimante est concernée.
+Format : échange de travail entre Moustafa et un collègue support. Le titre Plaud indique « point 300 » ; le contenu parle du « pont 300 ».
+### Problème
+Des étiquettes d'expédition sortent vides ; le site ne les veut pas pour le pont 300 (rails, demi-éléments).
+Zones de regroupement : petit matériel → ZRPL ; gros matériel → ZRGM (pont 300, articles en GP 31 et GP 32 dans « Storage Bin »).
+L'étiquette sort à la clôture HU (transaction RF, Work Center) ; le flux exact où elle est vide n'est pas établi.
+Gros matériel envoyé en production vers une zone voisine : étiquette inutile. Même matériel envoyé entre entrepôts Infrabel : étiquette potentiellement nécessaire.
+### Configuration observée
+Table avec plusieurs règles ZHU_SHPLABEL, certaines liées aux Work Centers ZR30 et ZR45, d'autres sans Work Center ; imprimante IAMPR_159000002_ZPL visible.
+« P » = étape manuelle. Une entrée semble superflue mais n'est pas confirmée (ligne en trop possible dans les condition records, à vérifier).
+Imprimante non confirmée : fin en 003 en première lecture, puis 671 et 262 sur une capture.
+Le collègue n'a pas les droits de modification (mode affichage uniquement).
+### Piste de paramétrage (non appliquée)
+Copier les entrées concernées en y ajoutant un Work Center ; éviter les entrées sans Work Center.
+Limiter l'impression à ZR45 pour le cas concerné ; restreindre l'entrée manuelle plutôt que la supprimer.
+Uniformiser les entrées par Work Center (approuvé par le collègue).
+Risque : une suppression générale bloquerait aussi l'impression nécessaire au petit matériel ou à d'autres flux utilisant la même imprimante.
+### Flux standard démontré
+Picking.
+Dépôt en zone de regroupement (ZRPL ou ZRGM).
+Clôture HU au Work Center via transaction Z (ZPAUC identifiée à l'écran) ; correction possible du poids ou des types sans réemballer.
+Impression des étiquettes et création automatique des tâches magasin.
+Le flux standard fonctionne ; il aurait fallu le tester plus tôt. Test de la configuration pour le pont 300 à faire après clarification avec Nicolas.
+### Livraisons distribuées
+Contrôle des livraisons et des lots scindés avant distribution ; flux Schaerbeek → Bascoup (Gand cité aussi, destination exacte non établie).
+Toutes distribuées sauf la n° 16, gardée en suspens pour éviter une réception avant vérification du processus.
+### Tickets support
+Un élément vérifié comme déjà distribué et débloqué ; il en reste un dans la série.
+Point suivant du fichier support : « Bascoup, can't speak », contexte et instances à récupérer.
+Problème d'annulation lié à une livraison (réf. dictée « 813 222 75 post 20 813 », à vérifier) ; à voir avec Brice, en congé.
+Problème d'impression distinct : ligne possiblement en trop dans les condition records.
+### Divers
+Export Plaud avec heures par locuteur : piste via « Share » ou bouton export depuis « Home » ; jugé non indispensable.
+### Actions
+☐ Moustafa : répondre à Cindy
+☐ Moustafa : contacter Brice sur le problème d'annulation de livraison
+☐ Moustafa + collègue : appeler Nicolas mardi 17/11 (imprimante et flux pont 300)
+☐ Collègue support : captures d'écran du processus pour la procédure

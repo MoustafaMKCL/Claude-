@@ -1,0 +1,82 @@
+# Index — Livrables assistants EWM Ronet
+Dossier Drive : Livrables assistants EWM Ronet Parent : Projet EWM 2.0 - Ronet Généré : 2026-11-05 (Europe/Brussels)
+## Hors Drive (Page / Canvas)
+[TABLEAU 1]
+Élément | Lien | Producteur
+Dashboard Follow-up Ronet (Page Cursor) | https://cursor.com/canvas/store-71b4f708-862d-4a7e-b433-64776c40d3fd/0700f06a-fa2f-4bba-839e-5468d6578c8d | Manager — lien seulement (Page non uploadable)
+[FIN TABLEAU 1]
+## 01_Tours_VLM
+[TABLEAU 2]
+Fichier | Source | Producteur
+Integration_Tours_VLM_EWM_2026-11-09.docx | /workspace/ewm/solution/tours/Integration_Tours_VLM_EWM_2026-11-09.docx | Consultant Solution
+Integration_Tours_VLM_EWM_2026-11-09.pdf | /workspace/ewm/solution/tours/_build/Integration_Tours_VLM_EWM_2026-11-09.pdf | Consultant Solution
+Reunion_Tours_VLM_Ronet_Questions_ouverts.pptx | /workspace/slides/tours-vlm-0PgbYM/Reunion_Tours_VLM_Ronet_Questions_ouverts.pptx | Manager
+[FIN TABLEAU 2]
+## 02_Retour_Blueprint
+[TABLEAU 3]
+Fichier | Source | Producteur
+Infrabel SAP EWM 2.0 Blueprint - Retour Document FR_v0.1.docx | /workspace/ewm/blueprint_retour/... | Blueprint / Manager
+Infrabel SAP EWM 2.0 Blueprint - Retour Document FR_v0.1.pdf | /workspace/ewm/blueprint_retour/... | Blueprint / Manager
+Infrabel SAP EWM 2.0 Blueprint - Retour Extraits BPMN FR_v0.2.docx | /workspace/ewm/blueprint_retour/... | Blueprint / Manager
+Infrabel SAP EWM 2.0 Blueprint - Retour Extraits BPMN FR_v0.2.pdf | /workspace/ewm/blueprint_retour/... | Blueprint / Manager
+[FIN TABLEAU 3]
+## 03_Outbound_GAP
+[TABLEAU 4]
+Fichier | Source | Producteur
+Plan_decisions_GAP_List_Ronet_v0.1.xlsx | /workspace/ewm/gap_decisions/ | GAP
+Points_ouverts_GAP_List_Ronet_v0.1.xlsx | /workspace/ewm/gap_decisions/ | GAP
+Points_ouverts_reunion_Outbound.docx | /workspace/ewm/ | GAP
+Points_ouverts_reunion_Outbound.xlsx | /workspace/ewm/ | GAP
+Controle_BR_Outbound_complet.xlsx | /workspace/ewm/ | GAP
+Controle_GAP_list_vs_Blueprint_Outbound.xlsx | /workspace/ewm/ | GAP
+Changements_GAP_list_Outbound_27-10.xlsx | /workspace/ewm/ | GAP
+Points_a_discuter_Business_Outbound_27-10.xlsx | /workspace/ewm/ | GAP
+GAP_Outbound_Priorisation.pptx | /workspace/slides/gap-outbound-prio-oqt7LV/ | GAP / Manager
+EWM2.0_Ronet_Outbound_Decisions_metier_v2.pptx | /workspace/slides/outbound-decisions-edit-f3roME/ | GAP / Manager
+points_ouverts_draft.csv | /workspace/ewm/ | Blueprint
+Relecture_BPR_Textes_T01-T19.xlsx | /workspace/ewm/ | Blueprint
+capture_325_draft.png | /workspace/ewm/ | Blueprint
+BR_Flux_Retour.xlsx | /workspace/ewm/ | GAP
+Controle_points_business_Outbound.xlsx | /workspace/ewm/ | GAP
+Controle_points_BPR_vs_GAP_list_Outbound.xlsx | /workspace/ewm/ | GAP
+Tracabilite_Draft_Outbound.xlsx | /workspace/ewm/ | GAP
+Modifications_Blueprint_Outbound_final_v2.xlsx | /workspace/ewm/ | GAP
+Blueprint_Outbound_Final_annote.docx | /workspace/ewm/ | GAP
+[FIN TABLEAU 4]
+## 04_CrossDock_KIT
+[TABLEAU 5]
+Fichier | Source | Producteur
+Etude_Standard_CrossDock_SAP_EWM_v2.docx | /workspace/ewm/solution/crossdock/ | Consultant Solution
+Approfondissement_Config_CrossDock_SAP_EWM.docx | /workspace/ewm/solution/crossdock/ | Consultant Solution
+Matrice_Standard_CrossDock_v2.xlsx | /workspace/ewm/solution/crossdock/ | Consultant Solution
+CrossDock_Besoin_Options_Infrabel_v3.pptx | /workspace/slides/crossdock-besoin-v2-pM3mbH/ | Consultant Solution / Manager
+CrossDock_Contraintes_GAP.pptx | /workspace/slides/crossdock-contraintes-gap/ | Consultant Solution / Manager
+TCD_SAP_EWM_Infrabel.pptx | /workspace/slides/tcd-Q5F3fd/ | Consultant Solution
+Kit_STO_Infrabel.pptx | /workspace/slides/kit-sto/ | Consultant Solution
+Kit_Flux_Expedition.pptx | /workspace/slides/kit-sto/ | Consultant Solution
+Kit_Flux_Expedition.png | /workspace/slides/kit-sto/ | Consultant Solution
+[FIN TABLEAU 5]
+## 05_Solution_Outbound
+[TABLEAU 6]
+Fichier | Source | Producteur
+Conception_Solution_EWM_Outbound_v3.xlsx | /workspace/ewm/solution/ | Consultant Solution
+Ordres_du_jour_ateliers_v2.docx | /workspace/ewm/ | GAP / Manager
+Plan_finalisation_Blueprint_Outbound_v2.docx | /workspace/ewm/ | GAP / Manager
+Proposition_scan_picking.xlsx | /workspace/ewm/ | Blueprint
+Proposition_scan_picking.pdf | /workspace/ewm/ | Blueprint
+[FIN TABLEAU 6]
+## 06_Meetings_Prep
+[TABLEAU 7]
+Fichier | Source | Producteur
+Prep_meeting_Tours_2026-11-09.md | /workspace/ewm/gap_decisions/ | Manager
+Prep_meeting_Bernard_2026-11-05.md | /workspace/ewm/gap_decisions/ | Manager
+fiche_capture_meeting_2026-11-03.md | /workspace/ewm/immat_figs/ | Manager
+[FIN TABLEAU 7]
+## Confirmations clés
+Conception_Solution_EWM_Outbound_v3.xlsx → 05 ✓
+Integration_Tours_VLM_EWM_2026-11-09.docx (+ pdf) → 01 ✓
+CrossDock_Besoin_Options_Infrabel_v3.pptx → 04 ✓
+CrossDock_Contraintes_GAP.pptx → 04 ✓
+Kit_STO_Infrabel.pptx → 04 ✓
+Proposition_scan_picking.xlsx + .pdf → 05 ✓
+Exclus : templates, source_GAP, gen*, embeddings, previews/start/base, versions plus anciennes (v1 CrossDock, Decisions_metier hors v2).

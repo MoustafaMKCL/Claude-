@@ -1,0 +1,61 @@
+SAP EWM 2.0 Immatriculation Processes Blueprint FR      
+# Introduction
+Ce document décrit le flux logistique des articles envoyés à l’immatriculation, depuis leur réception au DC de Ronet jusqu’à leur retour et leur mise en stock éventuelle. Il précise les opérations réalisées par le magasinier, les traitements attendus du système et les échanges avec le lieu d’immatriculation, notamment le garage Draisine.
+La solution cible s’inscrit dans SAP EWM embedded dans S/4HANA. Les procédures communes de réception, de picking, de consolidation et d’expédition sont réutilisées. Le présent blueprint décrit leurs particularités pour l’immatriculation et les adaptations identifiées dans la GAP List.
+[TABLEAU 1]
+Version
+Version | Date | Nom | Commentaire
+[FIN TABLEAU 1]
+Table des matières
+Note générale – Scope
+Deux profils d’articles immatriculés coexistent chez Infrabel : les articles ZIMA, articles génériques de la famille IM achetés ponctuellement et consommés directement sans gestion de stock, avec une immatriculation réalisée manuellement, et les articles ZIMB, repris au catalogue Supply, achetés sur contrat cadre et gérés en stock.
+L’analyse menée sur les trois DC montre qu’aucun article IM* n’est configuré sur ces sites et qu’aucun mouvement de réception d’un article IM* n’y a été enregistré. Les mouvements relatifs à ces articles sont uniquement enregistrés sur les divisions administratives *0P (110P, 240P, …), et non sur les divisions des DC.
+Les articles ZIMA sont donc hors scope du présent blueprint. Seuls les articles ZIMB sont concernés par le flux d’immatriculation décrit dans les chapitres suivants.
+1.2 Vue générale du flux
+Figure 1 – Vue d'ensemble du flux immatriculation
+[TABLEAU 2]
+Phase | Déroulement attendu
+Réception avant immatriculation | Réception → mise sur porteur → dépose directe dans la bin de staging immatriculation du magasin A, sans zone d’attente ni priorisation intermédiaire.
+Envoi à l’immatriculation | Confirmation du dépôt → génération automatique des mouvements nécessaires et du bon 8* → picking → deux consolidations → sortie.
+Retour après immatriculation | Création du document de retour → vérification documentaire → première et deuxième étapes de réception → mise en stock éventuelle.
+[FIN TABLEAU 2]
+2. Réception avant immatriculation
+2.1 Identifier le parcours immatriculation
+Les articles devant être envoyés à l’immatriculation sont réceptionnés au DC suivant le processus Inbound. Le parcours immatriculation doit être identifié suffisamment tôt pour orienter les HU vers la zone dédiée lors de leur dépose. Le critère utilisé par le système pour reconnaître ces articles reste à définir.
+La réception comprend les contrôles et les étapes décrits dans le blueprint Inbound. La particularité du présent flux porte sur la destination des HU après la réception de deuxième étape et sur l’envoi qui sera déclenché après leur dépôt.
+2.2 Effectuer la réception et la mise sur porteur
+Le magasinier réalise la réception des articles selon les procédures communes. Après la réception de deuxième étape, les HU destinées à l’immatriculation sont associées à un porteur afin d’être acheminées vers leur emplacement de dépose.
+Les règles communes de contrôle, d’identification des HU et de confirmation des opérations restent applicables. La procédure détaillée de réception et d’utilisation des porteurs est décrite dans le blueprint Inbound ; elle n’est pas redéfinie dans ce document.
+2.3 Déposer les HU dans le staging immatriculation
+Le magasinier dépose les HU directement dans une bin de staging immatriculation située dans le magasin 243A. Cette bin constitue la destination de putaway de ce parcours. Les HU ne passent pas par la zone d’attente ni par la priorisation habituelle de mise en stock.
+Le dépôt s’accompagne du passage du magasin R vers le magasin A. 
+La confirmation du dépôt constitue le point de départ du traitement automatique d’envoi décrit au chapitre 3. La zone de staging permet de localiser les articles en attente de leur préparation pour l’immatriculation.
+Figure 2 – Réception avant immatriculation : écart par rapport au parcours Inbound habituel
+GAP — Dépôt direct en staging immatriculation permettre la dépose directe dans le magasin A après la réception de deuxième étape, avec passage R → A, sans zone d’attente ni priorisation intermédiaire. L’identifiant définitif et la référence BR propre restent à attribuer. La couverture par paramétrage ou adaptation du flux Inbound reste à analyser.
+3. Envoi vers le lieu d’immatriculation
+Figure 3 – Envoi vers le lieu d'immatriculation : répartition magasinier / système
+3.1 Générer automatiquement l’envoi
+Après la réception et la confirmation du dépôt des HU dans la bin de staging immatriculation, le système génère automatiquement les mouvements nécessaires et le bon 8* vers le lieu d’immatriculation. Le magasinier peut ensuite poursuivre le flux de préparation et d’expédition à partir de ce bon.
+GAP BR-05-001-010 — Génération automatique de l’envoi en immatriculation automatiser le déclenchement depuis le staging et assurer la traçabilité des articles envoyés. Le BR demande le suivi automatique de l’article et sa localisation dans une zone particulière. La génération automatique des mouvements et du bon 8* correspond à la proposition TO BE de la GAP List et aux décisions de travail.
+3.2 Effectuer le picking
+L’envoi à l’immatriculation suit le flux de picking commun. Le magasinier se connecte à sa ressource, réalise le prélèvement demandé et confirme les opérations ainsi que la destination selon la procédure de picking applicable. Les articles sont préparés sur la base du bon 8* généré pour l’envoi.
+Les détails de création et de regroupement des tâches et ordres magasin relèvent du processus Outbound. 
+3.3 Réaliser les consolidations
+Le flux passe par les deux consolidations prévues dans le processus commun d’expédition. Le magasinier réalise les opérations de sélection, de consolidation et de clôture des HU suivant les règles de chaque étape.
+3.4 Enregistrer la sortie
+Après la préparation et les consolidations, la sortie de marchandises est enregistrée soit directement depuis le bon de livraison, soit via une unité de transport (TU), selon le parcours d’expédition retenu. Dans le parcours avec transport, les HU sont chargées sur le transport suivant le flux commun.
+4. Retour après immatriculation
+4.1 Préparer le retour vers Ronet
+Le retour nécessite un document permettant de recevoir les articles au DC. Pour cela, un  transfert du magasin du lieu d’immatriculation vers le magasin A, avec génération d’une livraison entrante est prévu. Le responsable de cette opération reste à déterminer entre le DC et l’atelier, notamment le garage Draisine.
+Pour le retour depuis le garage Draisine, le document de référence et son mode de création restent à confirmer.
+4.2 Effectuer la vérification documentaire
+À l’arrivée des articles, le magasinier effectue la vérification documentaire suivant le processus Inbound. Le document de retour permet d’identifier la réception à traiter. Lorsque le retour est effectué par un transporteur, le chauffeur présente le document de référence prévu pour ce flux.
+La référence définitive doit être cohérente avec la livraison entrante créée dans le système. La marche à suivre si cette référence est absente ou inexploitable doit être alignée sur la gestion des exceptions Inbound.
+4.3 Réaliser les deux étapes de réception
+Les articles retournés après immatriculation by-passent la réception première étape et sont traités à la deuxième étape de réception. Les contrôles et confirmations sont exécutés selon le processus Inbound applicable au retour.
+4.4 Orienter les articles vers leur destination
+Au retour d’immatriculation, les articles font l’objet d’une nouvelle réception à Ronet. Après la vérification documentaire, ils sont réceptionnés directement en deuxième étape, puis orientés vers leur emplacement de stockage.
+La destination diffère donc de celle de la réception initiale :
+Avant immatriculation, les HU sont déposées dans une BIN de staging de la zone immatriculation, en vue de leur envoi.
+Après immatriculation, les HU sont orientées vers leur emplacement de stockage, sans repasser par le staging destiné à l’envoi en immatriculation.
+Le système doit permettre de distinguer ces deux flux pour déterminer la destination appropriée.

@@ -1,0 +1,274 @@
+SAP EWM 2.0 Retour Blueprint FRBrouillon v0.1 – pour discussion – 02/11/2026SAP EWM 2.0 Retour Blueprint FRBrouillon v0.1 – pour discussion – 02/11/2026 
+# 1. Introduction
+Ce document initie le blueprint des processus de retour (retour fournisseur, refus de réception, litiges menant à un retour, mise en mitraille et retours internes) pour le projet SAP EWM 2.0 d’Infrabel, site / DC de Ronet. Il reprend la structure du blueprint Outbound (« Infrabel SAP EWM 2.0 Blueprint - Outbound Document FR_Final v1.0 »).
+Le contenu est exclusivement tiré (1) des BPMN du projet (Mon Drive > Projet EWM 2.0 - Ronet > BPMN Flux) et (2) de la liste des Business Requirements eWM 2.0 (BR). Aucune règle métier n’a été ajoutée : lorsque l’information manque, le document l’indique par « À compléter / À valider avec le business » ou par une question ouverte (chapitre 5).
+Statut : Brouillon – pour discussion (v0.1 du 02/11/2026). Ce document n’est pas validé ; il sert de support à la discussion avec le business sur le flux retour.
+Le tableau ci-dessous présente l’historique des versions de ce document.
+[TABLEAU 1]
+Version
+Version | Date | Nom | Commentaire
+0.1 | 02/11/2026 | Moustafa Kayali (consultant SAP EWM) | Brouillon initial – initiation du blueprint Retour, pour discussion avec le business
+[FIN TABLEAU 1]
+## 1.1 Objet et périmètre du document
+Objet : décrire, à partir des BPMN et des BR existants, les flux de retour identifiés au DC de Ronet, les associer aux exigences (BR) et lister les points à clarifier avec le business.
+Périmètre couvert par ce brouillon :
+Refus de réception à la vérification documentaire (camion / livraison refusée) ;
+Litige à la réception et décision de l’acheteur (réparation par le fournisseur au DC, retour fournisseur, mitraille) ;
+Retour fournisseur : identification des HU, document de renvoi, enlèvement par le transporteur ;
+Mitraille : après décision acheteur et mitraille de stock (articles au statut Z3) ;
+Retours internes visibles dans les BPMN (retour immatriculation, retour contrôle Q) ;
+Traçabilité des HU qui reviennent au DC.
+Hors périmètre de ce brouillon : la conception de la solution SAP EWM (sections « Solution SAP EWM – à définir » laissées vides) et le processus AS-IS détaillé (« À compléter avec le business »).
+## 1.2 Point d’attention – périmètre « flux retour » dans le BPMN E2E
+Le BPMN E2E du DC indique explicitement en Hors Scope le « flux retour » et le « flux vente de mitraille » (Figure 1). Pourtant, les BPMN de réception (2B, 3, 3B) modélisent la décision de l’acheteur « Retour fournisseur / Mitraille » jusqu’à la mise à disposition des articles dans la lane « Litige » de la staging zone « 2ième étape », et les BPMN 5B / 5C citent la mitraille et le retour fournisseur (« décision acheteur REC2 ») comme cas de mise à disposition / bon sans référence.
+Figure 1 – extrait BPMN « 0_Flux_DC_E2E_eWM2.0 V0.5_FR » – annotation « Hors Scope : flux retour / flux vente de mitraille »
+BR associées : aucune (question de périmètre – Q01)
+➜ Le périmètre exact du flux retour dans eWM 2.0 est à clarifier (voir Q01) : jusqu’où le flux est-il modélisé dans eWM (lane Litige, mise à disposition, création du bon sans référence, expédition / enlèvement) et qu’est-ce qui reste hors scope (p. ex. la vente de mitraille) ? « À valider avec le business »
+## 1.3 Conventions de lecture
+Lien BPMN confirmé : l’ID de la BR est annoté sur le BPMN (lu sur l’extrait).
+Lien BPMN probable : pas d’ID annoté à cet endroit, mais le contenu de la BR correspond à l’étape du BPMN.
+Aucun lien : aucune représentation trouvée dans les BPMN analysés.
+GAP (BR manquante) : étape modélisée dans un BPMN sans BR correspondante dans la liste.
+Les textes surlignés en jaune (« À compléter / À valider avec le business ») sont à traiter avec le business.
+Les questions sont numérotées Q01, Q02… et consolidées au chapitre 5.
+# 2. Processus « AS-IS » DC Ronet – retours
+« À compléter avec le business » – les sources utilisées pour ce brouillon (BPMN TO-BE et liste des BR) ne décrivent pas le fonctionnement actuel des retours au DC de Ronet. Points à documenter lors de l’atelier :
+Comment un refus de réception est-il traité aujourd’hui (document remis au transporteur, enregistrement des motifs) ?
+Comment un retour fournisseur est-il organisé aujourd’hui (document, rendez-vous transporteur, zone de stockage, identification) ?
+Qui décide de la mise en mitraille, où le matériel est-il déposé et comment est-il évacué ?
+Comment sont gérés les retours d’immatriculation et de contrôle qualité hors site ?
+Quels outils / rapports sont utilisés (check-list, suivi des litiges, suivi des camions refusés) ?
+# 3. Vue d’ensemble des flux retour identifiés
+Les flux ci-dessous ont été identifiés dans les BPMN du dossier « BPMN Flux » et dans la liste des BR. Le tableau indique, pour chaque flux, les BPMN concernés, les BR associées et le niveau de couverture.
+[TABLEAU 2]
+# | Flux retour | BPMN concernés | BR associées | Couverture BR
+F1 | Refus de réception (vérification documentaire) | 1_Flux_Vérif documentaire | BR-01-001-010, BR-07-002-020 | Partielle
+F2 | Litige et décision acheteur (réparation / retour fournisseur / mitraille) | 2B, 3, 3B, 0 E2E | BR-01-003-020-F, BR-01-003-100, BR-01-003-110, BR-07-002-030 | Partielle
+F3 | Retour fournisseur (identification HU, document de renvoi, enlèvement) | 0 E2E, 5C, 9 (+ fins 2B / 3 / 3B) | BR-02-002-010 à -050, BR-06-002-010 | Bonne (à valider)
+F4 | Mitraille après décision acheteur | 0 E2E, 2B, 3, 3B, 5B | aucune BR (question blueprint sans ID) | GAP
+F5 | Mitraille de stock (articles Z3) | aucun BPMN | BR-04-002-010-00, BR-04-002-010-A, BR-07-005-070 | Partielle – pas de BPMN
+F6 | Retours internes : retour immatriculation, retour contrôle Q | 2B | aucune BR | GAP
+F7 | Retour de HU au DC (traçabilité) / HU non nomenclaturées | 9 Expédition, 5B (notes BRM) | BR-08-010-030 (indirect) | GAP
+[FIN TABLEAU 2]
+Le BPMN E2E montre la position du flux de retour dans le flux global : les « Articles refusés QM » sont consolidés (« Consolider échantillons + articles stockés »), puis une passerelle oriente vers « Mitraille » ou « Retour fournisseur » (Figure 2). D’après la lecture du schéma, la branche « Retour fournisseur » rejoint la tâche « Créer un bon sans référence » (annotation « e.a. Retour fournisseur ») et la branche « Mitraille » rejoint le flux intra-site / « Mettre à disposition » « À valider avec le business ».
+Figure 2 – extrait BPMN « 0_Flux_DC_E2E_eWM2.0 V0.5_FR » – articles refusés QM → « Consolider échantillons + articles stockés » → passerelle « Mitraille » / « Retour fournisseur »
+BR associées : aucune BR annotée – lien probable avec la famille BR-02-002 (retour fournisseur)
+# 4. Processus Retour « To-Be DC »
+Ce chapitre décrit, flux par flux, ce que montrent les BPMN TO-BE du projet, les BR associées et les points ouverts. Les descriptions reprennent les libellés des BPMN ; elles ne constituent pas une conception de solution.
+## 4.1 Refus de réception (vérification documentaire)
+### Description du processus (BPMN)
+Dans le BPMN « Vérifier les documents de livraison » (lane Magasinier DC), le transporteur se présente et le magasinier vérifie la check-list phase 1 (« Checklist OK ? »). En cas de NOK, le flux part directement vers l’encodage des motifs de refus. Si la check-list est OK, le camion est déchargé, le(s) colis contrôlé(s) physiquement et la check-list phase 2 vérifiée (Figure 3).
+Note BRM du BPMN : check-list dynamique (PO + STO + BL 8* sans réf) ; points de check-list : (1) présence d’un n° de PO ou STO ou BL 8* sans réf – point bloquant, réponse négative = check-list NOK = refus ; (2) lot inspection – contrôle Q fournisseur ; (3) conditions logistiques.
+Figure 3 – extrait BPMN « 1_Flux_Vérif documentaire_eWM2.0_V1 » – check-lists phase 1 et phase 2 avec annotations BR
+BR associées : BR-01-001-010 (annotée sur check-list phase 1 et phase 2 – confirmée) ; autres ID visibles BR-01-001-020/-030/-040/-050/-060, BR-01-000-010 (hors extraction retour)
+À la décision « Refusé », le magasinier encode les motifs de refus (note BRM : alimentation du dossier – photos, champ libre…), le système génère un incident (lane Gestion incidents) et un document de refus qui est remis au transporteur ; le flux se termine par « Réception refusée » (Figure 4). La branche « Accepté avec ou sans réserves » mène à la signature CMR (hors flux retour).
+Figure 4 – extrait BPMN « 1_Flux_Vérif documentaire_eWM2.0_V1 » – branche « Refusé » : encoder motifs de refus → générer incident → remettre document de refus au transporteur → « Réception refusée »
+BR associées : BR-01-001-010 (probable sur cette branche) ; BR-07-002-020 (probable – reporting des livraisons refusées)
+### Exigences (BR) associées
+[TABLEAU 3]
+ID BR | Description formalisée (FR) | Texte source (extrait exact) | Lien BPMN
+BR-01-001-010 | Le magasinier doit pouvoir gérer la check-list d’acceptation/refus d’une livraison, avec suivi et traçabilité des motifs de refus. | « Le système doit permettre au magasinier de gérer la check list d'acceptation/refus d'une livraison afin de garantir le suivi de la check list et la traçabilité des raisons du refus » | Confirmé (annoté sur check-list phase 1 et 2, Fig. 3) ; branche Refusé : probable (Fig. 4)
+BR-07-002-020 | Reporting des livraisons refusées même sans MIGO d’entrée, pour suivre les camions refusés via la check-list. | « Reporting sur les livraisons refusées même quand il n'y a pas de MIGO d'entrée - savoir tracker les camions refusés (reporting sur la check list) » | Probable – fin « Réception refusée » (Fig. 4), pas d’ID annoté
+[FIN TABLEAU 3]
+### Solution SAP EWM – à définir
+« À compléter après validation du processus métier » – cette section sera complétée une fois le processus et les BR validés avec le business. Aucune option de solution n’est proposée à ce stade.
+Points ouverts
+Q02 – Le refus à la vérification documentaire fait-il partie du blueprint Retour ou reste-t-il dans le blueprint Inbound ?
+Q03 – Contenu du « document de refus » remis au transporteur et liste des motifs de refus à encoder. « À compléter avec le business »
+Q16 – Reporting des livraisons refusées (BR-07-002-020) : contenu, fréquence, destinataires. « À compléter avec le business »
+## 4.2 Litige à la réception et décision de l’acheteur
+### Description du processus (BPMN)
+Réception d’articles avec bon 8xxx sans référence (2B) – lorsque la décision (« Type décision ? ») est « Refusé », le magasinier place la HU dans la lane « Litige » de la staging zone « 2ième étape » et l’y associe (annotation : « actuellement zone 990 »). Une passerelle propose de consolider l’échantillon avec le reste des articles QM stockés (note : « c’est la décision de l’inspecteur qui génère les ordres de picking ») (Figure 5).
+Figure 5 – extrait BPMN « 2B_Flux_Rec-Articles avec bon sans référence » – branche « Refusé » : placer / associer la HU dans la lane « Litige » (zone 990) et consolidation échantillon + articles QM stockés
+BR associées : BR-02-002-010, BR-02-002-020, BR-02-002-030 (probables – pas d’ID annoté)
+La décision de l’acheteur comporte ensuite trois issues (Figure 6) : « Réparation par fournisseur au DC » (articles disponibles pour réception 1° étape), « Retour fournisseur » (articles dans la lane « Litige » disponibles pour retour vers fournisseur) et « Mitraille » (articles dans la lane « Litige » disponibles pour mitraille).
+Figure 6 – extrait BPMN « 2B_Flux_Rec-Articles avec bon sans référence » – passerelle « Décision acheteur ? » : réparation par fournisseur au DC / retour fournisseur / mitraille
+BR associées : BR-01-003-110 (probable, même logique que Fig. 7) ; branche Mitraille : aucune BR (GAP)
+Réception étape 2 pour stock (3) – après la libération automatique de la ligne de livraison entrante, les quantités supplémentaires refusées (décision acheteur prise à la 1ère étape) et le cas « Toutes les quantités sont refusées » mènent à la passerelle « Décision acheteur ? » : « Retour fournisseur » (annotation BR-01-003-110) ou « Mitraille », avec dans les deux cas des articles dans la lane « Litige » de la staging zone « 2ième étape » (Figure 7). Rappel du BPMN : cas 1 et 2 (qté supp acceptées, facturées ou non) → Repl met à jour le PO, le 18* est mis à jour automatiquement ; cas 3 et 4 (qté supp refusées / toutes les quantités refusées) → le 18* est mis à jour automatiquement.
+Figure 7 – extrait BPMN « 3_Flux_Rec-Etape2-Stock_eWM2.0_V3 » – qté supp refusées / toutes quantités refusées → « Décision acheteur ? » → Retour fournisseur (BR-01-003-110) / Mitraille
+BR associées : BR-01-003-110 (annotée – confirmée) ; BR-01-003-020-F (probable, en amont) ; BR-01-003-020-E visible mais hors sujet retour
+Réception étape 2 NNN / consommation directe (3B, V2) – en cas d’anomalie, toutes les lignes de la livraison entrante 18* sont bloquées et toutes les HU déplacées vers la lane « Litige » de la staging zone « 2ième étape ». Après l’événement « Décision acheteur » : si tous les articles litigieux sont acceptés, toutes les lignes du 18* sont débloquées ; si au moins un article est refusé, toute la livraison entrante 18* est clôturée (note BRM : changer le statut de la livraison entrante vers « clôturé »), puis « Retour fournisseur » ou « Mitraille » (Figure 8).
+Figure 8 – extrait BPMN « 3B_Flux_Rec-Etape2-NNN-Cons-Dir_eWM2.0_V2 » – lane « Litige » → « Décision acheteur » → clôturer la livraison entrante 18* → Retour fournisseur / Mitraille
+BR associées : BR-01-003-110 (probable) ; branche Mitraille : aucune BR (GAP)
+### Exigences (BR) associées
+[TABLEAU 4]
+ID BR | Description formalisée (FR) | Texte source (extrait exact) | Lien BPMN
+BR-01-003-020-F | En cas d’overdelivery détecté sur le bon de livraison, un litige est créé automatiquement (PO, article, qté supp, localisation) pour tracer les quantités supplémentaires. | « Dans le cas d'un overdelivery détecté sur le bon de livraison, un litige est automatiquement créé avec : - info du PO - article concerné - qté supp - endroit de localisation de la ligne concernée dans SAP » | Probable – amont de « Décision acheteur ? » (Fig. 7)
+BR-01-003-100 | Un canal de communication « gestion des litiges » doit relier réception, replenishment et autres services (historique par PO, éviter les doubles sollicitations fournisseur). | « Le système doit garantir un canal de communication (gestion des litiges) entre la réception, le replenishment et les autres services… » | Aucun lien trouvé
+BR-01-003-110 | Le système doit pouvoir tracer le retour d’une quantité vers le fournisseur lorsque l’acheteur refuse tout ou une partie de la livraison, afin de documenter un litige de facturation. | « Le système doit pouvoir tracer le retour d'une quantité vers le fournisseur si l'acheteur refuse tout ou une partie de la livraison afin de documenter en cas de litige au sujet de la facturation . » | Confirmé – 3_Flux_Rec-Etape2-Stock, branche Retour fournisseur (Fig. 7) ; probable sur 2B / 3B (Fig. 6, 8)
+BR-07-002-030 | Rapport par ligne de PO des litiges détectés à la réception (check-list, 107, 109, etc.). | « Rapport par PO line, sur les litiges détectés à la réception (toutes étapes confondues : check list, 107, 109..) » | Aucun lien trouvé
+[FIN TABLEAU 4]
+### Solution SAP EWM – à définir
+« À compléter après validation du processus métier » – cette section sera complétée une fois le processus et les BR validés avec le business. Aucune option de solution n’est proposée à ce stade.
+Points ouverts
+Q04 – Décision de l’acheteur : qui l’enregistre, par quel canal (BR-01-003-100), dans quel délai, et que se passe-t-il pendant l’attente (HU en lane Litige / zone 990) ?
+Q05 – La branche « Réparation par fournisseur au DC » (2B) fait-elle partie du flux retour ? Aucune BR spécifique trouvée.
+Q06 – Les quantités supplémentaires refusées (litige overdelivery, BR-01-003-020-F) suivent-elles le même flux de retour fournisseur que les lots refusés QM ?
+Q17 – Rapport des litiges par ligne de PO (BR-07-002-030) : contenu et utilisateurs. « À compléter avec le business »
+## 4.3 Retour fournisseur
+### 4.3.1 Identification du matériel refusé et gestion des HU
+Les BPMN de réception (2B, 3, 3B) se terminent, pour la branche « Retour fournisseur », sur « Articles dans la lane "Litige" de la staging zone "2ième étape" disponibles pour retour vers fournisseur » (Figures 6 à 8). Les BR du sous-processus « 002 Implémenter la décision (lot refusé) » précisent les attentes de traçabilité pendant le séjour au DC : HU dédiées au retour fournisseur, étapes de refus et de renvoi guidées par scanner, étiquetage du matériel rebuté. Aucune de ces BR n’est annotée sur les extraits BPMN (lien probable par contenu).
+[TABLEAU 5]
+ID BR | Description formalisée (FR) | Texte source (extrait exact) | Lien BPMN
+BR-02-002-010 | Le système doit gérer des HU dédiées au retour fournisseur, identifiées dans eWM tant qu’elles sont dans le magasin, pour assurer la traçabilité complète. | « Le système doit permettre de gérer des HU pour le retour fournisseur, identifiées dans eWM tant que c'est dans le magasin afin de garantir la traçabilité complète » | Probable – fins « disponibles pour retour vers fournisseur » (Fig. 6–8)
+BR-02-002-020 | L’agent doit pouvoir enchaîner, assisté par scanner, les étapes de refus puis de renvoi du matériel afin d’assurer la traçabilité et de limiter les erreurs. | « Le système doit permettre à l'agent de suivre des étapes de refus et de renvoi du matériel avec l'aide de scanner afin de garantir la traçabilité totale et empêcher des erreurs » (idée de base : « Pouvoir être 'simple' pour annuler la réception si lot QM est refusé ») | Probable – chemin Refusé → Litige → décision acheteur (Fig. 5–8)
+BR-02-002-030 | Le matériel rebuté, en totalité ou en partie, destiné au retour fournisseur doit pouvoir être identifié par étiquettes pour la traçabilité. | « Le système doit permettre d'identifer le matériel rebuté en entier ou en partiel pour le retour fournisseur avec des étiquettes afin de garantir la traçabilité » | Probable – placement en lane « Litige » (Fig. 5)
+[FIN TABLEAU 5]
+### 4.3.2 Document de renvoi (bon sans référence lié au PO)
+Dans le BPMN E2E, la tâche « Créer un bon sans référence » porte l’annotation « e.a. Retour fournisseur » (Figure 9). Le BPMN 5C « Créer un bon sans référence » (lane Coordinateur DC) détaille : lister les porteurs à traiter, créer un bon d’expédition sans référence (document « Bon sans ref 8* » ; infos nécessaires : « Num PO (cas QM) (BR-02-002-040) »), associer les HU au bon sans référence ; les HU sont alors prêtes pour expédition. La note BRM cite parmi les porteurs concernés « retour fournisseur (décision acheteur REC2) » (Figure 10).
+Figure 9 – extrait BPMN « 0_Flux_DC_E2E_eWM2.0 V0.5_FR » – tâche « Créer un bon sans référence » avec annotation « e.a. Retour fournisseur »
+BR associées : BR-02-002-040 (probable sur l’E2E)
+Figure 10 – extrait BPMN « 5C_Création bon sans référence_eWM2.0_V2 » – création du bon d’expédition sans référence ; infos nécessaires « Num PO (cas QM) (BR-02-002-040) » ; note BRM « retour fournisseur (décision acheteur REC2) »
+BR associées : BR-02-002-040 (annotée – confirmée) ; BR-05-006-050-A, BR-05-003-010-B visibles (hors extraction retour)
+[TABLEAU 6]
+ID BR | Description formalisée (FR) | Texte source (extrait exact) | Lien BPMN
+BR-02-002-040 | Le renvoi chez le fournisseur s’appuie sur un document (ex. bon 8000…) lié au PO ; cette référence, transmise manuellement par replenishment au fournisseur, sert au transporteur pour le rendez-vous et la marchandise à enlever. | « Le renvoi du matériel chez le fournisseur doit se passer sur base d'un document (exemple bon 8000…) lié au Purchase Order afin que la référence de ce document - envoyé manuellement par replenishment au fournisseur - serve au transporteur pour prendre le rendez-vous et préciser la marchandise à enlever. » | Confirmé – annotée sur 5C (Fig. 10) ; probable sur l’E2E (Fig. 9)
+[FIN TABLEAU 6]
+### 4.3.3 Enlèvement par le transporteur
+Le BPMN 9 « Expédition » montre la séquence générique de chargement : « Activer le chargement sur base du numéro d’expédition » (annotation BR-06-002-010), « Afficher liste des HU d’expédition », « Sortir les HU d’expédition de l’entrepôt », « Confirmer la sortie des HU d’expédition de l’entrepôt » (annotation BR-02-002-050), « Confirmer l’endroit de sortie des HU d’expédition » puis « Confirmer la fin du chargement » (Figure 11). Ces BR sont donc annotées sur le flux d’expédition générique ; leur contenu vise explicitement le retour fournisseur / litige. L’application de cette séquence à l’enlèvement d’un retour fournisseur est « À valider avec le business ».
+Figure 11 – extrait BPMN « 9_Flux_Expédition » – chargement / sortie des HU d’expédition avec annotations BR-06-002-010 et BR-02-002-050
+BR associées : BR-06-002-010 et BR-02-002-050 (annotées – confirmées sur le flux expédition ; usage retour à valider) ; BR-06-003-020/-040, BR-07-007-010 visibles (hors extraction retour)
+[TABLEAU 7]
+ID BR | Description formalisée (FR) | Texte source (extrait exact) | Lien BPMN
+BR-02-002-050 | À l’enlèvement, le magasinier doit scanner pour vérifier que le transporteur prend bien la HU refusée, même si le même matériel est présent dans la zone. | « Il faut pouvoir contrôler que le transporteur enlève la bonne HU refusée, même s'il y a le même matériel qui se trouve dans la même zone. Scan à l'enlèvement par le magasinier. » | Confirmé – annotée sur 9_Flux_Expédition « Confirmer la sortie des HU d’expédition » (Fig. 11)
+BR-06-002-010 | Le coordinateur doit pouvoir créer une référence unique regroupant plusieurs HU à enlever (remise au fournisseur / présentée au comptoir par le transporteur), y compris pour un retour litige fournisseur. | « (ex : retour litige fournisseur, enlèvement d'un NNN/cons directe,...) » | Confirmé – annotée sur 9_Flux_Expédition « Activer le chargement… » (Fig. 11)
+[FIN TABLEAU 7]
+### Solution SAP EWM – à définir
+« À compléter après validation du processus métier » – cette section sera complétée une fois le processus et les BR validés avec le business. Aucune option de solution n’est proposée à ce stade.
+Points ouverts
+Q07 – Type et numérotation du document de renvoi : bon 8000… (BR-02-002-040) ou bon d’expédition sans référence 8* (5C) ? Qui le crée (coordinateur DC selon 5C) et qui transmet la référence au fournisseur (replenishment selon BR-02-002-040) ?
+Q08 – Lot QM refusé : faut-il pouvoir « annuler » simplement la réception (idée de base de BR-02-002-020) ou documenter un retour vers le fournisseur ? « À valider avec le business »
+Q09 – Étiquette du matériel rebuté (BR-02-002-030) : informations attendues et moment de l’impression. « À compléter avec le business »
+Q10 – Enlèvement d’un retour fournisseur : même séquence que l’expédition standard (BPMN 9) ? Prise de rendez-vous par le transporteur, référence unique d’enlèvement (BR-06-002-010), contrôle par scan (BR-02-002-050).
+## 4.4 Mitraille
+### 4.4.1 Mitraille après décision de l’acheteur
+Les BPMN de réception (2B, 3, 3B) et l’E2E modélisent une branche « Mitraille » après la décision de l’acheteur, se terminant par « Articles dans la lane "Litige" de la staging zone "2ième étape" disponibles pour mitraille » (Figures 2, 6, 7 et 8). Le BPMN 5B « Mettre à disposition » mentionne parmi les porteurs à traiter « Mitraille (ex. décision acheteur REC2) » et, parmi les BIN de destination possibles, « Mitraille » (Figure 12) : prioriser les porteurs, activer la ligne du porteur, proposer un BIN par HU, déposer la HU sur le BIN, associer la HU au BIN.
+Figure 12 – extrait BPMN « 5B_Flux_Mettre_à_disposition_eWM2.0_V2 » – porteurs « Mitraille (ex. décision acheteur REC2) » et BIN de destination « Mitraille »
+BR associées : aucune BR (GAP) – question blueprint « Mitraille » sans ID
+GAP : aucune BR de la liste n’est associée à cette branche. BR-04-002-010-A concerne le picking des articles Z3 en stock, pas la mitraille décidée par l’acheteur après un litige.
+Question blueprint (onglet « Blueprint - questions », sous-processus Mitraille, sans ID BR) : « Qui prend en charge financièrement la mise en mitraille d'un article réceptionné et qui est refusé (acheteur nous dit de le mettre en mitraille). »
+### 4.4.2 Mitraille de stock (articles au statut Z3)
+Les BR du stockage prévoient des tâches de picking sur les articles au statut Z3 destinés à la mitraille (wave spécifique sur statut article, sans validation coordinateur selon la discussion business du 03-09-2026). Aucun BPMN du dossier analysé ne modélise ce flux. Dans la feuille de travail, l’idée d’une sortie distincte mitraille / Z3 (sous-processus « 002 Gérer la mitraille ») est annulée – « Hors scope eWM2.0. Imputation IM » ; le Master Data mentionne « A rediscuter sur le flux "retour" ».
+[TABLEAU 8]
+ID BR | Description formalisée (FR) | Texte source (extrait exact) | Lien BPMN
+BR-04-002-010-00 | Le système doit émettre un rapport sur les articles bientôt périmés et des tâches de picking sur les articles au statut Z3 destinés à la mitraille (« Voir split » vers A/B). | « - Tâches de picking sur les articles Z3 (pour mitraille) » | Aucun lien trouvé
+BR-04-002-010-A | Le système doit émettre des tâches de picking sur les articles Z3 pour la mitraille (wave sur statut article, sans validation coordinateur selon discussion business 03-09-2026). | « Le système doit émettre : - Tâches de picking sur les articles Z3 (pour mitraille) » ; BA : « Wave spécifique pour les articles à mitrailler -> articles dont le statut = Z3 » | Aucun lien trouvé (« Pas listé dans les flux »)
+BR-07-005-070 | Rapport des articles au plant specific material status Z2-Z3-Z5-ZD pour lancer un traitement spécifique (lien indirect mitraille via Z3). | BA : campagnes de picking pour sortir ces articles du magasin | Aucun lien trouvé
+[FIN TABLEAU 8]
+### Solution SAP EWM – à définir
+« À compléter après validation du processus métier » – cette section sera complétée une fois le processus et les BR validés avec le business. Aucune option de solution n’est proposée à ce stade.
+Points ouverts
+Q11 – Mitraille après décision acheteur : faut-il formaliser des BR (identification des HU, mise à disposition sur le BIN Mitraille, document, imputation) ? Le flux s’arrête-t-il au dépôt sur le BIN Mitraille ?
+Q12 – Qui prend en charge financièrement la mise en mitraille d’un article réceptionné puis refusé (question blueprint) ?
+Q13 – Mitraille de stock Z3 : BR-04-002-010-A est active alors que l’idée de sortie distincte mitraille / Z3 est annulée (« Hors scope eWM2.0. Imputation IM »). Le picking Z3 relève-t-il du blueprint Retour / Mitraille ou du blueprint Stockage / Outbound ?
+Q01 – « Flux vente de mitraille » Hors Scope (E2E) : confirmer que l’évacuation / vente de la mitraille reste hors eWM 2.0.
+## 4.5 Retours internes (retour immatriculation, retour contrôle Q)
+### Description du processus (BPMN)
+Dans le BPMN 2B (réception d’articles avec bon 8xxx sans référence), après « Associer les articles au n° de HU », la passerelle « Provenance ? » distingue (Figure 13) :
+Retour immatriculation → passerelle « Entreposage ? » : Non → placer la HU sur la lane adéquate de la staging zone (2° étape) puis l’associer (fin : articles immatriculés prêts pour expédition) ; Oui → proposer / confirmer le type de magasin, imprimer l’étiquette HU et placer la HU sur le porteur (fin : articles en staging zone « 2ième étape » pour mise en stock).
+Retour contrôle Q → passerelle « Type décision ? » : Accepté → même chemin de mise en stock ; Refusé → lane « Litige » puis décision acheteur (voir 4.2).
+Annotation du BPMN : « Comment faire le lien dans SAP avec le PO 45xxx initial ? Après recherche dans SAP, réconciliation avec 917 / RS / … ».
+Figure 13 – extrait BPMN « 2B_Flux_Rec-Articles avec bon sans référence » – passerelle « Provenance ? » : « Retour immatriculation » / « Retour contrôle Q »
+BR associées : aucune BR (GAP)
+GAP : aucune BR de la liste ne porte sur « retour immatriculation » ou « retour contrôle Q ». L’idée « Au retour de l'article suite à son immatriculation, un document doit être joint avec les référence du COPO » est annulée (« n-a pour ce projet / rediscuter garage draisine »).
+### Solution SAP EWM – à définir
+« À compléter après validation du processus métier » – cette section sera complétée une fois le processus et les BR validés avec le business. Aucune option de solution n’est proposée à ce stade.
+Points ouverts
+Q14 – Retour immatriculation : processus attendu, document accompagnant le retour (référence COPO ?), cas du garage draisine. Faut-il créer des BR ?
+Q15 – Retour contrôle Q (contrôle hors site, p. ex. ICT) : comment faire le lien avec le PO 45xxx initial (question du BPMN) ? Faut-il créer des BR ?
+## 4.6 Retour de HU au DC (traçabilité)
+### Description du processus (BPMN)
+Le BPMN 9 « Expédition » contient une note BRM : « ex. Q ou IMM par expédition il est important de pouvoir localiser la HU + tracer l'historique des localisations de la HU (où se trouve la HU à l'instant T + quand la HU a quitté le DC / quand la HU est arrivée à destination + au retour : quand la HU est revenue dans le DC) » (Figure 14). La même note figure sur le BPMN 5B « Mettre à disposition » (Figure 12).
+Figure 14 – extrait BPMN « 9_Flux_Expédition » – note BRM : « au retour : quand la HU est revenue dans le DC »
+BR associées : aucune BR retour (BR-07-007-010, voisine, est un KPI OTIF – pas un retour)
+GAP : aucune BR ne formalise le suivi « HU revenue dans le DC ». La BR-07-007-010 annotée à proximité (« KPIs de suivi des transports : Marchandise enlevée OTIF / Marchandise livrée OTIF ») ne concerne pas le retour.
+Par ailleurs, la BR-08-010-030 (HU non nomenclaturées) porte la mention « A traiter dans les flux "retour" » et l’idée de base « Qui s'occupe des retours? Comment? ».
+[TABLEAU 9]
+ID BR | Description formalisée (FR) | Texte source (extrait exact) | Lien BPMN
+BR-08-010-030 | Gérer des HU non nomenclaturées qui entrent, passent en cross-dock et ressortent vers le DC Schaerbeek. | « Le système doit pouvoir gérer des HU non nomenclaturées qui peuvent entrer, être mises en cross-dock et ressortir ensuite pour être expédié vers le DC Sch » ; flux : « A traiter dans les flux "retour" » | Aucun lien trouvé
+[FIN TABLEAU 9]
+### Solution SAP EWM – à définir
+« À compléter après validation du processus métier » – cette section sera complétée une fois le processus et les BR validés avec le business. Aucune option de solution n’est proposée à ce stade.
+Points ouverts
+Q18 – Suivi des HU qui reviennent au DC (Q / IMM par expédition) : faut-il une BR dédiée (événement « HU revenue dans le DC », historique des localisations) ?
+Q19 – BR-08-010-030 : rattacher les HU non nomenclaturées (« HU créée en amont (ex retour) ») au blueprint Retour ? « Qui s'occupe des retours ? Comment ? »
+# 5. Points ouverts / questions pour le business
+Liste consolidée des questions à traiter avec le business (ordre de priorité proposé : périmètre d’abord).
+[TABLEAU 10]
+N° | Question | Flux / réf. | Source
+Q01 | Périmètre : l’E2E indique « flux retour » et « flux vente de mitraille » Hors Scope, alors que 2B / 3 / 3B / 5B / 5C modélisent le retour fournisseur et la mitraille. Quel est le périmètre eWM 2.0 du flux retour, et jusqu’où va-t-il (lane Litige, mise à disposition, bon sans référence, enlèvement) ? | 1.2, F2–F4 | BPMN 0 E2E (Fig. 1)
+Q02 | Le refus à la vérification documentaire relève-t-il du blueprint Retour ou du blueprint Inbound ? | 4.1 | BPMN 1
+Q03 | Contenu du document de refus remis au transporteur ; liste des motifs de refus. | 4.1 | BPMN 1, BR-01-001-010
+Q04 | Décision de l’acheteur : qui l’enregistre, par quel canal, dans quel délai ; traitement des HU en attente en lane Litige (zone 990). | 4.2 | BPMN 2B/3/3B, BR-01-003-100
+Q05 | La branche « Réparation par fournisseur au DC » fait-elle partie du flux retour ? (aucune BR) | 4.2 | BPMN 2B
+Q06 | Les qté supp refusées (litige overdelivery) suivent-elles le même flux de retour fournisseur ? | 4.2 | BR-01-003-020-F, BPMN 3
+Q07 | Document de renvoi : bon 8000… ou bon sans référence 8* ? Qui le crée (coordinateur DC) et qui transmet la référence au fournisseur (replenishment) ? | 4.3.2 | BR-02-002-040, BPMN 5C
+Q08 | Lot QM refusé : annulation « simple » de la réception ou retour documenté vers le fournisseur ? | 4.3.1 | BR-02-002-020 (idée de base)
+Q09 | Étiquette du matériel rebuté : contenu et moment d’impression. | 4.3.1 | BR-02-002-030
+Q10 | Enlèvement d’un retour fournisseur : même séquence que l’expédition standard (rendez-vous, référence unique, scan) ? | 4.3.3 | BR-02-002-050, BR-06-002-010, BPMN 9
+Q11 | Mitraille après décision acheteur : BR à formaliser (identification, BIN Mitraille, document, imputation) ? | 4.4.1 | BPMN 2B/3/3B/5B – GAP
+Q12 | Qui prend en charge financièrement la mise en mitraille d’un article réceptionné et refusé ? | 4.4.1 | Blueprint - questions
+Q13 | Mitraille de stock Z3 : BR-04-002-010-A active vs idée annulée « Hors scope eWM2.0. Imputation IM » – dans quel blueprint la traiter ? | 4.4.2 | BR-04-002-010-A, FT ~169
+Q14 | Retour immatriculation : processus, document (COPO ?), garage draisine – BR à créer ? | 4.5 | BPMN 2B – GAP, FT ~55
+Q15 | Retour contrôle Q : lien avec le PO 45xxx initial – BR à créer ? | 4.5 | BPMN 2B – GAP
+Q16 | Reporting des livraisons refusées : contenu, fréquence, destinataires. | 4.1 | BR-07-002-020
+Q17 | Rapport des litiges par ligne de PO : contenu et utilisateurs. | 4.2 | BR-07-002-030
+Q18 | Suivi « HU revenue dans le DC » : BR dédiée à créer ? | 4.6 | BPMN 9 / 5B – GAP
+Q19 | BR-08-010-030 (HU non nomenclaturées, « à traiter dans les flux retour ») : à rattacher au blueprint Retour ? | 4.6 | BR-08-010-030
+Q20 | Retours annulés (retour en magasin COPO non enlevées, retours SP NL / MRP) : confirmer leur exclusion du périmètre. | Annexe B | Feuille de travail
+[FIN TABLEAU 10]
+# Annexe A – Traçabilité BR / BPMN / figures
+[TABLEAU 11]
+ID BR | Description courte | Processus / sous-processus | BPMN / élément | Fig. | Lien
+BR-01-001-010 | Check-list acceptation / refus, traçabilité des motifs | 01 Réception – 001 Vérifier les documents de livraison | 1_Flux_Vérif documentaire – check-list phase 1 & 2 ; branche Refusé | 3, 4 | Confirmé (check-lists) / probable (Refusé)
+BR-07-002-020 | Reporting livraisons refusées (camions refusés) | 07 Reporting – 002 Réception | 1_Flux_Vérif documentaire – fin « Réception refusée » | 4 | Probable
+BR-01-003-020-F | Litige automatique en cas d’overdelivery | 01 Réception – 003 Réceptionner PO 1ière étape pour stock | 3_Flux_Rec-Etape2-Stock – amont « Décision acheteur ? » | 7 | Probable
+BR-01-003-100 | Canal de communication « gestion des litiges » | 01 Réception – 003 | – | – | Aucun
+BR-01-003-110 | Tracer le retour d’une quantité refusée par l’acheteur | 01 Réception – 003 | 3_Flux_Rec-Etape2-Stock – branche Retour fournisseur (annotée) ; 2B, 3B | 7 (6, 8) | Confirmé (3) / probable (2B, 3B)
+BR-07-002-030 | Rapport des litiges par ligne de PO | 07 Reporting – 002 Réception | – | – | Aucun
+BR-02-002-010 | HU dédiées au retour fournisseur | 02 Check QM – 002 Implémenter la décision (lot refusé) | Fins « disponibles pour retour vers fournisseur » 2B / 3 / 3B | 6–8 | Probable
+BR-02-002-020 | Étapes de refus / renvoi guidées par scanner | 02 Check QM – 002 | Chemin Refusé → Litige → décision acheteur | 5–8 | Probable
+BR-02-002-030 | Étiquetage du matériel rebuté | 02 Check QM – 002 | Lane « Litige » 2B | 5 | Probable
+BR-02-002-040 | Document de renvoi lié au PO (bon 8000…) | 02 Check QM – 002 | 5C – « Num PO (cas QM) (BR-02-002-040) » ; 0 E2E « e.a. Retour fournisseur » | 10 (9) | Confirmé (5C) / probable (E2E)
+BR-02-002-050 | Scan de contrôle de la HU refusée à l’enlèvement | 02 Check QM – 002 | 9_Flux_Expédition – « Confirmer la sortie des HU d’expédition » | 11 | Confirmé (flux expédition)
+BR-06-002-010 | Référence unique d’enlèvement (dont retour litige fournisseur) | 06 Expédition – 002 Mise à disposition pour enlèvement | 9_Flux_Expédition – « Activer le chargement sur base du n° d’expédition » | 11 | Confirmé (flux expédition)
+BR-04-002-010-00 | Rapport articles périmés + picking Z3 (mitraille) | 04 Stockage – 002 Gérer les articles FEFO | – | – | Aucun
+BR-04-002-010-A | Picking des articles Z3 pour mitraille (wave) | 04 Stockage – 001 Gérer les articles non conformes | – | – | Aucun
+BR-07-005-070 | Rapport articles statut Z2-Z3-Z5-ZD | 07 Reporting | – | – | Aucun
+BR-08-010-030 | HU non nomenclaturées (« à traiter dans les flux retour ») | 08 | – | – | Aucun
+(GAP) | Mitraille après décision acheteur | – | 0 E2E, 2B, 3, 3B, 5B – branche / BIN « Mitraille » | 2, 6–8, 12 | Aucune BR
+(GAP) | Retour immatriculation / retour contrôle Q | – | 2B – passerelle « Provenance ? » | 13 | Aucune BR
+(GAP) | HU revenue dans le DC | – | 9 / 5B – note BRM | 14 (12) | Aucune BR
+(hors sujet) | BR-01-003-020-E, BR-07-007-010 : ID lus sur les extraits mais sans lien avec le retour | – | 3 (Fig. 7), 9 (Fig. 11, 14) | – | –
+[FIN TABLEAU 11]
+## Liste des figures
+Figure 1 – 0_Flux_DC_E2E_eWM2.0 V0.5_FR – annotation « Hors Scope : flux retour / flux vente de mitraille »
+Figure 2 – 0_Flux_DC_E2E_eWM2.0 V0.5_FR – articles refusés QM → « Consolider échantillons + articles stockés » → passerelle « Mitraille » / « Retour fournisseur »
+Figure 3 – 1_Flux_Vérif documentaire_eWM2.0_V1 – check-lists phase 1 et phase 2 avec annotations BR
+Figure 4 – 1_Flux_Vérif documentaire_eWM2.0_V1 – branche « Refusé » : encoder motifs de refus → générer incident → remettre document de refus au transporteur → « Réception refusée »
+Figure 5 – 2B_Flux_Rec-Articles avec bon sans référence – branche « Refusé » : placer / associer la HU dans la lane « Litige » (zone 990) et consolidation échantillon + articles QM stockés
+Figure 6 – 2B_Flux_Rec-Articles avec bon sans référence – passerelle « Décision acheteur ? » : réparation par fournisseur au DC / retour fournisseur / mitraille
+Figure 7 – 3_Flux_Rec-Etape2-Stock_eWM2.0_V3 – qté supp refusées / toutes quantités refusées → « Décision acheteur ? » → Retour fournisseur (BR-01-003-110) / Mitraille
+Figure 8 – 3B_Flux_Rec-Etape2-NNN-Cons-Dir_eWM2.0_V2 – lane « Litige » → « Décision acheteur » → clôturer la livraison entrante 18* → Retour fournisseur / Mitraille
+Figure 9 – 0_Flux_DC_E2E_eWM2.0 V0.5_FR – tâche « Créer un bon sans référence » avec annotation « e.a. Retour fournisseur »
+Figure 10 – 5C_Création bon sans référence_eWM2.0_V2 – création du bon d’expédition sans référence ; infos nécessaires « Num PO (cas QM) (BR-02-002-040) » ; note BRM « retour fournisseur (décision acheteur REC2) »
+Figure 11 – 9_Flux_Expédition – chargement / sortie des HU d’expédition avec annotations BR-06-002-010 et BR-02-002-050
+Figure 12 – 5B_Flux_Mettre_à_disposition_eWM2.0_V2 – porteurs « Mitraille (ex. décision acheteur REC2) » et BIN de destination « Mitraille »
+Figure 13 – 2B_Flux_Rec-Articles avec bon sans référence – passerelle « Provenance ? » : « Retour immatriculation » / « Retour contrôle Q »
+Figure 14 – 9_Flux_Expédition – note BRM : « au retour : quand la HU est revenue dans le DC »
+# Annexe B – Idées annulées liées aux retours (feuille de travail)
+Idées de la feuille de travail sans NR BR actif ; à confirmer comme hors périmètre (Q20) ou à réouvrir.
+[TABLEAU 12]
+Ligne FT | Idée / texte | Statut
+~55 | « Au retour de l'article suite à son immatriculation, un document doit être joint avec les référence du COPO » | Annulé – n-a pour ce projet / rediscuter garage draisine
+~112 | Flux « retour en magasin » COPO non enlevées → STO retour mag2/8 | Annulé – Hors scope
+~136 | Retours en SP (NL, MRP) | Annulé – Hors scope MRP
+~150 | « Retours? » | Annulé – repris ailleurs
+~154 | Retours de PO vers fournisseurs (non-conformité QA) | Annulé – repris (num ligne 223 → famille BR-02-002 / BR-01-003-110)
+~169 | Sortie distincte mitraille / Z3 (sous-processus « 002 Gérer la mitraille ») | Annulé – Hors scope eWM2.0 Imputation IM
+[FIN TABLEAU 12]
+Onglet « 8 BR Retour » : une seule proposition « Qui s'occupe des retours? Comment? » (sans NR) – reprise via BR-08-010-030.
+# Annexe C – Sources
+Liste des Business Requirements eWM 2.0 (Google Sheet « Business Requiremens eWM 2-0 (2) »), id Drive 1i_gU0lllY9zc0nFiBbZ_k_5oqVSoVCHaVj6BqzgE7y8 – onglets « Business Requirements 20260220 », « BR - Feuille de travail », « Master Data », « 8 BR Retour », « 5 BR Prep expédition », « Blueprint - questions ».
+BPMN : Mon Drive > Projet EWM 2.0 - Ronet > BPMN Flux – fichiers 0_Flux_DC_E2E_eWM2.0 V0.5_FR, 1_Flux_Vérif documentaire_eWM2.0_V1, 2B_Flux_Rec-Articles avec bon sans référence, 3_Flux_Rec-Etape2-Stock_eWM2.0_V3, 3B_Flux_Rec-Etape2-NNN-Cons-Dir_eWM2.0_V2, 5B_Flux_Mettre_à_disposition_eWM2.0_V2, 5C_Création bon sans référence_eWM2.0_V2, 9_Flux_Expédition.
+Référence de format : « Infrabel SAP EWM 2.0 Blueprint - Outbound Document FR_Final v1.0 ».

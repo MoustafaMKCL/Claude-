@@ -1,0 +1,39 @@
+SAP EWM 2.0 Retour Blueprint FR – Extraits BPMNBrouillon v0.2 – pour discussion – 02/11/2026SAP EWM 2.0 Retour Blueprint FR – Extraits BPMNBrouillon v0.2 – pour discussion – 02/11/2026 
+Ce document regroupe les extraits BPMN (screenshots) liés au flux retour, classés par flux BPMN. Statut : Brouillon – pour discussion.
+Historique des versions
+[TABLEAU 1]
+Version
+Version | Date | Nom | Commentaire
+0.1 | 02/11/2026 | Moustafa Kayali (consultant SAP EWM) | Brouillon initial – initiation du blueprint Retour, pour discussion avec le business
+0.2 | 02/11/2026 | Moustafa Kayali | Version extraits BPMN
+[FIN TABLEAU 1]
+# 0 – Flux DC E2E
+0_Flux_DC_E2E_eWM2.0 V0.5_FR.bmp
+Figure 1 – Annotation « Hors Scope : flux retour / flux vente de mitraille »
+Figure 2 – Consolider échantillons + articles stockés → Gateway : Mitraille / Retour fournisseur
+Figure 3 – Tâche « Créer un bon sans référence » – annotation « e.a. Retour fournisseur »
+# 1 – Flux Vérification documentaire
+1_Flux_Vérif documentaire_eWM2.0_V1.bmp
+Figure 4 – Vérifier check-list phase 1 et phase 2 (Checklist OK ? / Décision ?)
+Figure 5 – Branche « Refusé » : encoder motifs de refus → générer incident → remettre document de refus au transporteur → Réception refusée
+# 2B – Réception articles avec bon sans référence
+2B_Flux_Rec-Articles avec bon sans référence.bmp
+Figure 6 – Gateway Provenance : Retour immatriculation / Retour contrôle Q
+Figure 7 – Type décision « Refusé » : HU dans la lane « Litige » (zone 990) → consolider échantillon + articles QM
+Figure 8 – Gateway Décision acheteur : Réparation par fournisseur au DC / Retour fournisseur / Mitraille
+# 3 – Réception étape 2 – Stock
+3_Flux_Rec-Etape2-Stock_eWM2.0_V3.bmp
+Figure 9 – Qté supp refusées / toutes quantités refusées → Gateway Décision acheteur : Retour fournisseur / Mitraille
+# 3B – Réception étape 2 – NNN / Consommation directe
+3B_Flux_Rec-Etape2-NNN-Cons-Dir_eWM2.0_V2.bmp
+Figure 10 – Lane « Litige » → Décision acheteur → Clôturer la livraison entrante 18* → Retour fournisseur / Mitraille
+# 5B – Mettre à disposition
+5B_Flux_Mettre_à_disposition_eWM2.0_V2.bmp
+Figure 11 – Porteurs à traiter « Mitraille (ex. décision acheteur REC2) » et BIN de destination « Mitraille »
+# 5C – Création bon sans référence
+5C_Création bon sans référence_eWM2.0_V2.bmp
+Figure 12 – Créer un bon d’expédition sans référence (porteurs dont retour fournisseur – décision acheteur REC2)
+# 9 – Flux Expédition
+9_Flux_Expédition.bmp
+Figure 13 – Activer le chargement / sortir et confirmer la sortie des HU d’expédition
+Figure 14 – Note BRM : traçabilité de la HU « au retour : quand la HU est revenue dans le DC »

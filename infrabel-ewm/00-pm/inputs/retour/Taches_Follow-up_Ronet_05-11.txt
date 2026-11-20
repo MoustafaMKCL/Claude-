@@ -1,0 +1,37 @@
+===== Onglet : Tâches Follow-up Ronet — 05-11- =====
+[Tâches Follow-up Ronet — 05-11-] L1: Tâches Follow-up Ronet — 05/11/2026
+[Tâches Follow-up Ronet — 05-11-] L2: Tâche | Responsable | Échéance | Statut | Commentaire
+[Tâches Follow-up Ronet — 05-11-] L3: T-001 Liste GAP Immatriculation | Moustafa / Youssef | 18/09/2026 (passée) | En retard | Scope ZIMB (pas ZIMA)
+[Tâches Follow-up Ronet — 05-11-] L4: T-005 Liste GAP Outbound | Moustafa / Youssef | 18/09/2026 (passée) | En retard | Ajouter Consolidation + KIT
+[Tâches Follow-up Ronet — 05-11-] L5: T-043 Clôturer réunion Immatriculation | Moustafa / Youssef | 03/11/2026 (passée) | En retard | Appel fait — noter les réponses Youssef
+[Tâches Follow-up Ronet — 05-11-] L6: T-066 BPR livraisons directes hors EWM | Moustafa / Youssef | 29/10/2026 (passée) | À faire | Remonter au BA
+[Tâches Follow-up Ronet — 05-11-] L7: RACI Master Data | Yassine (prépare) / Bernard (valide) | 2026-11-05T00:00:00 | En cours — due today | Meeting validation Bernard
+[Tâches Follow-up Ronet — 05-11-] L8: Support matin — rendre les premières | Moustafa | 2026-11-05T00:00:00 | À faire | Planning oral du jour
+[Tâches Follow-up Ronet — 05-11-] L9: Réunion d'estimation | Moustafa | 2026-11-05T00:00:00 | À faire | Horaires à confirmer
+[Tâches Follow-up Ronet — 05-11-] L10: Réunion après-midi Bernard | Moustafa / Bernard | 2026-11-05T00:00:00 | À faire | Sujet exact à préciser
+[Tâches Follow-up Ronet — 05-11-] L11: Finaliser documents en cours | Moustafa | 2026-11-05T00:00:00 | À faire | Outbound / Immat / prep
+[Tâches Follow-up Ronet — 05-11-] L12: Discuter solution KIT (assemblé à la commande) | Moustafa | 2026-11-05T00:00:00 | À faire | Décision orale 31/10 à formaliser
+[Tâches Follow-up Ronet — 05-11-] L13: Yassine — finaliser Assis et les amener | Yassine | 2026-11-05T00:00:00 | À faire | Sens d'Assis à confirmer (AS-IS ?)
+[Tâches Follow-up Ronet — 05-11-] L14: Kitting STO — test sandbox / incident SAP | Consultant Solution / Moustafa | À planifier | À faire | Kit-to-order non documenté sur STO ; alternatives SD ou kit-to-stock
+[Tâches Follow-up Ronet — 05-11-] L15: T-044 Réunion Tours/Kardex | Moustafa / Youssef | 09/11/2026 9h30–12h00 | À venir | Prep prête — MFS hors scope
+[Tâches Follow-up Ronet — 05-11-] L16: T-068 Slides priorisation sessions nov./déc. | Moustafa / Youssef / Yassine | 2026-11-10T00:00:00 | À venir
+[Tâches Follow-up Ronet — 05-11-] L17: Blueprint Retour — intégrer sorties réunion Tours/VLM | Moustafa | À planifier | À faire | Suite réunion Tours ; baser sur doc Retour + notes séance
+[Tâches Follow-up Ronet — 05-11-] L18: Check BR Outbound vs Blueprint Outbound | Moustafa | À planifier | À faire | Contrôle de couverture BR ↔ blueprint
+[Tâches Follow-up Ronet — 05-11-] L19: Finaliser les points ouverts Outbound | Moustafa | À planifier | À faire | Clôturer / trancher les points ouverts restants
+===== Onglet : Proposition fusion =====
+[Proposition fusion] L1: Proposition de fusion — compare avec l’onglet principal (rien n’y est modifié)
+[Proposition fusion] L2: Tâche proposée (après fusion) | Responsable | Échéance | Statut proposé | Lignes absorbées / sources | Note
+[Proposition fusion] L3: F1 — Pack Outbound : clôturer BR↔Blueprint + points ouverts + docs Outbound | Moustafa | À planifier | À faire | • Check BR Outbound vs Blueprint Outbound ⏎ • Finaliser les points ouverts Outbound ⏎ • Finaliser documents en cours (partie Outbound) | Garder T-005 à part (livrable Liste GAP en retard). Ce pack = travail de clôture autour de T-005.
+[Proposition fusion] L4: F2 — Pack KIT : décision métier + preuve technique STO | Moustafa / Consultant Solution | À planifier | À faire | • Discuter solution KIT (assemblé à la commande) ⏎ • Kitting STO — test sandbox / incident SAP | Une seule tâche avec 2 sous-actions : formaliser décision + lancer sandbox.
+[Proposition fusion] L5: F3 — Pack Master Data / Bernard | Yassine / Bernard / Moustafa | 05/11/2026 | À mettre à jour | • RACI Master Data ⏎ • Réunion après-midi Bernard ⏎ • Yassine — finaliser Assis et les amener | Même fil de la journée ; mettre Statut selon ce qui s’est passé en réunion.
+[Proposition fusion] L6: F4 — Pack Tours : réunion + retours blueprint | Moustafa / Youssef | 09/11/2026 puis suite | À venir / À faire | • T-044 Réunion Tours/Kardex ⏎ • Blueprint Retour — intégrer sorties réunion Tours/VLM | Fusionner seulement si le Blueprint Retour sort bien de la séance Tours ; sinon garder 2 lignes.
+[Proposition fusion] L7: — Inchangées (pas de fusion)
+[Proposition fusion] L8: T-001 Liste GAP Immatriculation | Moustafa / Youssef | 18/09/2026 (passée) | En retard | — | Inchangée
+[Proposition fusion] L9: T-005 Liste GAP Outbound | Moustafa / Youssef | 18/09/2026 (passée) | En retard | — | Reste séparée ; alimentée par le pack F1
+[Proposition fusion] L10: T-043 Clôturer réunion Immatriculation | Moustafa / Youssef | 03/11/2026 (passée) | En retard | — | Inchangée
+[Proposition fusion] L11: T-066 BPR livraisons directes hors EWM | Moustafa / Youssef | 29/10/2026 (passée) | À faire | — | Inchangée
+[Proposition fusion] L12: T-068 Slides priorisation sessions nov./déc. | Moustafa / Youssef / Yassine | 10/11/2026 | À venir | — | Inchangée
+[Proposition fusion] L13: Finaliser documents — partie Immat / prep | Moustafa | À planifier | À faire | Extrait de « Finaliser documents en cours » | Après split Outbound → F1, ne garder que Immat/prep ici
+[Proposition fusion] L14: — Journée 05/11 (à archiver ou marquer Fait)
+[Proposition fusion] L15: Support matin — rendre les premières | Moustafa | 05/11/2026 | À confirmer | — | Probablement fait → Fait ou Annulé
+[Proposition fusion] L16: Réunion d'estimation | Moustafa | 05/11/2026 | À confirmer | — | Probablement fait → Fait ou Annulé
