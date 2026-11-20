@@ -1,6 +1,6 @@
 ---
 title: "Infrabel SAP EWM 2.0 Blueprint – Retour fournisseur et mitraille"
-subtitle: "Document FR – Draft v0.4 – pour discussion – validé QA (QA-004-v2)"
+subtitle: "Document FR – Draft v0.4 – pour discussion – validé QA le 20/11/2026 (QA-004 v2)"
 lang: fr-BE
 toc-title: "Table des matières"
 ---
