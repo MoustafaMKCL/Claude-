@@ -1,6 +1,6 @@
 ---
 title: "Infrabel SAP EWM 2.0 Blueprint – Retour fournisseur et mitraille"
-subtitle: "Document FR – Draft v0.4 – pour discussion – non validé QA"
+subtitle: "Document FR – Draft v0.4 – pour discussion – validé QA (QA-004-v2)"
 lang: fr-BE
 toc-title: "Table des matières"
 ---
@@ -312,13 +312,13 @@ Le magasinier sortira les HU d'expédition de l'entrepôt.
 
 ### 5.3.4 Confirmer la sortie des HU d'expédition de l'entrepôt
 
-Le magasinier devra scanner chaque HU refusée au moment de son enlèvement (BR-06-003-020). Ce scan permettra de contrôler que le transporteur enlève la bonne HU, même lorsque le même matériel se trouve dans la même zone (BR-02-002-050 ; GAP BR-02-002-050).
+Le magasinier devra scanner chaque HU refusée au moment de son enlèvement (BR-06-003-020, lu sur la figure 12). Ce scan permettra de contrôler que le transporteur enlève la bonne HU, même lorsque le même matériel se trouve dans la même zone (BR-02-002-050 ; GAP BR-02-002-050).
 
 Point ouvert : la qualification en GAP reste à confirmer. Le rattachement de la HU à l'unité de transport et à une porte pourrait suffire à couvrir ce besoin en standard.
 
 ### 5.3.5 Confirmer l'endroit de sortie des HU d'expédition
 
-Le magasinier confirmera l'endroit par lequel les HU d'expédition quittent le DC (BR-06-003-020).
+Le magasinier confirmera l'endroit par lequel les HU d'expédition quittent le DC (BR-06-003-020, lu sur la figure 12).
 
 Point ouvert : le blueprint Outbound marque cette confirmation comme GAP. Comme en 5.3.4, la TU et la porte pourraient couvrir ce besoin en standard (point ouvert 4).
 
@@ -371,6 +371,6 @@ Cette annexe liste les BR du fichier Business Requirements qui concernent le ret
 | BR-06-002-010 | Créer une référence unique regroupant plusieurs HU, remise au fournisseur | Absent de la GAP List 27-10 | 5.3.1 |
 | BR-05-006-050-A | Associer les HU NNN / consommation directe au bon sans référence (HU d'expédition) | NNN – BR-05-006-050 couvert – Standard Infrabel – Analysé | 5.1.3 |
 | BR-05-003-010-B | HU liées à un bon 8\* sans référence | NNN – deux lignes : BR-05-003-010 Standard Infrabel, et GAP à qualifier (ID à attribuer) – Analysé | 5.1.3 |
-| BR-06-003-020 | Confirmer la sortie et l'endroit de sortie des HU d'expédition | Absent de la GAP List 27-10 | 5.3.4 ; 5.3.5 |
+| BR-06-003-020 | Encoder le retrait des HU d'expédition par le chauffeur milkrun en cas de problème technique | Absent de la GAP List 27-10 | 5.3.4 ; 5.3.5 |
 | BR-06-003-040 | Lien de tracking transporteur associé à la HU / au numéro d'expédition | Outbound – Gap – Enhancement + Interface – Analysé | 5.3.6 |
 | BR-07-007-010 | Indicateurs OTIF des transports | Reporting – GAP – Report (KPI) – Analysé | 5.3.6 |
